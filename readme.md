@@ -12,7 +12,9 @@ Supports
 How to use
 ----------
 - Download the latest package in the dist folder and import into your project
-### or
+
+or
+
 - Clone, open in unity and export the project, then import into your project
 
 Need help
