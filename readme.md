@@ -11,6 +11,8 @@ Supports
 
 How to use
 ----------
+Make sure you have a supported version of Playmaker and A* pathfinding in your project, then:
+
 - Download the latest package in the dist folder and import into your project
 
 or
