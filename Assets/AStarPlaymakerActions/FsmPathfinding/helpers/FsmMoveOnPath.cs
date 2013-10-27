@@ -1,0 +1,164 @@
+using System;
+using HutongGames.PlayMaker;
+using FsmPathfinding;
+using Pathfinding;
+using UnityEngine;
+
+namespace HutongGames.PlayMaker.Helpers
+{
+	public class FsmMoveOnPath : MonoBehaviour
+	{
+		[Tooltip ("Stop the running temporarily. Use the set property action.")]
+		public bool stop;
+		
+      	public GameObject go;   
+		
+		//Move along this InputPath	
+		public Path InputPath;
+
+	  	//Required movement speed.
+	  	public float speed;
+	  
+		
+		//Stop this distance away from your goal.
+	  	public float finishDistance;
+		
+	  	//If the distance to the target is less than this, it's finished.
+	  	public float nextWaypointDistance;
+		
+	  	//If the final position of the InputPath is more than this amount away from where it's supposed to be, the failure event is sent. A high value and still failure means the object can't even get close to the target.
+	  	public float failureTolerance;
+		
+		//Moves only on the X and Z axis. Useful for walking on meshes above the grid
+	  	public bool ignoreY;
+	
+		public float costDependendSpeed;
+		
+		/*@Tooltip("WIP : Uses the offset to calculate a new InputPath, then checks if every node connection and node is walkable, if not extends the InputPath to make sure the InputPath is possible. ")
+		public var subcalc : FsmBool; */
+		
+		//Add an optional offset
+		public Vector3 offset;
+
+		public Vector3 directionOut;
+
+	  	
+		//Print out debug messages.
+	  	public bool LogEvents;
+		
+		public bool drawGizmos = true;
+
+		private RVOController controller2;
+	  	private CharacterController controller;
+	  //	private var seeker : Seeker;
+		private Vector3 direction;
+		
+	  	public int currentWaypoint = 0;
+		private FsmPath doo;
+		private Vector3 nextPos ;
+		private float dist ;
+		private float a = 1/0f;
+	
+		
+		public void UpdatePath()
+		{
+			if (InputPath == null) 
+			{
+				var moo = (FsmMoveOnPath)go.GetComponent(typeof(FsmMoveOnPath));
+				Destroy(moo);
+			}
+			return;
+		}
+		
+	  
+		public void Start() 
+	  	{		 	
+		 	controller = (CharacterController)go.GetComponent(typeof(CharacterController));
+			controller2 = (RVOController)go.GetComponent(typeof(RVOController));
+			if (controller == null && controller2 == null) 
+			{
+				if(AstarPath.HasPro)
+				{
+					controller2 = (RVOController)go.AddComponent(typeof(RVOController));
+					controller2.Move(new Vector3(0,0,0));
+				}
+				else 
+				{ controller = (CharacterController)go.AddComponent(typeof(CharacterController)); }
+			}
+			
+			UpdatePath();
+			
+      	}
+		
+
+	  
+	 	public void Update()
+	 	{
+			if(stop) return;
+			UpdatePath();
+			
+			//nextWaypointDistance = Vector3.Distance(go.transform.position,nextPos);
+			// If there is no InputPath yet.
+			if (InputPath == null) { return; }
+			if (currentWaypoint >= (InputPath.vectorPath).Count) 
+			{
+				InputPath = null;
+				if (controller2 != null) //NVO controller needs to be set to 0/0/0 , else it continues running.
+					controller2.Move(new Vector3(0,0,0));
+				Destroy(go.GetComponent(typeof(FsmMoveOnPath)));
+				return;
+			}
+			nextPos = InputPath.vectorPath[currentWaypoint];
+			
+			// Direction to the next waypoint.
+			direction = (nextPos - go.transform.position).normalized;
+			directionOut = direction;
+			
+			if (ignoreY)
+			{
+				direction.y = 0;
+				direction = direction.normalized;
+			}
+			
+			var multiplier = (float)((1/Math.Exp(costDependendSpeed * InputPath.path[currentWaypoint].penalty)  ) * speed * Time.fixedDeltaTime);
+			direction.x *= multiplier;
+			direction.y *= multiplier;
+			direction.z *= multiplier;
+			
+			if (controller2 != null) 
+			{
+				controller2.Move(direction);
+				controller2.maxSpeed = (float)((1/Math.Exp(costDependendSpeed * InputPath.path[currentWaypoint].penalty)  ) * speed); 
+			}
+			else 
+			{ controller.SimpleMove(direction); }
+			
+			// Check if we are close enough to the next waypoint.
+			dist = Vector3.Distance(go.transform.position, nextPos);
+			if ( dist < nextWaypointDistance) 
+			{	//Debug.Log(doo.Value.vectorPath[currentWaypoint]);
+				if (currentWaypoint >= (InputPath.vectorPath).Count - 1) 
+				{
+					if (dist >= finishDistance){return;}
+				}
+				// Proceed to follow the next waypoint.
+				currentWaypoint++;
+				return;
+			}
+		}
+		
+		public void OnDrawGizmos () 
+		{
+			if (InputPath.path == null || !drawGizmos) 
+			{ return; }			
+			
+			Gizmos.color = new Color (0,1F,0,1F);
+			
+			if (InputPath.vectorPath != null) 
+			{
+				for (var i=0;i<InputPath.vectorPath.Count-1;i++) 
+				{ Gizmos.DrawLine (InputPath.vectorPath[i],InputPath.vectorPath[i+1]); }
+			}
+		}
+	}
+}

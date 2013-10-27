@@ -1,0 +1,70 @@
+0.4 beta
+
+11/12/2012
+- Found reason for the weird Object error. Always make sure path is completed before using FollowPath!
+- IsPathComplete now features an optional true and false event
+
+12/12/2012
+- Follow Target for 4.0 by hannibalov
+
+15/12/2012
+- added IsPathPossible
+- added WillPathBePossible
+- added a couple of everyFrame options 
+
+0.5 beta
+
+27/12/2012
+- exposed direction in moveToTarget and followPath and followTarget
+
+29/12/2012
+- get node walkability
+
+0.6 beta
+
+30/12/2012
+- update graph area
+- move to target ignore Y
+
+31/12/2012
+- check area walkability
+
+1/1/2013
+- follow target ignore Y
+- follow Path ignore Y
+- check area walkability : resulotion by node size now
+- get closest Vector3 on Path
+
+0.7 beta
+- get node info
+- removed unneeded warnings and added thrice as much necessary warnings
+- check area walkability individual
+- wrapper variables
+- createPathTo (advanced and js version)
+- followPath (advanced and js version)
+- translatePath
+- getPathInfo
+- getNodeInfo
+- getNodeFromNodes
+- autoMove helper script for movement even if the action is not active.
+- Debug paths options
+- smooth path action
+- ported all the rest of those scripts to js, if they use any object variables (yes, I'm too tired to list them here :D)
+- ... lots and lots of small changes and additions. I really couldn't keep track of them all but I think I addressed everything mentioned in this thread before. Hope everyone's pleased :)
+
+0v8
+- deep integration of path, node, astarPath and graph properties as well as the most important functions for using them. (replace this later with a list)
+- Beginnings of pro integration : RVO controller supported now.
+- variables categorized again
+- fewer errors and warnings
+
+0v808
+- fixed followTarget
+- fixed IgnoreY to also ignore Y direction internally
+- fixed errors when reusing any MoveTo action.
+- fixed followPath speed issue
+- fixed examples, now without arrayMaker and globals
+
+0v809
+- stop actor if the action is interrupted/ didn't finish but the state is no longer active.
+- fixed the "MoveTo" action not finishing on end bug, unless there was an event plugged in.
