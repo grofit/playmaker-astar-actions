@@ -1,5 +1,6 @@
 using System;
 using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Dummies;
 using FsmPathfinding;
 using Pathfinding;
 using UnityEngine;
@@ -101,15 +102,15 @@ namespace HutongGames.PlayMaker.Helpers
 			  
 		public void Start() 
 	  	{
-			controller = (CharacterController)go.GetComponent(typeof(CharacterController));
-			controller2 = (RVOController)go.GetComponent(typeof(RVOController));
+			controller = go.GetComponent<CharacterController>();
+			controller2 = go.GetComponent<RVOController>();
 			
 			if (controller == null && controller2 == null) 
 			{
 				if(AstarPath.HasPro)
-				{ controller2 = (RVOController)go.AddComponent(typeof(RVOController)); }
+				{ controller2 = go.AddComponent<RVOController>(); }
 				else 
-				{ controller = (CharacterController)go.AddComponent(typeof(CharacterController)); }
+				{ controller = go.AddComponent<CharacterController>(); }
 			}
 			
 			CalculatePath();			
@@ -130,7 +131,7 @@ namespace HutongGames.PlayMaker.Helpers
 				if (finishOnEnd) 
 				{
 					InputPath = null;
-					Destroy(go.GetComponent(typeof(FsmFollowTargetHelper)));
+					Destroy(go.GetComponent<FsmFollowTargetHelper>());
 				}
 				return;
 			}			

@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AStarPlaymakerActions\FsmPathfinding\helpers\FsmMoveOnPath.cs">
+    <Files>
+      <File FileName="Assets\AStarPlaymakerActions\FsmDummies\FleePathDummy.cs" Line="1" Column="1" />
+      <File FileName="Assets\AStarPlaymakerActions\FsmDummies\RandomPathDummy.cs" Line="1" Column="1" />
+      <File FileName="Assets\AStarPlaymakerActions\FsmDummies\RVOControllerDummy.cs" Line="9" Column="33" />
+      <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" Line="4" Column="37" />
+      <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\helpers\FsmFollowTargetHelper.cs" Line="3" Column="1" />
+      <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\helpers\FsmMoveOnPath.cs" Line="3" Column="37" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

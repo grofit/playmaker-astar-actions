@@ -1,5 +1,6 @@
 using System;
 using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Dummies;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
@@ -226,17 +227,17 @@ namespace HutongGames.PlayMaker.Pathfinding
 				return;
 			}//finish the action if any of the requirements are not met
 			
-		 	controller = (CharacterController)go.GetComponent(typeof(CharacterController));
-			controller2 = (RVOController)go.GetComponent(typeof(RVOController));
-			rigidbody = (Rigidbody)go.GetComponent(typeof(Rigidbody));
+		 	controller = go.GetComponent<CharacterController>();
+			controller2 = go.GetComponent<RVOController>();
+			rigidbody = go.GetComponent<Rigidbody>();
 			
 			if(controllerType == ControllerType.characterController && controller == null)
-			{ controller = (CharacterController)go.AddComponent(typeof(CharacterController)); }
+			{ controller = go.AddComponent<CharacterController>(); }
 			else if(controllerType == ControllerType.rvoController && controller2 == null)
 			{
 				if(AstarPath.HasPro)
 				{
-					controller2 = (RVOController)go.AddComponent(typeof(RVOController));
+					controller2 = go.AddComponent<RVOController>();
 					controller2.Move(new Vector3(0,0,0));
 				}
 				else 
@@ -244,18 +245,18 @@ namespace HutongGames.PlayMaker.Pathfinding
 					controllerType = ControllerType.characterController;//free version can't use RVOControllers
 
 					if(controller == null)
-					{ controller = (CharacterController)go.AddComponent(typeof(CharacterController)); }
+					{ controller = go.AddComponent<CharacterController>(); }
 				}
 			}			
 			else if(controllerType == ControllerType.rigidbody && rigidbody == null)
 			{
-				rigidbody = (Rigidbody)go.AddComponent(typeof(Rigidbody));
+				rigidbody = go.AddComponent<Rigidbody>();
 				rigidbody.drag = 0.5f;
 				rigidbody.freezeRotation = true;
 			}
 			else if(controllerType == ControllerType.rigidbodyVelocity && rigidbody == null)
 			{
-				rigidbody = (Rigidbody)go.AddComponent(typeof(Rigidbody));
+				rigidbody = go.AddComponent<Rigidbody>();
 				rigidbody.freezeRotation = true;
 			}	
 			
@@ -404,10 +405,10 @@ namespace HutongGames.PlayMaker.Pathfinding
 		}
 		
 		public void Auto() {
-			var moo = (FsmMoveOnPath)go.GetComponent(typeof(FsmMoveOnPath));
+			var moo = go.GetComponent<FsmMoveOnPath>();
 			
 			if(moo == null) 
-			{ moo = (FsmMoveOnPath)go.AddComponent(typeof(FsmMoveOnPath)); }
+			{ moo = go.AddComponent<FsmMoveOnPath>(); }
 
 			moo.go = go;
 			moo.InputPath = path;

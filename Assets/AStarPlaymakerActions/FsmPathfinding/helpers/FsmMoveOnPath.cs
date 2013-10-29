@@ -1,5 +1,6 @@
 using System;
 using HutongGames.PlayMaker;
+using HutongGames.PlayMaker.Dummies;
 using FsmPathfinding;
 using Pathfinding;
 using UnityEngine;
@@ -64,7 +65,7 @@ namespace HutongGames.PlayMaker.Helpers
 		{
 			if (InputPath == null) 
 			{
-				var moo = (FsmMoveOnPath)go.GetComponent(typeof(FsmMoveOnPath));
+				var moo = go.GetComponent<FsmMoveOnPath>();
 				Destroy(moo);
 			}
 			return;
@@ -73,17 +74,17 @@ namespace HutongGames.PlayMaker.Helpers
 	  
 		public void Start() 
 	  	{		 	
-		 	controller = (CharacterController)go.GetComponent(typeof(CharacterController));
-			controller2 = (RVOController)go.GetComponent(typeof(RVOController));
+		 	controller = go.GetComponent<CharacterController>();
+			controller2 = go.GetComponent<RVOController>();
 			if (controller == null && controller2 == null) 
 			{
 				if(AstarPath.HasPro)
 				{
-					controller2 = (RVOController)go.AddComponent(typeof(RVOController));
+					controller2 = go.AddComponent<RVOController>();
 					controller2.Move(new Vector3(0,0,0));
 				}
 				else 
-				{ controller = (CharacterController)go.AddComponent(typeof(CharacterController)); }
+				{ controller = go.AddComponent<CharacterController>(); }
 			}
 			
 			UpdatePath();
@@ -105,7 +106,7 @@ namespace HutongGames.PlayMaker.Helpers
 				InputPath = null;
 				if (controller2 != null) //NVO controller needs to be set to 0/0/0 , else it continues running.
 					controller2.Move(new Vector3(0,0,0));
-				Destroy(go.GetComponent(typeof(FsmMoveOnPath)));
+				Destroy(go.GetComponent<FsmMoveOnPath>());
 				return;
 			}
 			nextPos = InputPath.vectorPath[currentWaypoint];

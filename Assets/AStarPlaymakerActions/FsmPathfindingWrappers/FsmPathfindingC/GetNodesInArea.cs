@@ -117,7 +117,7 @@ namespace HutongGames.PlayMaker.Actions
 			
 			else // get the points of the render bounds
 			{
-				bounds = (go.renderer.GetComponent(typeof(MeshFilter))as MeshFilter).sharedMesh.bounds;
+				bounds = (go.renderer.GetComponent<MeshFilter>()).sharedMesh.bounds;
 				calculateBox(gus);
 			}
 			
