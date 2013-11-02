@@ -47,13 +47,13 @@ namespace HutongGames.PlayMaker.Pathfinding
 		private NNConstraint nnc ;
 		private FsmNavGraph mo;
 	  
-		public void Reset()
+		public override void Reset()
 		{
 			graph = null;
 			maxDistance = 1.5f;	
 		}
 		
-		public void OnEnter()
+		public override void OnEnter()
 	  	{
 			mo = graph.Value as FsmNavGraph;
 			if ((mo == null) ||(mo.Value == null) || alwaysNew.Value) 

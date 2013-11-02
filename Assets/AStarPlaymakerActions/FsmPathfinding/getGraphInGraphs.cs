@@ -26,14 +26,14 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("The graph ")	]
 		public FsmObject graph;
 
-		public void Reset()
+		public override void Reset()
 		{
 			graphs = new FsmObject();
 			index = 0;
 			graph = new FsmObject();
 		}
 	  
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var go = graphs.Value as FsmNavGraphs;
 			if((go.Value == null) || !graph.UseVariable) {Finish(); return;} // it would continue for a frame without return

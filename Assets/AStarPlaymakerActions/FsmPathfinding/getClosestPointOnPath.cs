@@ -34,7 +34,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		private FsmPath goo = new FsmPath();	
 		
 		
-		public void Reset() 
+		public override void Reset() 
 		{
 			InputPath = null;
 			DistanceFrom = null;
@@ -42,7 +42,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			position = null;
 		} 
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var go = InputPath.Value as FsmPath;
 			if(go == null || go.Value == null) 

@@ -51,12 +51,12 @@ namespace HutongGames.PlayMaker.Pathfinding
 		private NNConstraint nnc;
 		private FsmPointGraph mo;
 	  
-		public void Reset()
+		public override void Reset()
 		{
 			graph = null;
 		}
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			mo = graph.Value as FsmPointGraph;
 			//Debug.Log(typeof(mo));

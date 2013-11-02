@@ -22,13 +22,13 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("Save duplicate path to this")]
 		public FsmObject OutputPath;
 				
-		public void Reset()
+		public override void Reset()
 		{
 			InputPath = new FsmObject();
 			OutputPath = new FsmObject();			
 		}
       
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var mo = InputPath.Value as FsmPath;
 			if( (mo == null) || (mo.Value == null) || !OutputPath.UseVariable) 

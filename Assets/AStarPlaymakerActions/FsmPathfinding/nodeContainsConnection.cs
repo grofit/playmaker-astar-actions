@@ -25,14 +25,14 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[ActionSection("Output")]
 		public FsmBool connected;
 		
-		public void Reset()
+		public override void Reset()
 		{
 			node = null; 
 			node2 = null;
 			connected = false;
 		}		
       
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var mo = node.Value as FsmNode;
 			var fo = node2.Value as FsmNode; 

@@ -100,13 +100,13 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private NavGraph g;
 		
-		public void Reset()
+		public override void Reset()
 		{
 			graph = null;
 			guid = null;
 		}
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			DoStuff();
 			
@@ -156,7 +156,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			}
 		}
 		
-		public void OnUpdate()
+		public override void OnUpdate()
 		{ DoStuff(); }	  
    	}
 }

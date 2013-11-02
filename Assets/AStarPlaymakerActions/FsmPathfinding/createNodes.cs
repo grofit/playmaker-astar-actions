@@ -31,7 +31,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private NavGraph g;
       
-		public void Reset()
+		public override void Reset()
 		{
 			graph = new FsmObject();
 			nodes = new FsmObject();
@@ -39,7 +39,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			everyFrame = false;	
 		}
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var mo = graph.Value as FsmNavGraph;
 			if(mo.Value == null) 
@@ -75,7 +75,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		}
 
 		
-		public void OnUpdate()
+		public override void OnUpdate()
 		{
 			DoStuff();
 		} 

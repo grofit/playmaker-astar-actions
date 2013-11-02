@@ -38,7 +38,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private FsmPath doo = new FsmPath();
 				
-    	public void Reset() 
+    	public override void Reset() 
 	  	{
          	gameObject = null;
 			target = new FsmGameObject();
@@ -47,7 +47,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			OutputPath = null;
       	}
 				
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 		 	go = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;
 

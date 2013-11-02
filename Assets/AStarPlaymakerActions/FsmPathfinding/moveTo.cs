@@ -80,7 +80,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public ControllerType controllerType = ControllerType.available;
 		
 	  	[Tooltip("Required movement speed.")]
-	  	public FsmFloat speed;
+	  	public FsmFloat speed = 1f;
 		
 		[Tooltip("Should the actor move exactly along the path or should it smoothly interpolate from one node to the next? The radius of each turn depends on the turnRadius")]
 		public FsmBool smoothTurns; 
@@ -95,19 +95,19 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  	public FsmEvent failedEvent;
 	  
 	  	[Tooltip("If the distance to the target is less than this, it's finished.")]
-	  	public FsmFloat nextWaypointDistance;
+	  	public FsmFloat nextWaypointDistance = 3f;
 		
 		[Tooltip("if set to absolute, the action will send the finished event once the distance between the actor and the target is less than finishDistance. Using absoluteEndnode it will send Finish once the distance between the last node on the path and the Actor is less than finishDistance. If set to relative, it will send the finish event if the distance along the path is less than finishDistance. If set to last it will go to the second to last node on the path and only then starts checking whether the distance to the last node is less than the finishDistance. Use last on simple movement actions, as it is by far the cheapest. Use relative only when you must, as it can be a tad expensive if your finishDistance is very high.")]
 		public FinishDistance finishDistanceMode = FinishDistance.absolute;
 		
 		[Tooltip("Stop this distance away from your goal.")]
-	  	public FsmFloat finishDistance;
+	  	public FsmFloat finishDistance = 1f;
 	  
 		[Tooltip("Turn this on to add the target position (or the target object position, if it exists) as the last waypoint. Use this if your target is an empty or a position on the floor to move precisely to that position (and not to the closest node nearby)")]
 		public FsmBool exactFinish;
 	  
 	  	[Tooltip("If the final position of the path is more than this amount away from where it's supposed to be, the failure event is sent. A high value and still failure means the object can't even get close to the target.")]
-	  	public FsmFloat failureTolerance;
+	  	public FsmFloat failureTolerance = 10f;
 		
 		[Tooltip("Moves only on the X and Z axis. Useful for walking on meshes above the grid")]
 	  	public FsmBool ignoreY;
@@ -169,7 +169,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private float time = 0f;
 		
-     	public void Reset() 
+     	public override void Reset() 
 	  	{
          	actor = null;
 			inputPath = null;
@@ -190,7 +190,7 @@ namespace HutongGames.PlayMaker.Pathfinding
       	}
 		
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			if(moveMode == MoveMode.followPath)
 			{
@@ -361,18 +361,20 @@ namespace HutongGames.PlayMaker.Pathfinding
 			return;
 		}
 			
-		public void OnPathComplete(Path path) 
+		public void OnPathComplete(Path path1) 
 		{
 			if (go == null) 
 			{
 				Finish(); 
 				return; 
 			}
-			
+		
 			doo = new FsmPath(); // this needs to be an instance even if the actual path is the same.
 			//if(path != null)
 				//path.Release(path);
-			path = p;
+
+			path = path1;
+			
 			currentWaypoint = 1;
 			if(moveMode == MoveMode.followPath)
 			{ currentWaypoint = 0; }// used to be getClosest() + 1;
@@ -424,8 +426,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 			
 		}
 		
-		private void Move() 
+		public void Move() 
 		{
+			Debug.Log("Move");	
 			// previous path is not cleared on reload. That's why it's finishing and why there's no error !!!!!!
 			if(controllerType == ControllerType.rvoController || (controllerType == ControllerType.available && controller2 != null))
 			{
@@ -489,11 +492,12 @@ namespace HutongGames.PlayMaker.Pathfinding
 			
 		}
 		
-	 	public void OnUpdate()
+	 	public override void OnUpdate()
 	 	{	
+			
 			if(updatePath && moveMode == MoveMode.followPath)
 			{ path = FsmConverter.GetPath(inputPath); }
-			
+
 			if (path == null || path.vectorPath.Count == 0){ // only continue if path is valid
 				return;
 			}
@@ -517,7 +521,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				{ Fsm.Event(endOfPathEvent); }
 				Finish();
 			}
-			
+
 			if (currentWaypoint >= (path.vectorPath).Count) 
 			{ currentWaypoint = path.vectorPath.Count-1; }
 			

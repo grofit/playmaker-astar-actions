@@ -16,12 +16,12 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("Input Path")	]
 		public FsmObject InputPath;
 		
-		public void Reset()
+		public override void Reset()
 		{
 			InputPath = null;			
 		}
 
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var go = InputPath.Value as FsmPath;
 			if(go.Value == null) 

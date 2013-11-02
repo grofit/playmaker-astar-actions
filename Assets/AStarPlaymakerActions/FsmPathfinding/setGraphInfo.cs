@@ -76,7 +76,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private NavGraph g ;
      	  
-		public void Reset()
+		public override void Reset()
 		{
 			graph = null;
 			mask = new FsmInt { UseVariable = true }; 
@@ -99,7 +99,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			nodes = new FsmObject {UseVariable = true};
 		}
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{			
 			DoStuff();
 			
@@ -179,7 +179,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			}
 		}
 		
-		public void OnUpdate()
+		public override void OnUpdate()
 		{
 			DoStuff();
 		}	  

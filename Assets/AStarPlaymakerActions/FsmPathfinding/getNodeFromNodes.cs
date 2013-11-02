@@ -28,14 +28,14 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("Any type of node")	]
 		public FsmObject node;
 
-		public void Reset()
+		public override void Reset()
 		{
 			nodes = new FsmObject();
 			index = 0;
 			node = new FsmObject();
 		}
 	  
-		public void OnEnter()  
+		public override void OnEnter()  
 	  	{
 			var mo = nodes.Value as FsmNodes;
 			
