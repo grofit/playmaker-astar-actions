@@ -40,7 +40,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private AstarPath astarp;
 		
-		public void Reset(){
+		public override void Reset(){
 		
 			astarPath = new FsmObject { UseVariable = true };
 			astarData = new FsmObject { UseVariable = true };
@@ -50,7 +50,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			graphs = new FsmObject { UseVariable = true };		
 		}
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{			
 			DoStuff();
 			
@@ -80,7 +80,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			return;
 		}
 	  
-		public void OnUpdate() 
+		public override void OnUpdate() 
 	  	{
 			DoStuff();
 		}

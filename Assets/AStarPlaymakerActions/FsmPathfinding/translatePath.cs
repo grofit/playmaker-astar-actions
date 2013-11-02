@@ -26,7 +26,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			Vector = null;			
 		}
       
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var doo = InputPath.Value as FsmPath;
 			a = doo.Value;

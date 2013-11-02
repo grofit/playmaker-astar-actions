@@ -25,14 +25,14 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[ObjectType(typeof(FsmNode))]
 		public FsmObject node;
 		
-		public void Reset() 
+		public override void Reset() 
 		{
 			Position = null;
 			everyFrame = false;
 			node = null;
 		}
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			if(!node.UseVariable) 
 			{
@@ -57,7 +57,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			return;
 		}
 		
-		public void OnUpdate()
+		public override void OnUpdate()
 		{
 			mohogony();
 		}

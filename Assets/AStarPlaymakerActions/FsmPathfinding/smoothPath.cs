@@ -22,7 +22,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private FsmPath goo;
       
-		public void OnUpdate()
+		public override void OnUpdate()
 	  	{	
 			goo = InputPath.Value as FsmPath;
 			if(goo.Value == null) 

@@ -76,7 +76,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		private FsmPath goo = new FsmPath();	
 		
 		
-		public void Reset() 
+		public override void Reset() 
 		{
 			InputPath = new FsmObject();
 			Length = new FsmFloat();
@@ -96,7 +96,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			runData = new FsmObject();
 		}
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			if(InputPath.Value == null || InputPath.Value is UnityEngine.Object || (InputPath.Value as FsmPath).Value == null) 
 			{
@@ -156,7 +156,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			
 		}
 	  
-		public void OnUpdate() 
+		public override void OnUpdate() 
 	  	{
 			DoStuff();
 		}

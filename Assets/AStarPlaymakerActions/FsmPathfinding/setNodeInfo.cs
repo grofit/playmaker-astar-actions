@@ -31,7 +31,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmBool everyFrame;
 
-		public void Reset()
+		public override void Reset()
 		{
 			node = new FsmObject {UseVariable = true};
 			penalty = new FsmInt {UseVariable = true};
@@ -40,7 +40,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			position = new FsmVector3 {UseVariable = true};
 		}
       
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var moo = node.Value as FsmNode;
 			if(moo.Value == null) 
@@ -55,7 +55,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ Finish(); }
 		}
 	  
-		public void OnUpdate()
+		public override void OnUpdate()
 		{
 			mohogony();
 		}

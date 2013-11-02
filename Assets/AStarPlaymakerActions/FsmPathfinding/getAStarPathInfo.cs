@@ -66,7 +66,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public FsmBool everyFrame;		
 		private AstarPath astarp;
 		
-		public void Reset()
+		public override void Reset()
 		{
 			astarPath = null;
 			astarData = null;
@@ -84,7 +84,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		}
 		
 		
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			DoStuff();
 			
@@ -134,7 +134,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			return;
 		}
 	  
-		public void OnUpdate() 
+		public override void OnUpdate() 
 	  	{
 			DoStuff();
 		}

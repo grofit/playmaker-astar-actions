@@ -69,7 +69,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private FsmPath goo = new FsmPath();	
 
-		public void Reset() 
+		public override void Reset() 
 		{
 			duration = new FsmFloat {UseVariable = true};
 			heuristicScale = new FsmFloat {UseVariable = true};			
@@ -86,7 +86,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			runData = new FsmObject{UseVariable = true};			
 		}
  
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			var moo = InputPath.Value as FsmPath;
 			
@@ -120,7 +120,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			runData.Value = FsmConverter.SetNodeRunData(doo.runData);			
 		}
 	 
-		public void OnUpdate() 
+		public override void OnUpdate() 
 	  	{ DoStuff(); }
    	}
 }

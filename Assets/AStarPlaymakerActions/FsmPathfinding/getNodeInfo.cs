@@ -50,7 +50,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 
 		public FsmBool everyFrame;		
       
-		public void Reset()
+		public override void Reset()
 		{
 			node = new FsmObject();
 			nodeIndex = null;
@@ -64,7 +64,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			connectedNodes.UseVariable = true;
 		}
 	  
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{			
 			var mo = node.Value as FsmNode;
 			Debug.Log(mo);
@@ -102,7 +102,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			graph.Value = loo;
 		}
 		
-		public void OnUpdate()
+		public override void OnUpdate()
 		{
 			DoStuff();
 		}

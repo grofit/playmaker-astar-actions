@@ -28,14 +28,14 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmBool everyFrame;
 		
-		public void Reset()
+		public override void Reset()
 		{
 			node = new FsmObject(); 
 			node2 = new FsmObject();
 			cost = 1;
 		}
 		      
-		public void OnEnter() 
+		public override void OnEnter() 
 	  	{
 			Mohogony();
 			
@@ -60,7 +60,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ fo.Value.AddConnection(mo.Value, cost.Value);	}		
 		}
 		
-		public void OnUpdate() 
+		public override void OnUpdate() 
 		{ Mohogony();}
    	}
 }
