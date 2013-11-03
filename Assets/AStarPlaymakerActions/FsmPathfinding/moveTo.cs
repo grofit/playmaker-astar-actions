@@ -106,9 +106,8 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmColor gizmosColor;
 
-		private Path path;
-      
-      	private GameObject go;
+        private Path path; 
+      	private GameObject targetGameObject;
 		
 		private RVOController controller2;
 	  	private CharacterController controller;
@@ -120,12 +119,11 @@ namespace HutongGames.PlayMaker.Pathfinding
 		private Vector3 prevTarget;
 		
 	  	private int currentWaypoint = 1;
-		private FsmPath doo;
+		private FsmPath newFsmPath;
 		private Vector3 nextPos;
-		private float dist;
+		private float distance;
 		private float a = 1/0f;
-		private bool done = true;
-		private Path p;
+		private Path abPath;
 		private int frame = 0;
 		private Vector3 nextDirection;
 		private bool firstFrame = true;
@@ -153,7 +151,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 			costDependendSpeed = 0f;
       	}
 		
-		
 		public override void OnEnter() 
 	  	{
 			if(moveMode == MoveMode.followPath)
@@ -168,20 +165,21 @@ namespace HutongGames.PlayMaker.Pathfinding
 					Finish(); 
 					return;
 				}
-				else if(path.vectorPath.Count == 0)
-				{
-					if(LogEvents.Value)
-					{ Debug.Log("Astar Follow Path failed. The path contains no nodes"); }
+			
+                if(path.vectorPath.Count == 0)
+			    {
+			        if(LogEvents.Value)
+			        { Debug.Log("Astar Follow Path failed. The path contains no nodes"); }
 
-					Fsm.Event(failedEvent); 
-					Finish(); 
-					return;				
-				}
+			        Fsm.Event(failedEvent); 
+			        Finish(); 
+			        return;				
+			    }
 			}
 			
 			currentWaypoint = 0;
-		 	go = actor.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : actor.GameObject.Value;
-			if( go == null) 
+		 	targetGameObject = actor.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : actor.GameObject.Value;
+			if( targetGameObject == null) 
 			{
 				if(LogEvents.Value)
 				{ Debug.Log("Astar Move To failed. The actor is null"); }
@@ -189,19 +187,19 @@ namespace HutongGames.PlayMaker.Pathfinding
 				Fsm.Event(failedEvent); 
 				Finish(); 
 				return;
-			}//finish the action if any of the requirements are not met
+			}
 			
-		 	controller = go.GetComponent<CharacterController>();
-			controller2 = go.GetComponent<RVOController>();
-			rigidbody = go.GetComponent<Rigidbody>();
+		 	controller = targetGameObject.GetComponent<CharacterController>();
+			controller2 = targetGameObject.GetComponent<RVOController>();
+			rigidbody = targetGameObject.GetComponent<Rigidbody>();
 			
 			if(controllerType == ControllerType.characterController && controller == null)
-			{ controller = go.AddComponent<CharacterController>(); }
+			{ controller = targetGameObject.AddComponent<CharacterController>(); }
 			else if(controllerType == ControllerType.rvoController && controller2 == null)
 			{
 				if(AstarPath.HasPro)
 				{
-					controller2 = go.AddComponent<RVOController>();
+					controller2 = targetGameObject.AddComponent<RVOController>();
 					controller2.Move(new Vector3(0,0,0));
 				}
 				else 
@@ -209,18 +207,18 @@ namespace HutongGames.PlayMaker.Pathfinding
 					controllerType = ControllerType.characterController;//free version can't use RVOControllers
 
 					if(controller == null)
-					{ controller = go.AddComponent<CharacterController>(); }
+					{ controller = targetGameObject.AddComponent<CharacterController>(); }
 				}
 			}			
 			else if(controllerType == ControllerType.rigidbody && rigidbody == null)
 			{
-				rigidbody = go.AddComponent<Rigidbody>();
+				rigidbody = targetGameObject.AddComponent<Rigidbody>();
 				rigidbody.drag = 0.5f;
 				rigidbody.freezeRotation = true;
 			}
 			else if(controllerType == ControllerType.rigidbodyVelocity && rigidbody == null)
 			{
-				rigidbody = go.AddComponent<Rigidbody>();
+				rigidbody = targetGameObject.AddComponent<Rigidbody>();
 				rigidbody.freezeRotation = true;
 			}	
 			
@@ -228,34 +226,29 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ CalculatePath(); }
 			
 			if(moveMode == MoveMode.followPath && !startAtStart.Value)
-			{ currentWaypoint = getClosest(); }
-			
+			{ currentWaypoint = GetClosestIndex(); }
 			
 			if(moveMode == MoveMode.followPath && connectPath.Value)
-			{
-				done = false;
-				ConnectPathX();
-			}
+			{ ConnectPathX(); }
       	}
 		
 		public void ConnectPathX()
-		{// connects the current position to the closest position on the path
-			p = ABPath.Construct(go.transform.position , path.vectorPath[currentWaypoint] , FinishConnectionX); // create path from current position to closest/first node
-			AstarPath.StartPath (p); //make the actual vector3 path which we'll use lateron.
-			return;
+		{
+			abPath = ABPath.Construct(targetGameObject.transform.position , path.vectorPath[currentWaypoint] , FinishConnectionX);
+			AstarPath.StartPath (abPath);
 		}  
 		
 		public void FinishConnectionX(Path path)
 		{
-			path.path.InsertRange(currentWaypoint,p.path);// node path, necessary if you want to run modifiers on top of it lateron I think
-			path.vectorPath.InsertRange(currentWaypoint,p.vectorPath);// concat lists by adding everything at the currentWaypoint index . That way nothing before this needs to be reset
-			doo = new FsmPath();
-			doo.Value = path;
-			OutputPath.Value = doo;			
+			path.path.InsertRange(currentWaypoint,abPath.path);// node path, necessary if you want to run modifiers on top of it lateron I think
+			path.vectorPath.InsertRange(currentWaypoint,abPath.vectorPath);// concat lists by adding everything at the currentWaypoint index . That way nothing before this needs to be reset
+			newFsmPath = new FsmPath();
+			newFsmPath.Value = path;
+			OutputPath.Value = newFsmPath;			
 			return;
 		}
 		
-		public int getClosest()
+		public int GetClosestIndex()
 		{
 			a =  1/0f;
 			var x = 1;
@@ -263,7 +256,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			
 			for (var i = 0; i < (path.vectorPath).Count; i++)
 			{
-				o = (path.vectorPath[i] - go.transform.position).sqrMagnitude;
+				o = (path.vectorPath[i] - targetGameObject.transform.position).sqrMagnitude;
 				if(o < a) 
 				{
 					a = o;
@@ -274,7 +267,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		}
 		
 		public void UpdateCurrentWaypoint()
-		{// checks if the next waypoint is more suited to being the current waypoint
+		{
 			var x = false;
 			var y = false;
 			var z = false;
@@ -284,7 +277,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			if(dir.y<=0) y = true;
 			if(dir.z<=0) z = true;
 			
-			var actorDir = go.transform.position - path.vectorPath[currentWaypoint + 1];
+			var actorDir = targetGameObject.transform.position - path.vectorPath[currentWaypoint + 1];
 			if((x ? (actorDir.x<=0) : (actorDir.x>0))&&(y ? (actorDir.y<=0) : (actorDir.y>0))&&(z ? (actorDir.z<=0) : (actorDir.z>0)))
 			{ currentWaypoint++; }
 		}
@@ -292,7 +285,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public void CalculatePath()
 		{
 			if(moveMode != MoveMode.follow && moveMode != MoveMode.followTo && moveMode != MoveMode.fleeContinuously)
-			{path = null;} // do this to avoid instant finishing if the action had been called before and if the actor didn't move
+			{ path = null; }
 						
 			Vector3 targetPos;
 			if (target.Value != null)
@@ -301,67 +294,66 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ targetPos = targetPosition.Value;}
 			
 			if(path != null && path.vectorPath.Count > 0 && (moveMode == MoveMode.follow || moveMode == MoveMode.followTo))	
-			{p = ABPath.Construct (nextPos , targetPos , OnPathComplete);} // create path from next waypoint (to avoid jitter due to sudden direction change on path update) to closest/first node
+			{abPath = ABPath.Construct (nextPos , targetPos , OnPathComplete);} // create path from next waypoint (to avoid jitter due to sudden direction change on path update) to closest/first node
 			else if(moveMode != MoveMode.fleeContinuously && moveMode != MoveMode.flee && moveMode != MoveMode.randomPath )
-			{p = ABPath.Construct (go.transform.position , targetPos , OnPathComplete);} // create path from current position to closest/first node
+			{abPath = ABPath.Construct (targetGameObject.transform.position , targetPos , OnPathComplete);} // create path from current position to closest/first node
 			
 			else if(moveMode == MoveMode.fleeContinuously || moveMode == MoveMode.flee ) 
 			{
 				if(AstarPath.HasPro)
-				{ p = FleePath.Construct (go.transform.position , targetPos , (int)(length.Value*1000f), OnPathComplete);} // create path from current position to closest/first node
+				{ abPath = FleePath.Construct (targetGameObject.transform.position , targetPos , (int)(length.Value*1000f), OnPathComplete);} // create path from current position to closest/first node
 				else
-				{ p = ABPath.Construct (go.transform.position , go.transform.position + (go.transform.position - targetPos).normalized * length.Value, OnPathComplete);}
+				{ abPath = ABPath.Construct (targetGameObject.transform.position , targetGameObject.transform.position + (targetGameObject.transform.position - targetPos).normalized * length.Value, OnPathComplete);}
 			}
 			else if (moveMode == MoveMode.randomPath)
 			{
 				if(AstarPath.HasPro)
-				{	p = RandomPath.Construct (go.transform.position, (int)(length.Value*1000f) , OnPathComplete); } // create path from current position to closest/first node
+				{ abPath = RandomPath.Construct (targetGameObject.transform.position, (int)(length.Value*1000f) , OnPathComplete); } // create path from current position to closest/first node
 				else // random direction! This is just a cheap immitation of the real randompath!
-				{	p = ABPath.Construct (go.transform.position , go.transform.position + new Vector3(UnityEngine.Random.Range(-1f,1f), 0f, UnityEngine.Random.Range(-1f,1f)).normalized * length.Value, OnPathComplete);}
+				{ abPath = ABPath.Construct (targetGameObject.transform.position , targetGameObject.transform.position + new Vector3(UnityEngine.Random.Range(-1f,1f), 0f, UnityEngine.Random.Range(-1f,1f)).normalized * length.Value, OnPathComplete);}
 			}
 				
-			AstarPath.StartPath (p); //make the actual vector3 path which we'll use lateron.
+			AstarPath.StartPath(abPath); //make the actual vector3 path which we'll use lateron.
 			time = Time.time;
-			return;
 		}
 			
 		public void OnPathComplete(Path path1) 
 		{
-			if (go == null) 
+			if (targetGameObject == null) 
 			{
 				Finish(); 
 				return; 
 			}
 		
-			doo = new FsmPath();
+			newFsmPath = new FsmPath();
 			path = path1;
 			
 			currentWaypoint = 1;
 			if(moveMode == MoveMode.followPath)
 			{ currentWaypoint = 0; }// used to be getClosest() + 1;
 			else if(moveMode == MoveMode.follow || moveMode == MoveMode.followTo || moveMode == MoveMode.fleeContinuously)
-			{ currentWaypoint = (path.vectorPath.Count >= 2 && (path.vectorPath[0]-go.transform.position).sqrMagnitude <= (path.vectorPath[1]-go.transform.position).sqrMagnitude) ? 0 : 1; }
+			{ currentWaypoint = (path.vectorPath.Count >= 2 && (path.vectorPath[0]-targetGameObject.transform.position).sqrMagnitude <= (path.vectorPath[1]-targetGameObject.transform.position).sqrMagnitude) ? 0 : 1; }
 
-			doo.Value = path;
-			OutputPath.Value = doo;
+			newFsmPath.Value = path;
+			OutputPath.Value = newFsmPath;
 			
 			if (LogEvents.Value)
-			{	Debug.Log(" Time needed to create path : " + (Time.time - time)); }
+			{ Debug.Log(" Time needed to create path : " + (Time.time - time)); }
 			
 			pathLoading = false;
 			if(exactFinish.Value)
-			{	path.vectorPath.Add(target.Value == null ? targetPosition.Value : target.Value.transform.position);}
-			
-			return;
+			{ path.vectorPath.Add(target.Value == null ? targetPosition.Value : target.Value.transform.position);}
 		}
 		
 		public void ShadowExtendPath()
 		{
-			if((target.Value != null && (target.Value.transform.position - path.vectorPath[path.vectorPath.Count - 1]).sqrMagnitude >= shadowUpdateDistance.Value * shadowUpdateDistance.Value)){
+			if((target.Value != null && (target.Value.transform.position - path.vectorPath[path.vectorPath.Count - 1]).sqrMagnitude >= shadowUpdateDistance.Value * shadowUpdateDistance.Value))
+            {
 				path.vectorPath.Add(target.Value.transform.position);
 				path.path.Add(AstarPath.active.GetNearest(target.Value.transform.position).node);
 			}
-			else if((target.Value == null && (targetPosition.Value - path.vectorPath[path.vectorPath.Count - 1]).sqrMagnitude >= shadowUpdateDistance.Value * shadowUpdateDistance.Value)){
+			else if((target.Value == null && (targetPosition.Value - path.vectorPath[path.vectorPath.Count - 1]).sqrMagnitude >= shadowUpdateDistance.Value * shadowUpdateDistance.Value))
+            {
 				path.vectorPath.Add(targetPosition.Value);
 				path.path.Add(AstarPath.active.GetNearest(targetPosition.Value).node);
 			}
@@ -369,28 +361,23 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public void Auto() 
         {
-			var moveOnPathComponent = go.GetComponent<FsmMoveOnPath>();
-			
-			if(moveOnPathComponent == null) 
-			{ moveOnPathComponent = go.AddComponent<FsmMoveOnPath>(); }
-
-			moveOnPathComponent.go = go;
+			var moveOnPathComponent = targetGameObject.GetComponent<FsmMoveOnPath>() ?? targetGameObject.AddComponent<FsmMoveOnPath>();
+		    moveOnPathComponent.go = targetGameObject;
 			moveOnPathComponent.InputPath = path;
 			moveOnPathComponent.speed = speed.Value;
 			moveOnPathComponent.finishDistance = finishDistance.Value;
 			moveOnPathComponent.nextWaypointDistance = nextWaypointDistance.Value;
 			moveOnPathComponent.failureTolerance = failureTolerance.Value;
 			moveOnPathComponent.ignoreY = ignoreY.Value;
-			//moo.offset = offset.Value;
 			moveOnPathComponent.LogEvents = LogEvents.Value;
 			moveOnPathComponent.currentWaypoint = currentWaypoint;
 			moveOnPathComponent.costDependendSpeed = costDependendSpeed.Value;
-			
 		}
 		
 		public void Move() 
 		{
 			Debug.Log("Move");	
+
 			// previous path is not cleared on reload. That's why it's finishing and why there's no error !!!!!!
 			if(controllerType == ControllerType.rvoController || (controllerType == ControllerType.available && controller2 != null))
 			{
@@ -413,9 +400,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			if(controllerType == ControllerType.characterController || (controllerType == ControllerType.available && controller != null))
 			{
 				if (controller != null) 
-				{
-					controller.SimpleMove(direction);
-				}
+				{ controller.SimpleMove(direction); }
 				else
 				{
 					if(LogEvents.Value)
@@ -423,6 +408,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 					Fsm.Event(failedEvent); Finish(); return;
 				}
 			}
+
 			if(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity)
 			{
 				if (controllerType == ControllerType.rigidbody && rigidbody != null) 
@@ -448,21 +434,16 @@ namespace HutongGames.PlayMaker.Pathfinding
 			}
 			
 			if(controllerType == ControllerType.transform || (controllerType == ControllerType.available && controller2 == null && controller == null && rigidbody == null))
-			{
-				go.transform.position += direction * Time.deltaTime;
-			}
-			
+			{ targetGameObject.transform.position += direction * Time.deltaTime; }
 		}
 		
 	 	public override void OnUpdate()
-	 	{	
-			
+	 	{
 			if(updatePath && moveMode == MoveMode.followPath)
 			{ path = FsmConverter.GetPath(inputPath); }
 
-			if (path == null || path.vectorPath.Count == 0){ // only continue if path is valid
-				return;
-			}
+			if (path == null || path.vectorPath.Count == 0)
+            { return; }
 			
 			if(!pathLoading && ((moveMode == MoveMode.follow || moveMode == MoveMode.followTo || moveMode == MoveMode.fleeContinuously) && frame >= Math.Max(1,updateInterval.Value)) )
 			{
@@ -486,84 +467,81 @@ namespace HutongGames.PlayMaker.Pathfinding
 
 			if (currentWaypoint >= (path.vectorPath).Count) 
 			{ currentWaypoint = path.vectorPath.Count-1; }
-			
-			if ((finishDistanceMode == FinishDistance.absolute && (
-				(target.Value != null && (target.Value.transform.position - go.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) 
-				|| (ignoreY.Value && target.Value != null && (new Vector3(target.Value.transform.position.x,go.transform.position.y,target.Value.transform.position.z) - go.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) 
-				|| (target.Value == null && Vector3.Distance(go.transform.position,targetPosition.Value) <= finishDistance.Value))
-				) ||
-				(finishDistanceMode == FinishDistance.absoluteEndnode  && (
-				(!ignoreY.Value && Vector3.Distance(go.transform.position,path.vectorPath[path.vectorPath.Count-1])<=finishDistance.Value) 
-				|| (ignoreY.Value && Vector3.Distance(new Vector3(go.transform.position.x,path.vectorPath[path.vectorPath.Count-1].y,go.transform.position.z),path.vectorPath[path.vectorPath.Count-1])<=finishDistance.Value)))
-			   )
+
+	 	    var isCloseEnoughToEndPoint = (finishDistanceMode == FinishDistance.absolute && (
+                (target.Value != null && (target.Value.transform.position - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) ||
+	 	        (ignoreY.Value && target.Value != null && (new Vector3(target.Value.transform.position.x, targetGameObject.transform.position.y, target.Value.transform.position.z)
+                - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) ||
+	 	        (target.Value == null && Vector3.Distance(targetGameObject.transform.position, targetPosition.Value) <= finishDistance.Value)));
+
+	 	    var isCloseEnoughToEndNode = (finishDistanceMode == FinishDistance.absoluteEndnode && ((!ignoreY.Value && Vector3.Distance(targetGameObject.transform.position, path.vectorPath[path.vectorPath.Count - 1]) <= finishDistance.Value) ||
+	 	        (ignoreY.Value && Vector3.Distance(new Vector3(targetGameObject.transform.position.x, path.vectorPath[path.vectorPath.Count - 1].y, targetGameObject.transform.position.z), path.vectorPath[path.vectorPath.Count - 1]) <=
+	 	         finishDistance.Value)));
+
+            if (isCloseEnoughToEndPoint || isCloseEnoughToEndNode)
 			{ 
 				Debug.Log("Finish");
-				if(moveMode != MoveMode.follow && moveMode != MoveMode.shadow && moveMode != MoveMode.fleeContinuously)
-				{
-					if (LogEvents.Value)
-					{	Debug.Log ("End Of path reached."); }
+			    if (moveMode == MoveMode.follow || moveMode == MoveMode.shadow || moveMode == MoveMode.fleeContinuously) 
+                { return; }
+			    
+                if (LogEvents.Value)
+			    { Debug.Log ("End Of path reached."); }
 					
-					if (controller2 != null && controllerType == ControllerType.rvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
-					{	controller2.Move(new Vector3(0,0,0)); }	
+			    if (controller2 != null && controllerType == ControllerType.rvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
+			    { controller2.Move(new Vector3(0,0,0)); }	
 					
-					if(rigidbody != null && (controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity))
-					{ rigidbody.velocity = new Vector3(0,rigidbody.velocity.y,0); }
+			    if(rigidbody != null && (controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity))
+			    { rigidbody.velocity = new Vector3(0,rigidbody.velocity.y,0); }
 	
-					if(endOfPathEvent != null)
-					{ Fsm.Event(endOfPathEvent);} 
+			    if(endOfPathEvent != null)
+			    { Fsm.Event(endOfPathEvent);} 
 					
-					Finish();
-					return;
-				}
-				else 
-				{ return; }
+			    Finish();
+			    return;
 			}
-			else if(finishDistanceMode == FinishDistance.relative  )
-			{
-				var i = currentWaypoint;
-				var leng = 0.0f;
-				while(i<path.vectorPath.Count-1)
-				{
-					leng+= Vector3.Distance(path.vectorPath[currentWaypoint], path.vectorPath[currentWaypoint+1]);
-					if(leng>finishDistance.Value) // if the distance is still too far to finish, break to save performance
-					{ break; }
-				}
-				
-				if(leng<= finishDistance.Value)
-				{
-					if(moveMode != MoveMode.follow && moveMode != MoveMode.shadow && moveMode != MoveMode.fleeContinuously)
-					{
-						if (LogEvents.Value)
-						{	Debug.Log ("End Of path reached."); }
-						if (controller2 != null && controllerType == ControllerType.rvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
-						{	controller2.Move(new Vector3(0,0,0));	}
-						if(rigidbody != null &&(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity))
-						{	rigidbody.velocity = new Vector3(0,rigidbody.velocity.y,0); }
-							
-						Fsm.Event(endOfPathEvent);
-						Finish();
-						return;
-					}
-					else 
-					{ return; }
-				}
-			}
-			
 
-			// Check if we are close enough to the next waypoint.
+	 	    if(finishDistanceMode == FinishDistance.relative )
+	 	    {
+	 	        var i = currentWaypoint;
+	 	        var leng = 0.0f;
+	 	        while(i<path.vectorPath.Count-1)
+	 	        {
+	 	            leng+= Vector3.Distance(path.vectorPath[currentWaypoint], path.vectorPath[currentWaypoint+1]);
+	 	            if(leng>finishDistance.Value) // if the distance is still too far to finish, break to save performance
+	 	            { break; }
+	 	        }
+
+	 	        if (!(leng <= finishDistance.Value)) 
+                { return; }
+
+	 	        if (moveMode == MoveMode.follow || moveMode == MoveMode.shadow || moveMode == MoveMode.fleeContinuously)
+                { return; }
+
+	 	        if (LogEvents.Value)
+	 	        { Debug.Log ("End Of path reached."); }
+	 	        if (controller2 != null && controllerType == ControllerType.rvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
+	 	        { controller2.Move(new Vector3(0,0,0));	}
+	 	        if(rigidbody != null &&(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity))
+	 	        { rigidbody.velocity = new Vector3(0,rigidbody.velocity.y,0); }
+							
+	 	        Fsm.Event(endOfPathEvent);
+	 	        Finish();
+	 	        return;
+	 	    }
+            
+	 	    // Check if we are close enough to the next waypoint.
 			if(ignoreY.Value) 
 			{
-				var distVec = nextPos - go.transform.position ;
-				distVec.y = 0;
-				dist = distVec.magnitude;
+				var distanceVector = nextPos - targetGameObject.transform.position ;
+				distanceVector.y = 0;
+				distance = distanceVector.magnitude;
 			}
 			else
-			{
-				dist = Vector3.Distance(go.transform.position, nextPos);
-			}
-			if ( dist < nextWaypointDistance.Value && !smoothTurns.Value) 
+			{ distance = Vector3.Distance(targetGameObject.transform.position, nextPos); }
+
+			if(distance < nextWaypointDistance.Value && !smoothTurns.Value) 
 			{	
-				if (finishDistanceMode == FinishDistance.last && currentWaypoint >= (path.vectorPath).Count - 1) 
+				if(finishDistanceMode == FinishDistance.last && currentWaypoint >= (path.vectorPath).Count - 1) 
 				{
 					if(moveMode != MoveMode.follow && moveMode != MoveMode.shadow && moveMode != MoveMode.fleeContinuously)
 					{
@@ -581,7 +559,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 						return;
 					}
 				}
-				// Proceed to follow the next waypoint.
+				
 				currentWaypoint++;
 				currentWaypoint = Math.Min(currentWaypoint,path.vectorPath.Count-1);
 			}
@@ -590,16 +568,14 @@ namespace HutongGames.PlayMaker.Pathfinding
 			
 			// Direction to the next waypoint.
 			if(!smoothTurns.Value)
-			{ direction = (nextPos - go.transform.position).normalized; }
-			//test
+			{ direction = (nextPos - targetGameObject.transform.position).normalized; }
 			else 
 			{
-				var turnDistance = 0.0f;
 				var targetPos = prevTarget;
 				if(frame == 1)
 				{
 					if(firstFrame)
-					{	targetPos = go.transform.position; } // keep targetPos on update 
+					{	targetPos = targetGameObject.transform.position; } // keep targetPos on update 
 
 					currentWaypoint = 1;
 					path.vectorPath[0] = targetPos;
@@ -608,9 +584,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 				var deltaPos = 0.0f;
 				
 				if( frame == 1) 
-				{ deltaPos = turnRadius.Value - (targetPos - go.transform.position).magnitude;	}
+				{ deltaPos = turnRadius.Value - (targetPos - targetGameObject.transform.position).magnitude; }
 				else 
-				{ deltaPos = (go.transform.position - prevPosition).magnitude; }
+				{ deltaPos = (targetGameObject.transform.position - prevPosition).magnitude; }
 				
 				
 				if(deltaPos*deltaPos > (path.vectorPath[currentWaypoint+1]-targetPos).sqrMagnitude)
@@ -624,13 +600,12 @@ namespace HutongGames.PlayMaker.Pathfinding
 					}
 				}
 				
-				if ((targetPos-go.transform.position).sqrMagnitude < turnRadius.Value*turnRadius.Value)
+				if ((targetPos-targetGameObject.transform.position).sqrMagnitude < turnRadius.Value*turnRadius.Value)
 				{ targetPos += ((path.vectorPath[currentWaypoint+1]-targetPos).normalized) * deltaPos *1.5f ; }
-				 
-			//	targetObjectHelper.transform.position = targetPos;
-				prevPosition = go.transform.position;
+
+				prevPosition = targetGameObject.transform.position;
 				prevTarget = targetPos;
-				direction = (targetPos - go.transform.position).normalized;
+				direction = (targetPos - targetGameObject.transform.position).normalized;
 			}
 
 			directionOut.Value = direction;
@@ -655,11 +630,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 				for (var i=0;i<path.vectorPath.Count-1;i++) 
 				{ Debug.DrawLine (path.vectorPath[i] ,path.vectorPath[i+1],gizmosColor.Value); }
 			}
-			
-			return;
 		}
 		
-		public void OnExit() 
+		public override void OnExit() 
 		{
 			if (controller2 != null)
 			{ controller2.maxSpeed = 0; }

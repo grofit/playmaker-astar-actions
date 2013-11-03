@@ -41,7 +41,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("Turning radius of the character. ")]
 		public FsmInt turnRadius;
 		
-		
 		[ActionSection("Bools")]
 		[Tooltip("True if the path is currently recycled (i.e in the path pool). ")	]
 		public FsmBool recycled;
@@ -63,8 +62,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmBool everyFrame;
 		
-		private FsmPath goo = new FsmPath();	
-
 		public override void Reset() 
 		{
 			duration = new FsmFloat {UseVariable = true};
@@ -84,39 +81,39 @@ namespace HutongGames.PlayMaker.Pathfinding
  
 		public override void OnEnter() 
 	  	{
-			var moo = InputPath.Value as FsmPath;
+			var fsmPath = InputPath.Value as FsmPath;
 			
-			if(moo.Value == null) 
+			if(fsmPath == null || fsmPath.Value == null) 
 			{
 				Finish(); 
 				return;
 			}
 			
-			DoStuff();
+			SetInfoOnPath();
 			
 			if(!everyFrame.Value)
 			{ Finish(); }			
 		}
 		
-		public void DoStuff(){
-			var doo = FsmConverter.GetPath(InputPath);
+		public void SetInfoOnPath(){
+			var path = FsmConverter.GetPath(InputPath);
 			
-			doo.duration = duration.Value;
-			doo.heuristicScale = heuristicScale.Value;			
-			doo.enabledTags = enabledTags.Value;			
-			doo.radius = radius.Value;
-			doo.pathID = (ushort)pathID.Value;
-			doo.searchedNodes = searchedNodes.Value;
-			doo.searchIterations = searchIterations.Value;
-			doo.speed = speed.Value;
-			doo.turnRadius = turnRadius.Value;
-			doo.recycled = recycled.Value;			
-			nnConstraint.Value = FsmConverter.SetNNConstraint(doo.nnConstraint);
-			nodes.Value = FsmConverter.SetNodes(doo.path);
-			runData.Value = FsmConverter.SetNodeRunData(doo.runData);			
+			path.duration = duration.Value;
+			path.heuristicScale = heuristicScale.Value;			
+			path.enabledTags = enabledTags.Value;			
+			path.radius = radius.Value;
+			path.pathID = (ushort)pathID.Value;
+			path.searchedNodes = searchedNodes.Value;
+			path.searchIterations = searchIterations.Value;
+			path.speed = speed.Value;
+			path.turnRadius = turnRadius.Value;
+			path.recycled = recycled.Value;			
+			nnConstraint.Value = FsmConverter.SetNNConstraint(path.nnConstraint);
+			nodes.Value = FsmConverter.SetNodes(path.path);
+			runData.Value = FsmConverter.SetNodeRunData(path.runData);			
 		}
 	 
 		public override void OnUpdate() 
-	  	{ DoStuff(); }
+	  	{ SetInfoOnPath(); }
    	}
 }

@@ -31,16 +31,16 @@ namespace Assets.AStarPlaymakerActions.FsmPathfinding
       
 		public override void OnEnter() 
 	  	{
-			var mo = node.Value as FsmNode;
-			var fo = node2.Value as FsmNode; 
-			if(mo == null || fo == null || (mo.Value == null) || (fo.Value == null)) 
+			var sourceFsmNode = node.Value as FsmNode;
+			var nodeToCheck = node2.Value as FsmNode; 
+			if(sourceFsmNode == null || nodeToCheck == null || (sourceFsmNode.Value == null) || (nodeToCheck.Value == null)) 
 			{
 				Debug.Log("Input incomplete, node not valid or does not exist. Make sure you assigned it properly.");
 				Finish(); 
 				return;
 			}
 			
-			var a = (node.Value as FsmNode).Value as Node;
+			var a = (node.Value as FsmNode).Value;
 			connected.Value = a.ContainsConnection(FsmConverter.GetAnythingShallow(node2) as Node); 
 			Finish();	
 		} 

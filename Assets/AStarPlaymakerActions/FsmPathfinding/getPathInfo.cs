@@ -135,19 +135,16 @@ namespace HutongGames.PlayMaker.Pathfinding
 			recycled.Value = fsmPath.Value.recycled;
 			
 			//NNConstraints
-			var fsmNnConstraint = new FsmNNConstraint();
-			fsmNnConstraint.Value = fsmPath.Value.nnConstraint;
-			nnConstraint.Value = fsmNnConstraint;
+			var fsmNnConstraint = new FsmNNConstraint { Value = fsmPath.Value.nnConstraint };
+		    nnConstraint.Value = fsmNnConstraint;
 			
 			//Nodes[]
-			var fsmNodes = new FsmNodes();
-			fsmNodes.Value = fsmPath.Value.path;
-			nodes.Value = fsmNodes;
+			var fsmNodes = new FsmNodes { Value = fsmPath.Value.path };
+		    nodes.Value = fsmNodes;
 			
 			//NodeRunData
-			var fsmNodeRunData = new FsmNodeRunData();
-			fsmNodeRunData.Value = fsmPath.Value.runData;
-			runData.Value = fsmNodeRunData;
+			var fsmNodeRunData = new FsmNodeRunData { Value = fsmPath.Value.runData };
+		    runData.Value = fsmNodeRunData;
 		}
 	  
 		public override void OnUpdate() 

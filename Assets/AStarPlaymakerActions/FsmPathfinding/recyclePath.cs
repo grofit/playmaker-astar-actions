@@ -18,8 +18,8 @@ namespace HutongGames.PlayMaker.Pathfinding
 
 		public override void OnEnter() 
 	  	{
-			var go = InputPath.Value as FsmPath;
-			if(go.Value == null) 
+			var fsmPath = InputPath.Value as FsmPath;
+			if(fsmPath.Value == null) 
 			{
 				Finish(); 
 				return;

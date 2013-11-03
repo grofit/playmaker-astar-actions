@@ -29,7 +29,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("How wide should the path be? 0 and 1 go like this ._._._._. (the point being the node, the line being the connection). 2 Would go like this  :=:=:=:=: (with additional connections between the nodes that make up a column :D ) Each node can only have 4 connections at the most. ")	]
 		public FsmInt width {get;set;}
 				
-		
 		[ActionSection ("Output : Nodes...s")]
 		[Tooltip("If you're using a grid graph, this will be what you need.")]
 		[ObjectType(typeof(FsmNodes))]
@@ -44,9 +43,8 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("Gets the closest node to the last child gameObject and connects the newly created node with that already existing node. Needed to connect the new graph to an old one.")]
 		public FsmBool connectEnd;
 		
-		private PointGraph g;
-		private NNConstraint nnc;
-		private FsmPointGraph mo;
+		private PointGraph cachedPointGraph;
+		private NNConstraint nnConstraint;
 	  
 		public override void Reset()
 		{
@@ -55,127 +53,114 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{
-			mo = graph.Value as FsmPointGraph;
-			//Debug.Log(typeof(mo));
-			if ((mo == null) ||(mo.Value == null) || alwaysNew.Value) 
+			var fsmPointGraph = graph.Value as FsmPointGraph;
+			if ((fsmPointGraph == null) ||(fsmPointGraph.Value == null) || alwaysNew.Value) 
 			{
-				AstarPath.active.astarData.AddGraph(mo.Value);
-				g = FsmConverter.GetPointGraph(graph) as PointGraph;
+				AstarPath.active.astarData.AddGraph(fsmPointGraph.Value);
+				cachedPointGraph = FsmConverter.GetPointGraph(graph);
 				Debug.Log ("Creating New Point Graph");
 				
-				graph.Value = FsmConverter.SetPointGraph(g);
+				graph.Value = FsmConverter.SetPointGraph(cachedPointGraph);
 			} // create a PointGraph if the variable does not contain a valid one already.
 			else 
-			{ g = FsmConverter.GetPointGraph(graph) as PointGraph; }
+			{ cachedPointGraph = FsmConverter.GetPointGraph(graph); }
 			
-			DoStuff();
+			GetPointGraphFromChildren();
 			Finish();			
 		}
 		
-		public void DoStuff()
+		public void GetPointGraphFromChildren()
 		{
-		 	var go = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;
-		 	
-		 	g.root = go.transform; // set the root so the scan will turn it into nodes
-		 	g.maxDistance = -1; // no autoconnect
-			g.initialPenalty = (uint)cost.Value;
-			g.name = name.Value;
-		 	AstarPathExtensions.ScanGraph (g); // turn the gameObjects into ndoes.
+		 	var targetGameObject = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;
+		 	cachedPointGraph.root = targetGameObject.transform; // set the root so the scan will turn it into nodes
+		 	cachedPointGraph.maxDistance = -1; // no autoconnect
+			cachedPointGraph.initialPenalty = (uint)cost.Value;
+			cachedPointGraph.name = name.Value;
+		 	AstarPathExtensions.ScanGraph(cachedPointGraph);
 			
 			if(width.Value <= 1)
 			{
-				for (var i =1; i<g.nodes.Length; i++)
+				for (var i =1; i<cachedPointGraph.nodes.Length; i++)
 				{
-					 // connect the node with the previously created node
-					g.nodes[i].AddConnection(g.nodes[i-1], cost.Value);
-					g.nodes[i-1].AddConnection(g.nodes[i], cost.Value);	
+					cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i-1], cost.Value);
+					cachedPointGraph.nodes[i-1].AddConnection(cachedPointGraph.nodes[i], cost.Value);	
 				}
 	
 				if (connectStart.Value || connectEnd.Value)
 				{
 					// You would want to use an NNConstraint to ignore this graph when searching (graphMask)
 					// Since it currently will find g.nodes[0] when searching
-					nnc = NNConstraint.Default;
-					var nncSave = nnc.graphMask;
-					var index = AstarPath.active.astarData.GetGraphIndex(g);
-					nnc.graphMask = ~(1 << index);			
+					nnConstraint = NNConstraint.Default;
+					var nncSave = nnConstraint.graphMask;
+					var index = AstarPath.active.astarData.GetGraphIndex(cachedPointGraph);
+					nnConstraint.graphMask = ~(1 << index);			
 
-					if (connectStart.Value) {connectEm(0);}	
-					if (connectEnd.Value) {connectEm(g.nodes.Length - 1);}
-					nnc.graphMask = nncSave;
+					if (connectStart.Value) {ConnectNodes(0);}	
+					if (connectEnd.Value) {ConnectNodes(cachedPointGraph.nodes.Length - 1);}
+					nnConstraint.graphMask = nncSave;
 				}
 			}
 			else
 			{
-				for (var i =0; i<g.nodes.Length; i++)
+				for (var i =0; i<cachedPointGraph.nodes.Length; i++)
 				{
-					 // connect the node with the previously created node
-					//g.nodes[i].AddConnection(g.nodes[i-1], cost.Value);
-					//g.nodes[i-1].AddConnection(g.nodes[i], cost.Value);
-					//if(i + width.Value <= g.nodes.Length)
-					//{
-						 //connect the node with the next node in line
-						//g.nodes[i-1].AddConnection(g.nodes[i-1+width.Value], cost.Value);
-						//g.nodes[i-1+width.Value].AddConnection(g.nodes[i-1], cost.Value);
-					//}
-					
 					// there are 3 scenarios: Either a node is in the middle or at either of the ends of the row.
 					if(i % width.Value == width.Value - 1 ) //2
 					{
-						if(i+width.Value <g.nodes.Length)
+						if(i+width.Value <cachedPointGraph.nodes.Length)
 						{
-							g.nodes[i].AddConnection(g.nodes[i+width.Value], cost.Value);
-							g.nodes[i+width.Value].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+width.Value], cost.Value);
+							cachedPointGraph.nodes[i+width.Value].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}
 							
-						if(i+width.Value -1 <g.nodes.Length) 
+						if(i+width.Value -1 <cachedPointGraph.nodes.Length) 
 						{
-							g.nodes[i].AddConnection(g.nodes[i+width.Value-1], cost.Value);
-							g.nodes[i + width.Value-1].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+width.Value-1], cost.Value);
+							cachedPointGraph.nodes[i + width.Value-1].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}						
 					}
 					else if(i ==0 ||  0 == i%width.Value)//1 // if i is 0 or a multiple of width
 					{
-						if(i+width.Value <g.nodes.Length)
+						if(i+width.Value <cachedPointGraph.nodes.Length)
 						{
-							g.nodes[i].AddConnection(g.nodes[i+width.Value], cost.Value);
-							g.nodes[i+width.Value].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+width.Value], cost.Value);
+							cachedPointGraph.nodes[i+width.Value].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}
-						if(i+1 <g.nodes.Length)
+						if(i+1 <cachedPointGraph.nodes.Length)
 						{
-							g.nodes[i].AddConnection(g.nodes[i+1], cost.Value);
-							g.nodes[i + 1].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+1], cost.Value);
+							cachedPointGraph.nodes[i + 1].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}
-						if(i+width.Value+1 <g.nodes.Length)
+						if(i+width.Value+1 <cachedPointGraph.nodes.Length)
 						{
-							g.nodes[i].AddConnection(g.nodes[i+width.Value+1], cost.Value);
-							g.nodes[i + width.Value + 1].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+width.Value+1], cost.Value);
+							cachedPointGraph.nodes[i + width.Value + 1].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}
 					}
 					else //3
 					{
-						if(i + width.Value <g.nodes.Length)
+						if(i + width.Value <cachedPointGraph.nodes.Length)
 						{
-							g.nodes[i].AddConnection(g.nodes[i+width.Value], cost.Value);
-							g.nodes[i+width.Value].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+width.Value], cost.Value);
+							cachedPointGraph.nodes[i+width.Value].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}
 						
-						if(i+1 <g.nodes.Length)
+						if(i+1 <cachedPointGraph.nodes.Length)
 						{
-							g.nodes[i].AddConnection(g.nodes[i+1], cost.Value);
-							g.nodes[i + 1].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+1], cost.Value);
+							cachedPointGraph.nodes[i + 1].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 							}
 						
-						if(i+width.Value+1 <g.nodes.Length)
+						if(i+width.Value+1 <cachedPointGraph.nodes.Length)
 						{
-							g.nodes[i].AddConnection(g.nodes[i+width.Value+1], cost.Value);
-							g.nodes[i + width.Value + 1].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+width.Value+1], cost.Value);
+							cachedPointGraph.nodes[i + width.Value + 1].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}
 						
-						if(i+width.Value -1 <g.nodes.Length) 
+						if(i+width.Value -1 <cachedPointGraph.nodes.Length) 
 						{
-							g.nodes[i].AddConnection(g.nodes[i+width.Value-1], cost.Value);
-							g.nodes[i + width.Value - 1].AddConnection(g.nodes[i], cost.Value);
+							cachedPointGraph.nodes[i].AddConnection(cachedPointGraph.nodes[i+width.Value-1], cost.Value);
+							cachedPointGraph.nodes[i + width.Value - 1].AddConnection(cachedPointGraph.nodes[i], cost.Value);
 						}
 					}					
 				}
@@ -184,36 +169,32 @@ namespace HutongGames.PlayMaker.Pathfinding
 				{
 					// You would want to use an NNConstraint to ignore this graph when searching (graphMask)
 					// Since it currently will find g.nodes[0] when searching
-					nnc = NNConstraint.Default;
-					var nncSave = nnc.graphMask;
-					var index = AstarPath.active.astarData.GetGraphIndex(g);
-					nnc.graphMask = ~(1 << index);			
+					nnConstraint = NNConstraint.Default;
+					var nncSave = nnConstraint.graphMask;
+					var index = AstarPath.active.astarData.GetGraphIndex(cachedPointGraph);
+					nnConstraint.graphMask = ~(1 << index);			
 
-					if (connectStart.Value) {connectEm(0);}					
-					if (connectEnd.Value) {connectEm(g.nodes.Length - width.Value);}	
+					if (connectStart.Value) {ConnectNodes(0);}					
+					if (connectEnd.Value) {ConnectNodes(cachedPointGraph.nodes.Length - width.Value);}	
 
-					nnc.graphMask = nncSave;
+					nnConstraint.graphMask = nncSave;
 				}			
 			}
 			
-			Nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(g.nodes));
-
-			//Required since the graph connections have been updated
-			AstarPath.active.FloodFill ();
-			
-			//g.AddChildren(Count, go.transform);
-			return;
+			Nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(cachedPointGraph.nodes));
+            AstarPath.active.FloodFill();
 		}
 		
-		public void connectEm(int Count) 
+		public void ConnectNodes(int Count) 
 		{
 			for(var i = 0; i< width.Value || i == 0; i++)
 			{
-				var pos = g.nodes[Count + i].position;
-				var nodeinf = AstarPath.active.GetNearest(new Vector3 (pos.x,pos.y,pos.z)*Int3.PrecisionFactor, nnc);
-				if (nodeinf.node != null) {
-					nodeinf.node.AddConnection(g.nodes[Count + i], cost.Value);
-					g.nodes[Count + i].AddConnection(nodeinf.node, cost.Value);
+				var pos = cachedPointGraph.nodes[Count + i].position;
+				var nnInfoNode = AstarPath.active.GetNearest(new Vector3 (pos.x,pos.y,pos.z)*Int3.PrecisionFactor, nnConstraint);
+				if (nnInfoNode.node != null) 
+                {
+					nnInfoNode.node.AddConnection(cachedPointGraph.nodes[Count + i], cost.Value);
+					cachedPointGraph.nodes[Count + i].AddConnection(nnInfoNode.node, cost.Value);
 				}
 			}
 		}	  

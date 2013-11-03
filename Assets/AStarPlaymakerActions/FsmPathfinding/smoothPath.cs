@@ -15,28 +15,26 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[ObjectType(typeof(FsmPath))]
 		[Tooltip("Alternatively use a path directly. Overwrites everything else as a path, if set.")]
 		public FsmObject InputPath;
-		
-		private FsmPath goo;
       
 		public override void OnUpdate()
 	  	{	
-			goo = InputPath.Value as FsmPath;
-			if(goo.Value == null) 
+			var fsmPath = InputPath.Value as FsmPath;
+			if(fsmPath == null || fsmPath.Value == null) 
 			{
 				Finish();
 				return;
 			}
 			
 			if(FsmConverter.GetPath(InputPath).vectorPath.Count == 0) 
-			{ return; } // wait until path's ready
+			{ return; }
 			
 			var go = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;
-			goo = InputPath.Value as FsmPath;
+			fsmPath = InputPath.Value as FsmPath;
 
 			var moo = (SimpleSmoothModifier)go.AddComponent(typeof(SimpleSmoothModifier));
-			goo.Value.vectorPath = moo.SmoothSimple (goo.Value.vectorPath);
+			fsmPath.Value.vectorPath = moo.SmoothSimple (fsmPath.Value.vectorPath);
 			
-			GameObject.Destroy(moo);
+			Object.Destroy(moo);
 			Finish();	
 		}	  
    	}

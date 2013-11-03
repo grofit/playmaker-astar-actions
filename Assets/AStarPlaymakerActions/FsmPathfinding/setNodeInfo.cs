@@ -1,3 +1,4 @@
+using System;
 using FsmPathfinding;
 using Pathfinding;
 
@@ -38,14 +39,14 @@ namespace HutongGames.PlayMaker.Pathfinding
       
 		public override void OnEnter() 
 	  	{
-			var moo = node.Value as FsmNode;
-			if(moo.Value == null) 
+			var fsmNode = node.Value as FsmNode;
+            if (fsmNode == null || fsmNode.Value == null) 
 			{
 				Finish(); 
 				return;
 			}
 			
-			mohogony();
+			SetInfoOnNode();
 			
 			if(!everyFrame.Value)
 			{ Finish(); }
@@ -53,28 +54,30 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  
 		public override void OnUpdate()
 		{
-			mohogony();
+			SetInfoOnNode();
 		}
 	  
-		public void mohogony()
+		public void SetInfoOnNode()
 		{
-			var doo = node.Value as FsmNode;
+			var fsmNode = node.Value as FsmNode;
+            if(fsmNode == null)
+            { throw new NullReferenceException("The node is null"); }
 			
 			if (!penalty.IsNone)
-			{ doo.Value.penalty = (uint)penalty.Value; }
+			{ fsmNode.Value.penalty = (uint)penalty.Value; }
 			
 			if (!tags.IsNone)
-			{ doo.Value.tags = tags.Value; }
+			{ fsmNode.Value.tags = tags.Value; }
 			
 			if (!walkable.IsNone) 
 			{
-				doo.Value.walkable = walkable.Value;
-				doo.Value.UpdateNeighbourConnections ();
-				doo.Value.UpdateConnections ();
+				fsmNode.Value.walkable = walkable.Value;
+				fsmNode.Value.UpdateNeighbourConnections ();
+				fsmNode.Value.UpdateConnections ();
 			}
 			
 			if (!position.IsNone)
-			{ doo.Value.position = new Int3((int)position.Value.x, (int)position.Value.y, (int)position.Value.z); }	  
+			{ fsmNode.Value.position = new Int3((int)position.Value.x, (int)position.Value.y, (int)position.Value.z); }	  
 		}
    	}
 }

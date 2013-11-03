@@ -72,8 +72,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmBool everyFrame;
 		
-		private NavGraph g ;
-     	  
 		public override void Reset()
 		{
 			graph = null;
@@ -99,87 +97,87 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{			
-			DoStuff();
+			GetInfoOnGraph();
 			
 			if (!everyFrame.Value)
 			Finish();			
 		}
 	  
-		public void DoStuff(){
-
-			var go = graph.Value as FsmNavGraph;
-			if(go.Value == null) 
+		public void GetInfoOnGraph()
+        {
+            var fsmNavGraph = graph.Value as FsmNavGraph;
+			if(fsmNavGraph.Value == null) 
 			{
 				Finish(); 
 				return;
 			}
 					
-			g = FsmConverter.GetNavGraph(graph);
+			var navGraph = FsmConverter.GetNavGraph(graph);
 			
 			if (!drawGizmos.IsNone)
-			{ g.drawGizmos = drawGizmos.Value; }
+			{ navGraph.drawGizmos = drawGizmos.Value; }
 			
 			if (!infoScreenOpen.IsNone)
-			{ g.infoScreenOpen = infoScreenOpen.Value; }
+			{ navGraph.infoScreenOpen = infoScreenOpen.Value; }
 			
 			if (!initialPenalty.IsNone)
-			{ g.initialPenalty = (uint)initialPenalty.Value; }
+			{ navGraph.initialPenalty = (uint)initialPenalty.Value; }
 			
 			if (!name.IsNone)
-			{ g.name = name.Value; }
+			{ navGraph.name = name.Value; }
 			
 			if (!nodes.IsNone)
-			{ g.nodes = FsmConverter.NodeArrayFromList((nodes.Value as FsmNodes).Value); }
+			{ navGraph.nodes = FsmConverter.NodeArrayFromList((nodes.Value as FsmNodes).Value); }
 			
 			if (!open.IsNone)
-			{ g.open = open.Value; }
+			{ navGraph.open = open.Value; }
 			
-			if(graphType == GraphType.pointGraph && g as PointGraph != null)
+			if(graphType == GraphType.pointGraph && navGraph as PointGraph != null)
 			{
 				if (!autoLinkNodes.IsNone)
-				{ (g as PointGraph).autoLinkNodes = autoLinkNodes.Value; }
+				{ (navGraph as PointGraph).autoLinkNodes = autoLinkNodes.Value; }
 				
 				if (!limits.IsNone)
-				{ (g as PointGraph).limits = limits.Value ; }
+				{ (navGraph as PointGraph).limits = limits.Value ; }
 				
 				if (!mask.IsNone)
-				{ (g as PointGraph).mask = mask.Value ; }
+				{ (navGraph as PointGraph).mask = mask.Value ; }
 				
 				if (!maxDistance.IsNone)
-				{ (g as PointGraph).maxDistance = maxDistance.Value; }
+				{ (navGraph as PointGraph).maxDistance = maxDistance.Value; }
 				
 				if (!raycast.IsNone)
-				{ (g as PointGraph).raycast = raycast.Value; }
+				{ (navGraph as PointGraph).raycast = raycast.Value; }
 				
 				if (!recursive.IsNone)
-				{ (g as PointGraph).recursive  = recursive.Value; }
+				{ (navGraph as PointGraph).recursive  = recursive.Value; }
 				
 				if (!searchTag.IsNone)
-				{ (g as PointGraph).searchTag = searchTag.Value; }
+				{ (navGraph as PointGraph).searchTag = searchTag.Value; }
 				
 				if (!thickRaycast.IsNone)
-				{ (g as PointGraph).thickRaycast = thickRaycast.Value; }
+				{ (navGraph as PointGraph).thickRaycast = thickRaycast.Value; }
 				
 				if (!thickRaycastRadius.IsNone)
-				{ (g as PointGraph).thickRaycastRadius = thickRaycastRadius.Value ; }
+				{ (navGraph as PointGraph).thickRaycastRadius = thickRaycastRadius.Value ; }
 			}
 			
-			if(graphType == GraphType.gridGraph && g as GridGraph != null)
+			if(graphType == GraphType.gridGraph && navGraph as GridGraph != null)
 			{
 				if (!getNearestForceOverlap.IsNone)
-				{ (g as GridGraph).getNearestForceOverlap = getNearestForceOverlap.Value ;}
+				{ (navGraph as GridGraph).getNearestForceOverlap = getNearestForceOverlap.Value ;}
 				
 				if (!scans.IsNone)
-				{ (g as GridGraph).scans = scans.Value; }
+				{ (navGraph as GridGraph).scans = scans.Value; }
 				
 				if (!size.IsNone)
-				{ (g as GridGraph).size = size.Value; }
+				{ (navGraph as GridGraph).size = size.Value; }
 			}
 		}
 		
 		public override void OnUpdate()
 		{
-			DoStuff();
+			GetInfoOnGraph();
 		}	  
    	}
 }

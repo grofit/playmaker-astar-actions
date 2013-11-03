@@ -48,13 +48,13 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{			
-			DoStuff();
+			SetInfoOnPath();
 			
 			if(!everyFrame.Value)
-			{Finish();}
+			{ Finish(); }
 		}
 		
-		public void DoStuff()
+		public void SetInfoOnPath()
 		{
 			if (!astarPath.IsNone && astarPath.Value != null)
 			{ astarp = FsmConverter.GetAstarPath(astarPath); }
@@ -76,7 +76,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  
 		public override void OnUpdate() 
 	  	{
-			DoStuff();
+			SetInfoOnPath();
 		}
    	}
 }
