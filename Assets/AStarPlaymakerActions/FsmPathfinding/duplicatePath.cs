@@ -1,3 +1,4 @@
+using System;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
@@ -27,33 +28,34 @@ namespace HutongGames.PlayMaker.Pathfinding
       
 		public override void OnEnter() 
 	  	{
-			var mo = InputPath.Value as FsmPath;
-			if( (mo == null) || (mo.Value == null) || !OutputPath.UseVariable) 
+			var inputFsmPath = InputPath.Value as FsmPath;
+			if( (inputFsmPath == null) || (inputFsmPath.Value == null) || !OutputPath.UseVariable) 
 			{
 				Debug.Log("Input Incomplete"); 
 				Finish(); 
 				return;
-			} // also abort the action if there is no variable to save to.					
+			}				
 			
-			var a = (InputPath.Value as FsmPath).Value as ABPath;			
-			var b = PathPool<ABPath>.GetPath(); // I can't instantiate so there's nothing but the manual way left
-			
-			b.duration = a.duration;
-			b.heuristicScale = a.heuristicScale;
-			b.enabledTags = a.enabledTags;
-			b.radius = a.radius;
-			b.searchedNodes = a.searchedNodes;
-			b.searchIterations = a.searchIterations;
-			b.speed = a.speed;
-			b.turnRadius = a.turnRadius;
-			b.recycled = a.recycled;
-			b.nnConstraint = a.nnConstraint;
-			b.path = a.path;
-			b.vectorPath = a.vectorPath;
-			
-			OutputPath.Value = FsmConverter.SetPath(b);
+			var underlyingABPath = (InputPath.Value as FsmPath).Value as ABPath;	
+		    if(underlyingABPath == null)
+            { throw new NullReferenceException("There is no underlying path in the input path"); }
+
+			var newAbPath = PathPool<ABPath>.GetPath();
+            newAbPath.duration = underlyingABPath.duration;
+            newAbPath.heuristicScale = underlyingABPath.heuristicScale;
+            newAbPath.enabledTags = underlyingABPath.enabledTags;
+            newAbPath.radius = underlyingABPath.radius;
+            newAbPath.searchedNodes = underlyingABPath.searchedNodes;
+            newAbPath.searchIterations = underlyingABPath.searchIterations;
+            newAbPath.speed = underlyingABPath.speed;
+            newAbPath.turnRadius = underlyingABPath.turnRadius;
+            newAbPath.recycled = underlyingABPath.recycled;
+            newAbPath.nnConstraint = underlyingABPath.nnConstraint;
+            newAbPath.path = underlyingABPath.path;
+            newAbPath.vectorPath = underlyingABPath.vectorPath;
+
+            OutputPath.Value = FsmConverter.SetPath(newAbPath);
 			Finish();	
 		}
-
    	}
 }

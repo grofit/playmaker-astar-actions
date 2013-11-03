@@ -1,3 +1,4 @@
+using System;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
@@ -36,27 +37,27 @@ namespace HutongGames.PlayMaker.Pathfinding
 				return;
 			}
 			
-			mohogony();
+			SetTheNearestNode();
 			
-			var coo = node.Value as FsmNode;
-			var foo = (coo as FsmNode).Value;
-			
-			Debug.Log(foo.area);
+			var fsmNode = node.Value as FsmNode;
+            if(fsmNode == null)
+            { throw new NullReferenceException("The node contains no data"); }
+
+			var underlyingNodeValue = fsmNode.Value;
+			Debug.Log(underlyingNodeValue.area);
 			
 			if (!everyFrame.Value)
 			{ Finish(); }			
 		}
 		
-		public void mohogony() 
+		public void SetTheNearestNode() 
 		{
-			node.Value = FsmConverter.SetNode(AstarPath.active.GetNearest(Position.Value).node as Node);
-			return;
+			node.Value = FsmConverter.SetNode(AstarPath.active.GetNearest(Position.Value).node);
 		}
 		
 		public override void OnUpdate()
 		{
-			mohogony();
+			SetTheNearestNode();
 		}
-	  
    	}
 }

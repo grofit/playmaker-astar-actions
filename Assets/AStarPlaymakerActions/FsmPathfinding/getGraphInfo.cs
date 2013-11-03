@@ -1,3 +1,4 @@
+using System;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using HutongGames.PlayMaker.Pathfinding.Enums;
@@ -88,8 +89,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmBool everyFrame;
 		
-		private NavGraph g;
-		
 		public override void Reset()
 		{
 			graph = null;
@@ -98,55 +97,56 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{
-			DoStuff();
+			GetInfoFromGraph();
 			
 			if (!everyFrame.Value)
 			Finish();			
 		}
 	  
-		public void DoStuff()
+		public void GetInfoFromGraph()
 		{
-			var go = graph.Value as FsmNavGraph;
-			if(go.Value == null) 
+			var underlyingFsmNavGraph = graph.Value as FsmNavGraph;
+            if(underlyingFsmNavGraph == null)
+            { throw new NullReferenceException("Graph does not contain any underlying graph data"); }
+
+			if(underlyingFsmNavGraph.Value == null) 
 			{
 				Finish(); 
 				return;
 			}			
 			
-			g = FsmConverter.GetNavGraph(graph);
+			var currentNavGraph = FsmConverter.GetNavGraph(graph);
+			guid.Value = currentNavGraph.guid.ToString();
+			drawGizmos.Value = currentNavGraph.drawGizmos;
+			infoScreenOpen.Value = currentNavGraph.infoScreenOpen;
+			initialPenalty.Value = (int)currentNavGraph.initialPenalty;
+			name.Value = currentNavGraph.name;
+			nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(currentNavGraph.nodes));
+			open.Value = currentNavGraph.open;
 			
-			guid.Value = g.guid.ToString();
-			drawGizmos.Value = g.drawGizmos;
-			infoScreenOpen.Value = g.infoScreenOpen;
-			initialPenalty.Value = (int)g.initialPenalty;
-			name.Value = g.name;
-
-			nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(g.nodes)) as FsmNodes;  // everywhere else it's saved as a generic list, only here it is an array, so it needs extra conversion
-			open.Value = g.open;
-			
-			if(graphType == GraphType.pointGraph && g as PointGraph != null)
+			if(graphType == GraphType.pointGraph && currentNavGraph as PointGraph != null)
 			{
-				autoLinkNodes.Value = (g as PointGraph).autoLinkNodes ;
-				limits.Value = (g as PointGraph).limits ;
-				mask.Value =  (g as PointGraph).mask ;
-				maxDistance.Value = (g as PointGraph).maxDistance ;
-				raycast.Value = (g as PointGraph).raycast ;
-				recursive.Value = (g as PointGraph).recursive ;
-				root.Value = (g as PointGraph).root.gameObject ;
-				searchTag.Value = (g as PointGraph).searchTag ;
-				thickRaycast.Value = (g as PointGraph).thickRaycast ;
-				thickRaycastRadius.Value = (g as PointGraph).thickRaycastRadius ;
+				autoLinkNodes.Value = (currentNavGraph as PointGraph).autoLinkNodes ;
+				limits.Value = (currentNavGraph as PointGraph).limits ;
+				mask.Value =  (currentNavGraph as PointGraph).mask ;
+				maxDistance.Value = (currentNavGraph as PointGraph).maxDistance ;
+				raycast.Value = (currentNavGraph as PointGraph).raycast ;
+				recursive.Value = (currentNavGraph as PointGraph).recursive ;
+				root.Value = (currentNavGraph as PointGraph).root.gameObject ;
+				searchTag.Value = (currentNavGraph as PointGraph).searchTag ;
+				thickRaycast.Value = (currentNavGraph as PointGraph).thickRaycast ;
+				thickRaycastRadius.Value = (currentNavGraph as PointGraph).thickRaycastRadius ;
 			}
 			
-			if(graphType == GraphType.gridGraph && g as GridGraph != null)
+			if(graphType == GraphType.gridGraph && currentNavGraph as GridGraph != null)
 			{
-				getNearestForceOverlap.Value = (g as GridGraph).getNearestForceOverlap ;
-				scans.Value = (g as GridGraph).scans ;
-				size.Value = (g as GridGraph).size;
+				getNearestForceOverlap.Value = (currentNavGraph as GridGraph).getNearestForceOverlap ;
+				scans.Value = (currentNavGraph as GridGraph).scans ;
+				size.Value = (currentNavGraph as GridGraph).size;
 			}
 		}
 		
 		public override void OnUpdate()
-		{ DoStuff(); }	  
+		{ GetInfoFromGraph(); }	  
    	}
 }

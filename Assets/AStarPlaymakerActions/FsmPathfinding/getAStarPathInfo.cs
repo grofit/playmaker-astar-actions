@@ -42,8 +42,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		[Tooltip ("	Number of parallel pathfinders. ")]		
 		public FsmInt NumParallelThreads;
-
-		
+        
 		[ActionSection("Strings")]
 		[Tooltip ("The version number for the A* Pathfinding Project. ")]		
 		public FsmString Version;	
@@ -60,7 +59,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public FsmObject activeAstarPath;
 		
 		public FsmBool everyFrame;		
-		private AstarPath astarp;
 		
 		public override void Reset()
 		{
@@ -79,36 +77,36 @@ namespace HutongGames.PlayMaker.Pathfinding
 			activeAstarPath = null;
 		}
 		
-		
 		public override void OnEnter() 
 	  	{
-			DoStuff();
+			GetInfoFromPath();
 			
 			if(!everyFrame.Value)
-			{Finish();}
+			{ Finish(); }
 		} 
 
-		public void DoStuff()
+		public void GetInfoFromPath()
 		{
+            AstarPath currentAstarPath;
 			if (!astarPath.IsNone && astarPath.Value != null)
-			{ astarp = FsmConverter.GetAstarPath(astarPath); }
+            { currentAstarPath = FsmConverter.GetAstarPath(astarPath); }
 			else
-			{ astarp = AstarPath.active; }
+            { currentAstarPath = AstarPath.active; }
 			
 			if(!isScanning.IsNone)
-			{ isScanning.Value = astarp.isScanning;	}		
+            { isScanning.Value = currentAstarPath.isScanning; }		
 			
 			if(!showGraphs.IsNone)
-			{ showGraphs.Value = astarp.showGraphs;	}
+            { showGraphs.Value = currentAstarPath.showGraphs; }
 			
 			if(!IsUsingMultithreading.IsNone)
 			{ IsUsingMultithreading.Value = AstarPath.IsUsingMultithreading; }	
 			
 			if(!IsAnyGraphUpdatesQueued.IsNone)
-			{ IsAnyGraphUpdatesQueued.Value = astarp.IsAnyGraphUpdatesQueued; }			
+            { IsAnyGraphUpdatesQueued.Value = currentAstarPath.IsAnyGraphUpdatesQueued; }			
 
 			if(!lastUniqueAreaIndex.IsNone)
-			{ lastUniqueAreaIndex.Value = astarp.lastUniqueAreaIndex; }	
+            { lastUniqueAreaIndex.Value = currentAstarPath.lastUniqueAreaIndex; }	
 			
 			if(!ActiveThreadsCount.IsNone)
 			{ ActiveThreadsCount.Value = AstarPath.ActiveThreadsCount; }	
@@ -120,20 +118,18 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ Version.Value = AstarPath.Version.ToString(); }
 			
 			if(!graphs.IsNone)
-			{ graphs.Value = FsmConverter.SetNavGraphs(astarp.graphs); }
+            { graphs.Value = FsmConverter.SetNavGraphs(currentAstarPath.graphs); }
 			
 			if(!activeAstarPath.IsNone)
 			{ activeAstarPath.Value = FsmConverter.SetAstarPath(AstarPath.active);	}	
 			
 			if (!astarData.IsNone)
-			{ astarData.Value = FsmConverter.SetNavGraphs(astarp.graphs); }			
-			return;
+            { astarData.Value = FsmConverter.SetNavGraphs(currentAstarPath.graphs); }			
 		}
 	  
 		public override void OnUpdate() 
 	  	{
-			DoStuff();
+			GetInfoFromPath();
 		}
    	}
-	
 }

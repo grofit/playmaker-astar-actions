@@ -1,3 +1,4 @@
+using System;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 
@@ -31,17 +32,23 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  
 		public override void OnEnter() 
 	  	{
-			var go = graphs.Value as FsmNavGraphs;
-			if((go.Value == null) || !graph.UseVariable) {Finish(); return;} // it would continue for a frame without return
+			var underlyingFsmNavGraphs = graphs.Value as FsmNavGraphs;
+            if(underlyingFsmNavGraphs == null)
+            { throw new NullReferenceException("The graphs contains no underlying data"); }
+
+		    if ((underlyingFsmNavGraphs.Value == null) || !graph.UseVariable)
+		    {
+		        Finish(); 
+                return;
+		    }
 						
-			var goo = FsmConverter.GetNavGraphs(graphs);
-			var coo = new FsmNavGraph();
-			
-			if(index.Value>=goo.Length) //check if the index exists
-			{ Finish(); }
-			
-			coo.Value = goo[index.Value];
-			graph.Value = coo;
+			var navGraphArray = FsmConverter.GetNavGraphs(graphs);
+            if (index.Value >= navGraphArray.Length)
+            { Finish(); }
+
+			var navGraphContainer = new FsmNavGraph { Value = navGraphArray[index.Value] };
+            graph.Value = navGraphContainer;
+
 			Finish();
 		}
    	}

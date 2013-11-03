@@ -17,7 +17,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("Compare the distance of the items in the list to the position of this gameObject") ]
 		public FsmOwnerDefault DistanceFrom;
 
-
 		[ActionSection("Node") ]
 		[ObjectType(typeof(FsmNode)) ]
 		[Tooltip("closest node ")]	
@@ -26,9 +25,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[ActionSection("Vector3") ]
 		[Tooltip("The actual position ")]	
 		public FsmVector3 position;
-		
-		private FsmPath goo = new FsmPath();	
-		
 		
 		public override void Reset() 
 		{
@@ -40,35 +36,29 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{
-			var go = InputPath.Value as FsmPath;
-			if(go == null || go.Value == null) 
+			var underlyingFsmPath = InputPath.Value as FsmPath;
+			if(underlyingFsmPath == null || underlyingFsmPath.Value == null) 
 			{
 				Debug.Log("Input incomplete");
 				Finish(); 
 				return;
-			} // it would continue for a frame without return
-			
-			var a = 1/0f;
-			var doo = InputPath.Value as FsmPath;
-			var coo = new FsmNode();
-			
-			if (doo.Value == null) 
-			{ return; }			
-			else 
-			{
-				var pathNodes = doo.Value.vectorPath;
-			 	for (var i = 0; i < Enumerable.Count(pathNodes); i++)
-				{
-					var o = (pathNodes[i] - Fsm.GetOwnerDefaultTarget(DistanceFrom).transform.position).sqrMagnitude;
-					if(o < a) 
-					{
-						position.Value = pathNodes[i];
-						coo.Value = doo.Value.path[i];
-						a = o;
-					}
-				}
 			}
-			node.Value = coo;
+			
+			var currentDistance = 1/0f;
+			var closestNode = new FsmNode();
+            var pathNodes = underlyingFsmPath.Value.vectorPath;
+		    for (var i = 0; i < pathNodes.Count(); i++)
+		    {
+		        var o = (pathNodes[i] - Fsm.GetOwnerDefaultTarget(DistanceFrom).transform.position).sqrMagnitude;
+		        if(o < currentDistance) 
+		        {
+		            position.Value = pathNodes[i];
+                    closestNode.Value = underlyingFsmPath.Value.path[i];
+		            currentDistance = o;
+		        }
+		    }
+
+		    node.Value = closestNode;
 			Finish();			
 		}	  
    	}	
