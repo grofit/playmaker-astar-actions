@@ -1,8 +1,5 @@
-using System;
-using HutongGames.PlayMaker;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 using HutongGames.PlayMaker.Helpers;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +8,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("Currently supports both FsmNodes and FsmGridNodes. More to come. Gets a node at a certain index from an array/list of nodes")]
-	public class getNodeFromNodes : HutongGames.PlayMaker.FsmStateAction
+	public class GetNodeFromNodes : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[RequiredField]

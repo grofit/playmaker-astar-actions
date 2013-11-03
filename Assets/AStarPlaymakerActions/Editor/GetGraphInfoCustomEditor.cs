@@ -1,45 +1,46 @@
-using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Actions;
+using HutongGames.PlayMaker.Pathfinding.Enums;
 using HutongGames.PlayMakerEditor;
-using HutongGames.PlayMaker.Pathfinding;
 using UnityEngine;
 
-[CustomActionEditor(typeof(getGraphInfo))]
-public class GetGraphCustomEditor : CustomActionEditor
+namespace HutongGames.PlayMaker.Pathfinding.Editor
 {
-	public override bool OnGUI()
+    [CustomActionEditor(typeof(GetGraphInfo))]
+    public class GetGraphCustomEditor : CustomActionEditor
     {
-	  	var aTarget = target as getGraphInfo;
+        public override bool OnGUI()
+        {
+            var aTarget = target as GetGraphInfo;
 		
-		EditField("graphType");
-		EditField("graph");
-		EditField("guid");
-		EditField("drawGizmos");
-		EditField("infoScreenOpen");
-		EditField("open");
-		EditField("initialPenalty");
-		EditField("name");
-		EditField("nodes");
-		EditField("everyFrame");	
+            EditField("graphType");
+            EditField("graph");
+            EditField("guid");
+            EditField("drawGizmos");
+            EditField("infoScreenOpen");
+            EditField("open");
+            EditField("initialPenalty");
+            EditField("name");
+            EditField("nodes");
+            EditField("everyFrame");	
 		
-		if(aTarget.graphType == GraphType.pointGraph){
-			EditField("root");
-			EditField("autoLinkNodes");
-			EditField("limits");
-			EditField("mask");
-			EditField("maxDistance");
-			EditField("raycast");
-			EditField("recursive");
-			EditField("searchTag");
-			EditField("thickRaycast");
-			EditField("thickRaycastRadius");
-		}
-		if(aTarget.graphType == GraphType.gridGraph){
-			EditField("size");
-			EditField("scans");
-			EditField("getNearestForceOverlap");
+            if(aTarget.graphType == GraphType.pointGraph){
+                EditField("root");
+                EditField("autoLinkNodes");
+                EditField("limits");
+                EditField("mask");
+                EditField("maxDistance");
+                EditField("raycast");
+                EditField("recursive");
+                EditField("searchTag");
+                EditField("thickRaycast");
+                EditField("thickRaycastRadius");
+            }
+            if(aTarget.graphType == GraphType.gridGraph){
+                EditField("size");
+                EditField("scans");
+                EditField("getNearestForceOverlap");
 
-		}					
-		return GUI.changed;
-    }	
+            }					
+            return GUI.changed;
+        }	
+    }
 }

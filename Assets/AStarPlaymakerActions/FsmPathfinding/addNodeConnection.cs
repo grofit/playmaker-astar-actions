@@ -1,15 +1,12 @@
-using System;
-using HutongGames.PlayMaker;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("set node attributes directly")]
-	public class AddNodeConnection : HutongGames.PlayMaker.FsmStateAction
+	public class AddNodeConnection : FsmStateAction
 	{
 		[ActionSection("Any type of node.")]
 		[Tooltip("The node to be changed")]

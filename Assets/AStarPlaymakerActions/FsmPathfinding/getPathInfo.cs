@@ -1,16 +1,11 @@
-using System;
-using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
-using Pathfinding;
-using System.Linq;
 using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("get various properties of the path. Get properties does not work due to the wrappers.")]
-	public class getPathInfo : HutongGames.PlayMaker.FsmStateAction
+	public class GetPathInfo : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[ObjectType(typeof(FsmPath))]

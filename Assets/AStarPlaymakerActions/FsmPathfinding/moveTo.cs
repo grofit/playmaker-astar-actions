@@ -1,53 +1,17 @@
 using System;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Dummies;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
+using HutongGames.PlayMaker.Pathfinding.Enums;
 using Pathfinding;
 using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
-	
-	public enum ControllerType 
-		{
-	characterController,
-	rvoController,
-	rigidbody,
-	rigidbodyVelocity,
-	transform,
-	available,
-	none,
-
-	}
-		
-	public enum FinishDistance 
-		{
-	absoluteEndnode,
-	absolute,
-	relative,
-	last,
-
-	}	
-	
-	public enum MoveMode 
-		{
-	moveTo,
-	followTo,
-	follow,
-	shadowTo,
-	shadow,
-	followPath,
-	flee,
-	fleeContinuously,
-	randomPath,
-	}	
-	
-	[ActionCategory("A Star")]
+    [ActionCategory("A Star")]
 	[Tooltip("move an object from its' current position directly to the target position or gameObject")]
 	public class MoveTo : FsmStateAction
 	{
-	//	public var targetObjectHelper : GameObject;
 		[Tooltip("What kind of movement do you want? Depending on the mode new settings will appear. Move To moves to the position of the target at the time of call. Follow To updates until it reaches the target, then finishes. Follow keeps following indefinitely. And Follow Path uses a path input.")]
 		public MoveMode moveMode;
 		
@@ -369,10 +333,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				return; 
 			}
 		
-			doo = new FsmPath(); // this needs to be an instance even if the actual path is the same.
-			//if(path != null)
-				//path.Release(path);
-
+			doo = new FsmPath();
 			path = path1;
 			
 			currentWaypoint = 1;
@@ -406,23 +367,24 @@ namespace HutongGames.PlayMaker.Pathfinding
 			}
 		}
 		
-		public void Auto() {
-			var moo = go.GetComponent<FsmMoveOnPath>();
+		public void Auto() 
+        {
+			var moveOnPathComponent = go.GetComponent<FsmMoveOnPath>();
 			
-			if(moo == null) 
-			{ moo = go.AddComponent<FsmMoveOnPath>(); }
+			if(moveOnPathComponent == null) 
+			{ moveOnPathComponent = go.AddComponent<FsmMoveOnPath>(); }
 
-			moo.go = go;
-			moo.InputPath = path;
-			moo.speed = speed.Value;
-			moo.finishDistance = finishDistance.Value;
-			moo.nextWaypointDistance = nextWaypointDistance.Value;
-			moo.failureTolerance = failureTolerance.Value;
-			moo.ignoreY = ignoreY.Value;
+			moveOnPathComponent.go = go;
+			moveOnPathComponent.InputPath = path;
+			moveOnPathComponent.speed = speed.Value;
+			moveOnPathComponent.finishDistance = finishDistance.Value;
+			moveOnPathComponent.nextWaypointDistance = nextWaypointDistance.Value;
+			moveOnPathComponent.failureTolerance = failureTolerance.Value;
+			moveOnPathComponent.ignoreY = ignoreY.Value;
 			//moo.offset = offset.Value;
-			moo.LogEvents = LogEvents.Value;
-			moo.currentWaypoint = currentWaypoint;
-			moo.costDependendSpeed = costDependendSpeed.Value;
+			moveOnPathComponent.LogEvents = LogEvents.Value;
+			moveOnPathComponent.currentWaypoint = currentWaypoint;
+			moveOnPathComponent.costDependendSpeed = costDependendSpeed.Value;
 			
 		}
 		

@@ -1,9 +1,6 @@
-using System;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 using AstarPathExtension;
 using UnityEngine;
 
@@ -11,7 +8,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("recursively checks all children of a gameObject and adds their positions to a PointGraph. It then connects every node to surrounding nodes based on the max distance value. It's called complex because it creates a complex graph without any real order, and nodes can have all number of connections.")]
-	public class ComplexPointGraphFromChildren : HutongGames.PlayMaker.FsmStateAction
+	public class ComplexPointGraphFromChildren : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[RequiredField]

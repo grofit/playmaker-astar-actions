@@ -1,23 +1,13 @@
-using System;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
+using HutongGames.PlayMaker.Pathfinding.Enums;
 using Pathfinding;
-using System.Linq;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
-	public enum GraphType
-	{
-		any,
-		pointGraph,
-		gridGraph,
-		all,
-	}
-	
-	[ActionCategory("A Star")]
+    [ActionCategory("A Star")]
 	[Tooltip("Using the Seeker component on a GameObject a path is calculated and then followed.")]
-	public class getGraphInfo : FsmStateAction
+	public class GetGraphInfo : FsmStateAction
 	{		
 		[Tooltip("Choose the right type of graph. Choosing Any works on any graph, but choosing the wrong one will return nothing.")]	
 		public GraphType graphType;

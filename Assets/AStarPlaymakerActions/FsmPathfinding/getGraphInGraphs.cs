@@ -1,15 +1,11 @@
-using System;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
-using Pathfinding;
-using System.Linq;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("Using the Seeker component on a GameObject a path is calculated and then followed.")]
-	public class getGraphInGraphs : HutongGames.PlayMaker.FsmStateAction
+	public class GetGraphInGraphs : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[RequiredField]

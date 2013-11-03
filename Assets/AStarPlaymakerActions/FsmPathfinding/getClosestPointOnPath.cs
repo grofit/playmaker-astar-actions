@@ -1,8 +1,4 @@
-using System;
-using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
-using Pathfinding;
 using System.Linq;
 using UnityEngine;
 
@@ -10,7 +6,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip(" This action returns the closest point to a gameObject on a path. It only regards world distance, not the length of the path needed to go there. So while it is cheap on performance and can get you to any path, it may sometimes take you a longer way than needed.")]
-	public class getClosestNodeOnPath : HutongGames.PlayMaker.FsmStateAction
+	public class GetClosestNodeOnPath : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[ObjectType(typeof(FsmPath))]

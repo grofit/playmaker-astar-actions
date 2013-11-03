@@ -1,16 +1,12 @@
-using System;
-using HutongGames.PlayMaker;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("set node attributes directly")]
-	public class setNodeInfo : FsmStateAction
+	public class SetNodeInfo : FsmStateAction
 	{
-
 		[ActionSection("Input")]
 		[RequiredField]
 		[ObjectType(typeof(FsmNode))]

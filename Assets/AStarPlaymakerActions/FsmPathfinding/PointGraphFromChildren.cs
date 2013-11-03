@@ -1,9 +1,6 @@
-using System;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 using AstarPathExtension;
 using UnityEngine;
 
@@ -11,7 +8,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("recursively checks all children of a gameObject and adds their positions to a PointGraph. This creates a pathlike or gridlike graph, depending on the width. For other irregular types of graphs, check ComplexPointGraphFromChildren. The advantage of this is that you only need to pose 2 empties to define a long path, but you're still able to make it more detailled at certain parts. The complex version will create node connections based on the distance between the empties, so if you set the minimal distance needed for a connection to something very high to accomplish a connection between 2 nodes that are very far from each other, then you won't be able to make a smooth curve right after the second node because instead of connecting the second node to the third, it will connect it to the last or even further off. So that's why there's 2 of these actions ;) ")]
-	public class PointGraphFromChildren : HutongGames.PlayMaker.FsmStateAction
+	public class PointGraphFromChildren : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[RequiredField]

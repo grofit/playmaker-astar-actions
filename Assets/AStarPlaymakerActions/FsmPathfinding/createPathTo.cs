@@ -1,5 +1,3 @@
-using System;
-using HutongGames.PlayMaker;
 using FsmPathfinding;
 using Pathfinding;
 using UnityEngine;
@@ -8,7 +6,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("Using the Seeker component on a GameObject a path is calculated and then followed.")]
-	public class createPathTo : FsmStateAction
+	public class CreatePathTo : FsmStateAction
 	{
 
 		[Tooltip("Uses this as the start Position. Also requires a seeker component to create the path. You can create one before calling this action and remove it right after this action is done if you want / if the gameObject is some generic thing.")]

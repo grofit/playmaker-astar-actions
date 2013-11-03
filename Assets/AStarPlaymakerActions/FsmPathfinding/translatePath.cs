@@ -1,14 +1,11 @@
-using System;
-using HutongGames.PlayMaker;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("Using the Seeker component on a GameObject a path is calculated and then followed.")]
-	public class translatePath : FsmStateAction
+	public class TranslatePath : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[ObjectType(typeof(FsmPath))]
@@ -20,7 +17,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		private Path a;
 		
-		public void Reset()
+		public override void Reset()
 		{
 			InputPath = null;
 			Vector = null;			

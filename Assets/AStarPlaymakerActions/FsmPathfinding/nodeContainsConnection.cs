@@ -1,17 +1,14 @@
-using System;
+using FsmPathfinding;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
-using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
-using AstarPathExtension;
 using UnityEngine;
 
-namespace HutongGames.PlayMaker.Pathfinding
+namespace Assets.AStarPlaymakerActions.FsmPathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("set node attributes directly")]
-	public class nodeContainsConnection : FsmStateAction
+	public class NodeContainsConnection : FsmStateAction
 	{
 
 		[ActionSection("Any type of node.")]

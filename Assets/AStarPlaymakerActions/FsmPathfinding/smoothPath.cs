@@ -1,16 +1,12 @@
-using System;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
-using Pathfinding;
-using System.Linq;
 using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("Use this action to smooth a path. Right now there is no smoothing amount available yet, so avoid this on large node sizes")]
-	public class smoothPath : FsmStateAction
+	public class SmoothPath : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[Tooltip("Really any gameObject does the trick here ^^")]

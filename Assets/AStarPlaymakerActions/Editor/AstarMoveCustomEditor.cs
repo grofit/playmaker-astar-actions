@@ -1,80 +1,89 @@
-using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Actions;
+using System;
+using HutongGames.PlayMaker.Pathfinding.Enums;
 using HutongGames.PlayMakerEditor;
-using HutongGames.PlayMaker.Pathfinding;
 using UnityEngine;
 
-[CustomActionEditor(typeof(MoveTo))]
-public class AstarMoveCustomEditor : CustomActionEditor
-{	
-    public override bool OnGUI()
+namespace HutongGames.PlayMaker.Pathfinding.Editor
+{
+    [CustomActionEditor(typeof(MoveTo))]
+    public class AstarMoveCustomEditor : CustomActionEditor
     {	
-	  	var aTarget = target as MoveTo;
+        public override bool OnGUI()
+        {	
+            var moveToTarget = target as MoveTo;
+            if(moveToTarget == null)
+            { throw new NullReferenceException("The move to target is null"); }
 		
-		EditField("targetObjectHelper");
+            EditField("targetObjectHelper");
 		
-		EditField("moveMode");
-		if(aTarget.moveMode == MoveMode.flee || aTarget.moveMode == MoveMode.fleeContinuously || aTarget.moveMode == MoveMode.randomPath)
-			EditField("length");
-		if(aTarget.moveMode == MoveMode.follow || aTarget.moveMode == MoveMode.followTo || aTarget.moveMode == MoveMode.fleeContinuously)
-			EditField("updateInterval");	
-		if(aTarget.moveMode == MoveMode.shadow || aTarget.moveMode == MoveMode.shadowTo)
-			EditField("shadowUpdateDistance");	
-		
-		EditField("actor");
-		if(aTarget.moveMode == MoveMode.followPath){
-			EditField("inputPath");
-			EditField("updatePath");
-				
-		}
-		if(aTarget.moveMode != MoveMode.followPath && aTarget.moveMode != MoveMode.randomPath)
-		{
-			EditField("target");
-			EditField("targetPosition");
-		}
-		EditField("controllerType");
-		EditField("auto");
-		if(aTarget.moveMode == MoveMode.followPath){
-			EditField("startAtStart");
-			EditField("connectPath");
-		}
-		EditField("ignoreY");
-		EditField("speed");
-		
-		EditField("smoothTurns");
-		if(aTarget.smoothTurns.Value)
-			EditField("turnRadius");
-		EditField("costDependendSpeed");
-		if(!aTarget.smoothTurns.Value)
-			EditField("nextWaypointDistance");
-		
-		EditField("finishDistanceMode");
-		if(aTarget.moveMode != MoveMode.follow && aTarget.moveMode != MoveMode.fleeContinuously)
-			EditField ("endOfPathEvent");
-		EditField("finishDistance");
-		
-		if(!(aTarget.moveMode == MoveMode.flee || aTarget.moveMode == MoveMode.fleeContinuously || aTarget.moveMode == MoveMode.randomPath))
-		EditField("exactFinish");
-		
-		EditField("failedEvent");
-		
-		if(aTarget.moveMode != MoveMode.follow && aTarget.moveMode != MoveMode.fleeContinuously){
-			EditField("failureTolerance");
-		}
+            EditField("moveMode");
+            if(moveToTarget.moveMode == MoveMode.flee || moveToTarget.moveMode == MoveMode.fleeContinuously || moveToTarget.moveMode == MoveMode.randomPath)
+            { EditField("length"); }
 
-		EditField ("directionOut");
-		
-		
-		EditField("OutputPath");
-		EditField("outputSpeed");
-		
-		
-		EditField("LogEvents");
-		EditField ("drawGizmos");
+            if(moveToTarget.moveMode == MoveMode.follow || moveToTarget.moveMode == MoveMode.followTo || moveToTarget.moveMode == MoveMode.fleeContinuously)
+            { EditField("updateInterval"); }
 
-		if(aTarget.drawGizmos)
-			EditField("gizmosColor");	
+            if(moveToTarget.moveMode == MoveMode.shadow || moveToTarget.moveMode == MoveMode.shadowTo)
+            { EditField("shadowUpdateDistance"); }	
 		
-		return GUI.changed;
-    }	
+            EditField("actor");
+            if(moveToTarget.moveMode == MoveMode.followPath)
+            {
+                EditField("inputPath");
+                EditField("updatePath");		
+            }
+
+            if(moveToTarget.moveMode != MoveMode.followPath && moveToTarget.moveMode != MoveMode.randomPath)
+            {
+                EditField("target");
+                EditField("targetPosition");
+            }
+
+            EditField("controllerType");
+            EditField("auto");
+            if(moveToTarget.moveMode == MoveMode.followPath)
+            {
+                EditField("startAtStart");
+                EditField("connectPath");
+            }
+		
+            EditField("ignoreY");
+            EditField("speed");
+		
+            EditField("smoothTurns");
+            if(moveToTarget.smoothTurns.Value)
+            { EditField("turnRadius"); }
+
+            EditField("costDependendSpeed");
+            if(!moveToTarget.smoothTurns.Value)
+            { EditField("nextWaypointDistance"); }
+		
+            EditField("finishDistanceMode");
+            if(moveToTarget.moveMode != MoveMode.follow && moveToTarget.moveMode != MoveMode.fleeContinuously)
+            { EditField ("endOfPathEvent"); }
+
+            EditField("finishDistance");
+		
+            if(!(moveToTarget.moveMode == MoveMode.flee || moveToTarget.moveMode == MoveMode.fleeContinuously || moveToTarget.moveMode == MoveMode.randomPath))
+                EditField("exactFinish");
+		
+            EditField("failedEvent");
+		
+            if(moveToTarget.moveMode != MoveMode.follow && moveToTarget.moveMode != MoveMode.fleeContinuously)
+            { EditField("failureTolerance"); }
+
+            EditField ("directionOut");
+		
+            EditField("OutputPath");
+            EditField("outputSpeed");
+		
+            EditField("LogEvents");
+            EditField ("drawGizmos");
+
+            if(moveToTarget.drawGizmos)
+            { EditField("gizmosColor"); }	
+		
+            return GUI.changed;
+        }	
+    }
 }

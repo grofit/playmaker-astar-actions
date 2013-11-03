@@ -1,16 +1,13 @@
-using System;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("This action creates an exact replica of the first path, without them being related to each other.")]
-	public class duplicatePath : FsmStateAction
+	public class DuplicatePath : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[ObjectType(typeof(FsmPath))]

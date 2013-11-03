@@ -1,17 +1,14 @@
-using System;
 using System.Collections.Generic;
-using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
-using System.Linq;
 using AstarPathExtension;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("Creates a number of nodes with the correct type for the graph. ")]
-	public class createNodes : HutongGames.PlayMaker.FsmStateAction
+	public class createNodes : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[RequiredField]
