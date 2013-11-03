@@ -68,3 +68,8 @@
 0v809
 - stop actor if the action is interrupted/ didn't finish but the state is no longer active.
 - fixed the "MoveTo" action not finishing on end bug, unless there was an event plugged in.
+
+0v9
+- Refactored project to use c# rather than javascript
+- project no longer needs setup script to install
+- namespaces and file locations changed
