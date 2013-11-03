@@ -1,3 +1,4 @@
+using System;
 using FsmPathfinding;
 using Pathfinding;
 using UnityEngine;
@@ -34,30 +35,36 @@ namespace HutongGames.PlayMaker.Pathfinding
 		      
 		public override void OnEnter() 
 	  	{
-			Mohogony();
+			AddPathConnectionWithCost();
 			
 			if(!everyFrame.Value)
 			{ Finish();	}
-			
 		}
 	  
-		public void Mohogony()
+		public void AddPathConnectionWithCost()
 		{
-			var mo = node.Value as FsmNode;
-			var fo = node2.Value as FsmNode;
-			if((mo.Value == null) || (fo.Value == null)) 
+			var sourceFsmNode = node.Value as FsmNode;
+            if(sourceFsmNode == null)
+            { throw new NullReferenceException("Source FSM node is null"); }
+
+			var destinationFsmNode = node2.Value as FsmNode;
+            if (destinationFsmNode == null)
+            { throw new NullReferenceException("Destination FSM node is null"); }
+
+			if((sourceFsmNode.Value == null) || (destinationFsmNode.Value == null)) 
 			{ 
 				Debug.Log("Input Incomplete"); 
 				Finish(); 
 				return;
 			}
 			
-			mo.Value.AddConnection(fo.Value as Node, cost.Value); 
+			sourceFsmNode.Value.AddConnection(destinationFsmNode.Value, cost.Value);
+ 
 			if (pingPong != null && pingPong.Value)
-			{ fo.Value.AddConnection(mo.Value, cost.Value);	}		
+			{ destinationFsmNode.Value.AddConnection(sourceFsmNode.Value, cost.Value);	}		
 		}
 		
 		public override void OnUpdate() 
-		{ Mohogony();}
+		{ AddPathConnectionWithCost(); }
    	}
 }

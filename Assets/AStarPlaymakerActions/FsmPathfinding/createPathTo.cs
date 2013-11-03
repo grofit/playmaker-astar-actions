@@ -8,7 +8,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 	[Tooltip("Using the Seeker component on a GameObject a path is calculated and then followed.")]
 	public class CreatePathTo : FsmStateAction
 	{
-
 		[Tooltip("Uses this as the start Position. Also requires a seeker component to create the path. You can create one before calling this action and remove it right after this action is done if you want / if the gameObject is some generic thing.")]
       	public FsmOwnerDefault gameObject;     
 		
@@ -29,13 +28,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[ObjectType(typeof(FsmPath))]
 		[Tooltip("Alternatively use a path directly. Overwrites everything else as a path, if set.")]	
 		public FsmObject OutputPath;
-
-		private Path path;
-      
-      	private GameObject go;
-		
-		private FsmPath doo = new FsmPath();
-				
+     
     	public override void Reset() 
 	  	{
          	gameObject = null;
@@ -47,7 +40,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				
 		public override void OnEnter() 
 	  	{
-		 	go = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;
+		 	var targetGameObject = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;
 
 			if(!OutputPath.UseVariable) 
 			{
@@ -62,29 +55,27 @@ namespace HutongGames.PlayMaker.Pathfinding
 				
 				if (LogEvents.Value)
 				{ Debug.Log ("Target was specified, getting position."); }
-			}	
-		 	CalculatePath();
+			}
+
+            CalculatePath(targetGameObject);
       	}		
 		
-	  	public void CalculatePath() 
+	  	public void CalculatePath(GameObject targetGameObject) 
 		{
-			path = ABPath.Construct (go.transform.position , targetPosition.Value , OnPathComplete); // create path from current position to closest/first node
-			AstarPath.StartPath (path); //make the actual vector3 path which we'll use lateron.
-			
-			if (LogEvents.Value)
-			{ Debug.Log ("Start Position" + go.transform.position + "End Position" + targetPosition.Value); }
-			
-			return;
+			var path = ABPath.Construct(targetGameObject.transform.position , targetPosition.Value , OnPathComplete);
+			AstarPath.StartPath(path);
+
+	  	    if (LogEvents.Value)
+	  	    { Debug.Log(string.Format("Start Position {0} End Position {1}", targetGameObject.transform.position, targetPosition.Value)); }
 	  	}
 		
-	  	public void OnPathComplete(Path p) 
+	  	public void OnPathComplete(Path path) 
 	  	{
 			if (LogEvents.Value)
 			{ Debug.Log ("Path Completed"); }
 			
-			doo = new FsmPath();
-			doo.Value = p;
-			OutputPath.Value = doo;
+			var fsmPath = new FsmPath { Value = path };
+	  	    OutputPath.Value = fsmPath;
 			
 			Debug.Log((OutputPath.Value as FsmPath).Value);
 

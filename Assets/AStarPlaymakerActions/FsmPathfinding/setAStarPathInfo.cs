@@ -72,8 +72,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 
 			if (!astarData.IsNone)
 			{ astarp.graphs = FsmConverter.GetNavGraphs(astarData.Value); }
-			
-			return;
 		}
 	  
 		public override void OnUpdate() 

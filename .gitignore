@@ -6,3 +6,5 @@
 /Assets/Photon Unity Networking
 
 obj
+
+*.suo

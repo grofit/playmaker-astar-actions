@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
@@ -8,7 +9,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
 	[Tooltip("Creates a number of nodes with the correct type for the graph. ")]
-	public class createNodes : FsmStateAction
+	public class CreateNodes : FsmStateAction
 	{
 		[ActionSection("Input")]
 		[RequiredField]
@@ -26,7 +27,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmBool everyFrame;
 		
-		private NavGraph g;
+		private NavGraph cachedNavGraph;
       
 		public override void Reset()
 		{
@@ -38,43 +39,31 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{
-			var mo = graph.Value as FsmNavGraph;
-			if(mo.Value == null) 
+			var fsmNavGraph = graph.Value as FsmNavGraph;
+            if (fsmNavGraph == null || fsmNavGraph.Value == null) 
 			{
 				Finish(); 
 				return;
-			} // it would continue for a frame without return
+			}
 			
-			g = FsmConverter.GetNavGraph(graph);
-			
-			DoStuff();
+			cachedNavGraph = FsmConverter.GetNavGraph(graph);
+			CreateNodesForGraph();
 			
 			if (!everyFrame.Value)
 			{ Finish(); }
-
-			
 		}
 		
-		public void DoStuff()
+		public void CreateNodesForGraph()
 		{
-			var a = g.CreateNodes(number.Value);
-			
+			var a = cachedNavGraph.CreateNodes(number.Value);
 			nodes.Value = new FsmNodes();
-			
 			(nodes.Value as FsmNodes).Value = (List<Node>)FsmConverter.NodeListToArray(a);
-			
-		//	g.nodes += a;
-			
-		//	AstarPath.active.NodeCountChanged() ;
-
-			AstarPathExtensions.ScanGraph(g);
-
+			AstarPathExtensions.ScanGraph(cachedNavGraph);
 		}
-
 		
 		public override void OnUpdate()
 		{
-			DoStuff();
+			CreateNodesForGraph();
 		} 
    	}
 }

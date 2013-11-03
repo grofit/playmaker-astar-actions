@@ -1,5 +1,5 @@
+using System;
 using FsmPathfinding;
-using Pathfinding;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
@@ -14,9 +14,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		[Tooltip("Amount of translation")]
 		public FsmVector3 Vector;
-		
-		private Path a;
-		
+			
 		public override void Reset()
 		{
 			InputPath = null;
@@ -25,22 +23,21 @@ namespace HutongGames.PlayMaker.Pathfinding
       
 		public override void OnEnter() 
 	  	{
-			var doo = InputPath.Value as FsmPath;
-			a = doo.Value;
-			
-			if(a == null) 
+			var inputFsmPath = InputPath.Value as FsmPath;
+            if(inputFsmPath == null)
+            { throw new NullReferenceException("Input Path does not contain a valid path"); }
+
+			var path = inputFsmPath.Value;
+			if(path == null) 
 			{
 				Finish(); 
 				return;
 			}
 			
 			var x = 0;
-			while (x < a.path.Count)
+			while (x < path.path.Count)
 			{
-				//a.path[x].position.x += Vector.Value.x/a.path[x].position.PrecisionFactor;
-				//a.path[x].position.y += Vector.Value.y/a.path[x].position.PrecisionFactor;
-				//a.path[x].position.z += Vector.Value.z/a.path[x].position.PrecisionFactor;
-				a.vectorPath[x] += Vector.Value;
+				path.vectorPath[x] += Vector.Value;
 				x++;
 			}
 			Finish();			

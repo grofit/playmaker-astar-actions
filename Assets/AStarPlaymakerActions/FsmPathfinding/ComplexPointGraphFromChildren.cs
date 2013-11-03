@@ -1,3 +1,4 @@
+using System;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Pathfinding
 {
 	[ActionCategory("A Star")]
-	[Tooltip("recursively checks all children of a gameObject and adds their positions to a PointGraph. It then connects every node to surrounding nodes based on the max distance value. It's called complex because it creates a complex graph without any real order, and nodes can have all number of connections.")]
+	[Tooltip("Recursively checks all children of a gameObject and adds their positions to a PointGraph. It then connects every node to surrounding nodes based on the max distance value. It's called complex because it creates a complex graph without any real order, and nodes can have all number of connections.")]
 	public class ComplexPointGraphFromChildren : FsmStateAction
 	{
 		[ActionSection("Input")]
@@ -40,10 +41,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		[Tooltip("If true, this always creates a new PointGraph. If False, this adds to the current PointGraph in the graph variable.") ]
 		public FsmBool alwaysNew {get;set;} 
 		
-		private PointGraph g;
-		private NNConstraint nnc ;
-		private FsmNavGraph mo;
-	  
 		public override void Reset()
 		{
 			graph = null;
@@ -52,35 +49,38 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter()
 	  	{
-			mo = graph.Value as FsmNavGraph;
-			if ((mo == null) ||(mo.Value == null) || alwaysNew.Value) 
+			var fsmNavGraph = graph.Value as FsmNavGraph;
+            if(fsmNavGraph == null)
+            { throw new NullReferenceException("The graph provided is null"); }
+
+            PointGraph pointGraph;
+			if (fsmNavGraph.Value == null || alwaysNew.Value) 
 			{
-				AstarPath.active.astarData.AddGraph(mo.Value);
-				g = FsmConverter.GetNavGraph(graph) as PointGraph;	
+				AstarPath.active.astarData.AddGraph(fsmNavGraph.Value);
+				pointGraph = FsmConverter.GetNavGraph(graph) as PointGraph;	
+
 				Debug.Log ("Creating New Point Graph");
-				
-				graph.Value = FsmConverter.SetNavGraph(g as NavGraph);
+				graph.Value = FsmConverter.SetNavGraph(pointGraph);
 			}
 			else 
-			{ g = FsmConverter.GetNavGraph(graph) as PointGraph;	}
+			{ pointGraph = FsmConverter.GetNavGraph(graph) as PointGraph;	}
 			
-			DoStuff();
+			ScanPointGraph(pointGraph);
 			Finish();			
 		}
 		
-		public void DoStuff()
+		public void ScanPointGraph(PointGraph pointGraph)
 		{
 		 	var go = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;
 		 	
-		 	g.root = go.transform; // set the root so the scan will turn it into nodes
-		 	g.maxDistance = maxDistance.Value; // set max distance for connection
-			g.initialPenalty = (uint)cost.Value;
-			g.name = name.Value;
-		 	AstarPathExtensions.ScanGraph (g); // turn the gameObjects into ndoes.
+		 	pointGraph.root = go.transform;
+		 	pointGraph.maxDistance = maxDistance.Value;
+			pointGraph.initialPenalty = (uint)cost.Value;
+			pointGraph.name = name.Value;
+		 	AstarPathExtensions.ScanGraph(pointGraph);
 			
-			Nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(g.nodes));
+			Nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(pointGraph.nodes));
 			AstarPath.active.FloodFill ();
-			return;
 		}		  
    	}	
 }
