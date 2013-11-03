@@ -63,45 +63,44 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  
 		public override void OnEnter() 
 	  	{			
-			var mo = node.Value as FsmNode;
-			Debug.Log(mo);
-			
-			if(mo == null || mo.Value == null) 
+			var underlyingFsmNode = node.Value as FsmNode;
+			if(underlyingFsmNode == null || underlyingFsmNode.Value == null) 
 			{
 				Debug.Log("input invalid. Make sure the node is properly assigned.");
 				Finish();
 				return;
 			}
-			DoStuff();
+
+			GetInfoFromNode();
 			
 			if (!everyFrame.Value)
 			{ Finish(); }			
 		}
 	  
-		public void DoStuff()
+		public void GetInfoFromNode()
 		{		
-			var doo = ((node as FsmObject).Value as FsmNode).Value as Node;
+			var underlingNode = (node.Value as FsmNode).Value;
 			
-			nodeIndex.Value = doo.GetNodeIndex();			
-			penalty.Value = (int)doo.penalty;			
-			area.Value = doo.area;			
-			tags.Value = doo.tags;			
-			walkable.Value = doo.walkable;			
-			graphIndex.Value = doo.graphIndex;			
-			position.Value = new Vector3(doo.position.x,doo.position.y,doo.position.z);
+			nodeIndex.Value = underlingNode.GetNodeIndex();			
+			penalty.Value = (int)underlingNode.penalty;			
+			area.Value = underlingNode.area;			
+			tags.Value = underlingNode.tags;			
+			walkable.Value = underlingNode.walkable;			
+			graphIndex.Value = underlingNode.graphIndex;			
+			position.Value = new Vector3(underlingNode.position.x,underlingNode.position.y,underlingNode.position.z);
 			position.Value *= Int3.PrecisionFactor;
 			
 			if (!connectedNodes.IsNone)
-			(connectedNodes.Value as FsmNodes).Value = (List<Node>)FsmConverter.NodeListToArray(doo.connections);
+			{ (connectedNodes.Value as FsmNodes).Value = (List<Node>)FsmConverter.NodeListToArray(underlingNode.connections); }
 			
-			var loo = new FsmNavGraph();
-			loo.Value = AstarPath.active.graphs[doo.graphIndex];
-			graph.Value = loo;
+			var newNavGraph = new FsmNavGraph();
+			newNavGraph.Value = AstarPath.active.graphs[underlingNode.graphIndex];
+			graph.Value = newNavGraph;
 		}
 		
 		public override void OnUpdate()
 		{
-			DoStuff();
+			GetInfoFromNode();
 		}
    	}
 }

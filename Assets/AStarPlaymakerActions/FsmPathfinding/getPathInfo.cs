@@ -1,3 +1,4 @@
+using System;
 using FsmPathfinding;
 using UnityEngine;
 
@@ -68,9 +69,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public FsmBool everyFrame;
 		
-		private FsmPath goo = new FsmPath();	
-		
-		
 		public override void Reset() 
 		{
 			InputPath = new FsmObject();
@@ -93,67 +91,68 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{
-			if(InputPath.Value == null || InputPath.Value is UnityEngine.Object || (InputPath.Value as FsmPath).Value == null) 
+			if(InputPath.Value == null || (InputPath.Value as FsmPath).Value == null) 
 			{
 				Debug.Log("Input Path is invalid. Make sure that the path is completely created (many actions do not finish in the same frame as they start) ");
 				Finish(); 
 				return;
 			}
-			DoStuff();
+
+			GetInfoFromPath();
+
 			if(!everyFrame.Value)
 			{ Finish(); }
-			
 		}
 
-		public void DoStuff()
+		public void GetInfoFromPath()
 		{
-			var doo = InputPath.Value as FsmPath;
+			var fsmPath = InputPath.Value as FsmPath;
+            if(fsmPath == null)
+            { throw new NullReferenceException("InputPath does not contain any path data"); }
 			
-			if(doo.Value == null)
+			if(fsmPath.Value == null)
 			{
 				Finish(); 
 				return;
 			}
 			
 			//floats
-			Length.Value = doo.Value.GetTotalLength();
-			duration.Value = doo.Value.duration;
-			heuristicScale.Value = doo.Value.heuristicScale;
+			Length.Value = fsmPath.Value.GetTotalLength();
+			duration.Value = fsmPath.Value.duration;
+			heuristicScale.Value = fsmPath.Value.heuristicScale;
 			
 			//ints
-			enabledTags.Value = doo.Value.enabledTags;			
-			radius.Value = doo.Value.radius;
-			pathID.Value = doo.Value.pathID;
-			searchedNodes.Value = doo.Value.searchedNodes;
-			searchIterations.Value = doo.Value.searchIterations;
-			speed.Value = doo.Value.speed;
-			turnRadius.Value = doo.Value.turnRadius;
+			enabledTags.Value = fsmPath.Value.enabledTags;			
+			radius.Value = fsmPath.Value.radius;
+			pathID.Value = fsmPath.Value.pathID;
+			searchedNodes.Value = fsmPath.Value.searchedNodes;
+			searchIterations.Value = fsmPath.Value.searchIterations;
+			speed.Value = fsmPath.Value.speed;
+			turnRadius.Value = fsmPath.Value.turnRadius;
 
 			//bools
-			IsDone.Value = doo.Value.IsDone ();
-			recycled.Value = doo.Value.recycled;
-			
+			IsDone.Value = fsmPath.Value.IsDone ();
+			recycled.Value = fsmPath.Value.recycled;
 			
 			//NNConstraints
-			var noo = new FsmNNConstraint();
-			noo.Value = doo.Value.nnConstraint;
-			nnConstraint.Value = noo;
+			var fsmNnConstraint = new FsmNNConstraint();
+			fsmNnConstraint.Value = fsmPath.Value.nnConstraint;
+			nnConstraint.Value = fsmNnConstraint;
 			
 			//Nodes[]
-			var coo = new FsmNodes();
-			coo.Value = doo.Value.path;
-			nodes.Value = coo;
+			var fsmNodes = new FsmNodes();
+			fsmNodes.Value = fsmPath.Value.path;
+			nodes.Value = fsmNodes;
 			
 			//NodeRunData
-			var roo = new FsmNodeRunData();
-			roo.Value = doo.Value.runData;
-			runData.Value = roo;
-			
+			var fsmNodeRunData = new FsmNodeRunData();
+			fsmNodeRunData.Value = fsmPath.Value.runData;
+			runData.Value = fsmNodeRunData;
 		}
 	  
 		public override void OnUpdate() 
 	  	{
-			DoStuff();
+			GetInfoFromPath();
 		}
    	}
 }

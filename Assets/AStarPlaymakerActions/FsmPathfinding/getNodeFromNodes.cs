@@ -34,16 +34,15 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  
 		public override void OnEnter()  
 	  	{
-			var mo = nodes.Value as FsmNodes;
-			
-			if( mo == null || (mo.Value == null) || !node.UseVariable) 
+			var underlyingFsmNodes = nodes.Value as FsmNodes;
+			if(underlyingFsmNodes == null || (underlyingFsmNodes.Value == null) || !node.UseVariable) 
 			{
 				Debug.Log("No Input");
 				Finish(); 
 				return;
 			} 
 			
-			if ((mo.Value as List<Node>).Count <= index.Value)
+			if (underlyingFsmNodes.Value.Count <= index.Value)
 			{
 				Debug.Log("index is higher than the number of nodes in the nodes list/variable");
 				Finish();
