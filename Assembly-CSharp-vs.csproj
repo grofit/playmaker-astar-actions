@@ -12,13 +12,14 @@
 	<AssemblyName>Assembly-CSharp</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	<DebugSymbols>true</DebugSymbols>
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_2_2;UNITY_4_2;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_0;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -36,6 +37,7 @@
 	<Reference Include="System" />
     <Reference Include="System.XML" />
 	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
 	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
@@ -51,34 +53,34 @@
      <Compile Include="Assets\AStarPlaymakerActions\FsmDummies\RVOControllerDummy.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmDummies\RandomPathDummy.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\ComplexPointGraphFromChildren.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\CreateNodes.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\CreatePathTo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\DuplicatePath.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetAStarPathInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetClosestPointOnPath.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetGraphInGraphs.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetGraphInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetNearestNode.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetNodeFromNodes.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetNodeInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\GetPathInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\MoveTo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\NodeContainsConnection.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\PointGraphFromChildren.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\RecyclePath.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\SetAStarPathInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\SetGraphInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\SetNodeInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\SetPathInfo.cs" />
-     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\SmoothPath.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\addNodeConnection.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\createNodes.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\createPathTo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\duplicatePath.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\enums\ControllerType.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\enums\FinishDistance.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\enums\GraphType.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\enums\MoveMode.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getAStarPathInfo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getClosestPointOnPath.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getGraphInGraphs.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getGraphInfo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getNearestNode.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getNodeFromNodes.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getNodeInfo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\getPathInfo.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\helpers\FsmConverter.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\helpers\FsmFollowTargetHelper.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\helpers\FsmMoveOnPath.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\nodeContainsConnection.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\recyclePath.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\setAStarPathInfo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\setGraphInfo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\setNodeInfo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\setPathInfo.cs" />
+     <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\smoothPath.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfinding\translatePath.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfindingWrappers\FsmABPath.cs" />
      <Compile Include="Assets\AStarPlaymakerActions\FsmPathfindingWrappers\FsmAstarData.cs" />
@@ -352,7 +354,6 @@
      <Compile Include="Assets\PlayMaker\Actions\Flicker.cs" />
      <Compile Include="Assets\PlayMaker\Actions\FloatAbs.cs" />
      <Compile Include="Assets\PlayMaker\Actions\FloatAdd.cs" />
-     <Compile Include="Assets\PlayMaker\Actions\FloatAddMultiple.cs" />
      <Compile Include="Assets\PlayMaker\Actions\FloatChanged.cs" />
      <Compile Include="Assets\PlayMaker\Actions\FloatClamp.cs" />
      <Compile Include="Assets\PlayMaker\Actions\FloatCompare.cs" />
@@ -708,7 +709,6 @@
      <Compile Include="Assets\PlayMaker\Actions\SetSkybox.cs" />
      <Compile Include="Assets\PlayMaker\Actions\SetStringValue.cs" />
      <Compile Include="Assets\PlayMaker\Actions\SetTag.cs" />
-     <Compile Include="Assets\PlayMaker\Actions\SetTagsOnChildren.cs" />
      <Compile Include="Assets\PlayMaker\Actions\SetTextureOffset.cs" />
      <Compile Include="Assets\PlayMaker\Actions\SetTextureScale.cs" />
      <Compile Include="Assets\PlayMaker\Actions\SetVector3Value.cs" />

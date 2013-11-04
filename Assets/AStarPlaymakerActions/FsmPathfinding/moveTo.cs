@@ -376,8 +376,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public void Move() 
 		{
-			Debug.Log("Move");	
-
 			// previous path is not cleared on reload. That's why it's finishing and why there's no error !!!!!!
 			if(controllerType == ControllerType.rvoController || (controllerType == ControllerType.available && controller2 != null))
 			{
@@ -397,7 +395,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				}
 			}
 			
-			if(controllerType == ControllerType.characterController || (controllerType == ControllerType.available && controller != null))
+			else if(controllerType == ControllerType.characterController || (controllerType == ControllerType.available && controller != null))
 			{
 				if (controller != null) 
 				{ controller.SimpleMove(direction); }
@@ -409,12 +407,12 @@ namespace HutongGames.PlayMaker.Pathfinding
 				}
 			}
 
-			if(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity)
+			else if(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity)
 			{
 				if (controllerType == ControllerType.rigidbody && rigidbody != null) 
 				{ rigidbody.AddForce(direction*Time.deltaTime*100*rigidbody.mass); }
 				
-				else if ((controllerType == ControllerType.rigidbodyVelocity || controllerType == ControllerType.available) && rigidbody != null) 
+				else if (controllerType == ControllerType.rigidbodyVelocity && rigidbody != null) 
 				{
 					if(ignoreY.Value)
 					{ rigidbody.velocity = new Vector3(direction.x,rigidbody.velocity.y,direction.z)*110; }
@@ -433,7 +431,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				}
 			}
 			
-			if(controllerType == ControllerType.transform || (controllerType == ControllerType.available && controller2 == null && controller == null && rigidbody == null))
+			else if(controllerType == ControllerType.transform || (controllerType == ControllerType.available && controller2 == null && controller == null && rigidbody == null))
 			{ targetGameObject.transform.position += direction * Time.deltaTime; }
 		}
 		

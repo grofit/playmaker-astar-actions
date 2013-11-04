@@ -18,20 +18,20 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public FsmObject graph;
 		
 		[Tooltip("You can give this graph whatever name you want. If you want to get it by its' name lateron thouh, make sure that the name is unique.")]	
-      	public FsmString name {get;set;} 		
+      	public FsmString name; 		
 			
 		[RequiredField]
 		[Tooltip("The root of the gameObjects you want to use as a graph")]
       	public FsmOwnerDefault gameObject;  
 		
 		[Tooltip("How easy are the nodes to walk over? If it's a path through the swamp, then you may want to turn this up. Movement actions also have the option to move more slowly on nodes with high cost, and astar generally avoids them unless the cost is less than the cost of the additional nodes needed to go around them (in this case going around the swamp) would take.")	]
-		public FsmInt cost {get;set;}
+		public FsmInt cost;
 		
 		[Tooltip("If the distance between 2 nodes is less than this, they will be connected")]
-		public FsmFloat maxDistance {get;set;}
+		public FsmFloat maxDistance;
 		
 		[Tooltip("Check this to connect the graph nodes to any node from a different graph, if those nodes are closer than the Max Distance") ]
-		public FsmBool connect {get;set;} 
+		public FsmBool connect;
 		
 		[ActionSection("Output : Nodes...s")]
 		[Tooltip("If you're using a grid graph, this will be what you need.")]
@@ -39,7 +39,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public FsmObject Nodes; 
 		
 		[Tooltip("If true, this always creates a new PointGraph. If False, this adds to the current PointGraph in the graph variable.") ]
-		public FsmBool alwaysNew {get;set;} 
+		public FsmBool alwaysNew;
 		
 		public override void Reset()
 		{
@@ -49,21 +49,24 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter()
 	  	{
+			
+			
+            if(graph.Value == null)
+            { graph.Value = new FsmNavGraph(); }
+			
 			var fsmNavGraph = graph.Value as FsmNavGraph;
-            if(fsmNavGraph == null)
-            { throw new NullReferenceException("The graph provided is null"); }
 
             PointGraph pointGraph;
 			if (fsmNavGraph.Value == null || alwaysNew.Value) 
 			{
-				AstarPath.active.astarData.AddGraph(fsmNavGraph.Value);
-				pointGraph = FsmConverter.GetNavGraph(graph) as PointGraph;	
-
-				Debug.Log ("Creating New Point Graph");
-				graph.Value = FsmConverter.SetNavGraph(pointGraph);
+				pointGraph = AstarPath.active.astarData.AddGraph( typeof( PointGraph )) as PointGraph;	
+				graph.Value = FsmConverter.SetNavGraph(pointGraph) as FsmNavGraph;
 			}
-			else 
-			{ pointGraph = FsmConverter.GetNavGraph(graph) as PointGraph;	}
+			else { 
+				pointGraph = FsmConverter.GetNavGraph(graph) as PointGraph;
+				if(pointGraph==null)
+					 throw new System.ArgumentException("The input graph variable does not contain a Pointgraph, but some other type of graph.");
+			}
 			
 			ScanPointGraph(pointGraph);
 			Finish();			
