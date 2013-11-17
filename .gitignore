@@ -1,10 +1,9 @@
-/Temp
-
+Temp/*
+Library/*
+Build/*
 /Assets/PlayMaker
 /Assets/Gizmos
 /Assets/iTween
 /Assets/Photon Unity Networking
-
 obj
-
 *.suo
