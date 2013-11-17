@@ -9,3 +9,7 @@ obj
 *.suo
 
 /*.pidb
+
+/*.sln
+
+/*.csproj
