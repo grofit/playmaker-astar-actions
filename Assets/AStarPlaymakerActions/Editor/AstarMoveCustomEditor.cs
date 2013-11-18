@@ -11,8 +11,6 @@ namespace HutongGames.PlayMaker.Pathfinding.Editor
         public override bool OnGUI()
         {	
             var moveToTarget = target as MoveTo;
-            if(moveToTarget == null)
-            { throw new NullReferenceException("The move to target is null"); }
 		
             EditField("targetObjectHelper");
 		
@@ -55,8 +53,9 @@ namespace HutongGames.PlayMaker.Pathfinding.Editor
             { EditField("turnRadius"); }
 
             EditField("costDependendSpeed");
+            
             if(!moveToTarget.smoothTurns.Value)
-            { EditField("nextWaypointDistance"); }
+                EditField("nextWaypointDistance"); 
 		
             EditField("finishDistanceMode");
             if(moveToTarget.moveMode != MoveMode.follow && moveToTarget.moveMode != MoveMode.fleeContinuously)

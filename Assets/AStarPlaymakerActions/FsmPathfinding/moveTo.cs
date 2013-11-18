@@ -376,7 +376,6 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public void Move() 
 		{
-			// previous path is not cleared on reload. That's why it's finishing and why there's no error !!!!!!
 			if(controllerType == ControllerType.rvoController || (controllerType == ControllerType.available && controller2 != null))
 			{
 				if (controller2 != null) 
@@ -470,7 +469,8 @@ namespace HutongGames.PlayMaker.Pathfinding
                 (target.Value != null && (target.Value.transform.position - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) ||
 	 	        (ignoreY.Value && target.Value != null && (new Vector3(target.Value.transform.position.x, targetGameObject.transform.position.y, target.Value.transform.position.z)
                 - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) ||
-	 	        (target.Value == null && Vector3.Distance(targetGameObject.transform.position, targetPosition.Value) <= finishDistance.Value)));
+                (target.Value == null && Vector3.Distance(targetGameObject.transform.position, targetPosition.Value) <= finishDistance.Value) ||
+                (ignoreY.Value && target.Value == null && (new Vector3(targetPosition.Value.x, targetGameObject.transform.position.y, targetPosition.Value.z) - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value * finishDistance.Value)));
 
 	 	    var isCloseEnoughToEndNode = (finishDistanceMode == FinishDistance.absoluteEndnode && ((!ignoreY.Value && Vector3.Distance(targetGameObject.transform.position, path.vectorPath[path.vectorPath.Count - 1]) <= finishDistance.Value) ||
 	 	        (ignoreY.Value && Vector3.Distance(new Vector3(targetGameObject.transform.position.x, path.vectorPath[path.vectorPath.Count - 1].y, targetGameObject.transform.position.z), path.vectorPath[path.vectorPath.Count - 1]) <=
@@ -478,7 +478,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 
             if (isCloseEnoughToEndPoint || isCloseEnoughToEndNode)
 			{ 
-				Debug.Log("Finish");
+				//Debug.Log("Finish");
 			    if (moveMode == MoveMode.follow || moveMode == MoveMode.shadow || moveMode == MoveMode.fleeContinuously) 
                 { return; }
 			    
