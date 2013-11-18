@@ -1,8 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs">
+    <Files>
+      <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" Line="457" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Code\Games\playmaker-astar-actions\Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" line="596" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
