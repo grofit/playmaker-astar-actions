@@ -9,6 +9,7 @@ Material:
   m_Name: PlayerShadow
   m_Shader: {fileID: 4800000, guid: 7de44d047f48041b8a867b1630fb8a45, type: 3}
   m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:

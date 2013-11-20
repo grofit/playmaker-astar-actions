@@ -4,13 +4,12 @@
 SceneSettings:
   m_ObjectHideFlags: 0
   m_PVSData: 
-  m_QueryMode: 1
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
-    viewCellSize: 1
-    bakeMode: 2
-    memoryUsage: 10485760
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_Fog: 0
@@ -23,6 +22,7 @@ RenderSettings:
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 0}
   m_ObjectHideFlags: 0
@@ -121,6 +121,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &35216886
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -176,6 +179,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!64 &50699896
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -254,6 +260,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &330017207
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -309,6 +318,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &810017960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -365,7 +377,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1116614227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.3520041, y: 11, z: -16.6347122}
+  m_LocalPosition: {x: 11.3520041, y: 11.0502214, z: -16.6347122}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1739067068}
@@ -388,6 +400,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!136 &1116614230
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -419,34 +434,39 @@ MonoBehaviour:
   m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
   fsm:
     usedInTemplate: {fileID: 0}
-    name: 4d6f7665546f506c617965724265686176696f7572
-    startState: 417761697420496e707574
+    name: Player MoveTo Point Behaviour
+    startState: Await Input
     states:
-    - name: 417761697420496e707574
-      description: 5468697320776169747320666f7220746865206d6f757365206c65667420636c69636b206576656e7420746f206f63637572
+    - name: Await Input
+      description: 
       colorIndex: 0
       position:
-        x: 304
-        y: 100
-        width: 218.5
-        height: 16
+        serializedVersion: 2
+        x: 66
+        y: 116
+        width: 118
+        height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
-      transitions: []
+      transitions:
+      - fsmEvent:
+          name: MOUSE DOWN
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Get Destination Point
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
       actionData:
         actionNames:
-        - 4875746f6e6747616d65732e506c61794d616b65722e416374696f6e732e4765744d6f757365427574746f6e446f776e
+        - HutongGames.PlayMaker.Actions.GetMouseButtonDown
         customNames:
         - 
-        actionEnabled:
-        - 1
-        actionIsOpen:
-        - 1
+        actionEnabled: 01
+        actionIsOpen: 01
         actionStartIndex: 00000000
         actionHashCodes: 2d8b867b
         unityObjectParams: []
@@ -461,63 +481,46 @@ MonoBehaviour:
         fsmStringParams: []
         fsmObjectParams: []
         fsmVarParams: []
-        byteData:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 77
-        - 79
-        - 85
-        - 83
-        - 69
-        - 32
-        - 68
-        - 79
-        - 87
-        - 78
-        - 0
-        - 1
+        byteData: 000000004d4f55534520444f574e0001
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
         paramDataType: 070000001700000011000000
         paramName:
-        - 627574746f6e
-        - 73656e644576656e74
-        - 73746f7265526573756c74
+        - button
+        - sendEvent
+        - storeResult
         paramDataPos: 00000000040000000e000000
         paramByteDataSize: 040000000a00000002000000
-    - name: 53656c656374204d6f7665546f204c6f636174696f6e
-      description: 546865206c6f636174696f6e20746f206d6f766520746f0a
+    - name: Get Destination Point
+      description: 
       colorIndex: 0
       position:
-        x: 56
-        y: 189
-        width: 176
+        serializedVersion: 2
+        x: 58
+        y: 200
+        width: 160
         height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: 46494e4953484544
+          name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: 53686f7720506f696e74204d61726b6572
+        toState: Show Destination Position
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - 4875746f6e6747616d65732e506c61794d616b65722e416374696f6e732e4d6f7573655069636b
+        - HutongGames.PlayMaker.Actions.MousePick
         customNames:
         - 
-        actionEnabled:
-        - 1
-        actionIsOpen:
-        - 1
+        actionEnabled: 01
+        actionIsOpen: 01
         actionStartIndex: 00000000
         actionHashCodes: 3b448f99
         unityObjectParams: []
@@ -538,125 +541,66 @@ MonoBehaviour:
         fsmStringParams: []
         fsmObjectParams: []
         fsmVarParams: []
-        byteData:
-        - 0
-        - 0
-        - 200
-        - 66
-        - 0
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 77
-        - 111
-        - 118
-        - 101
-        - 84
-        - 111
-        - 76
-        - 111
-        - 99
-        - 97
-        - 116
-        - 105
-        - 111
-        - 110
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
+        byteData: 0000c8420000010000000000000000000000000144657374696e6174696f6e506f696e74000000000000000000000000010000000001000000
         arrayParamSizes: 00000000
         arrayParamTypes:
-        - 4875746f6e6747616d65732e506c61794d616b65722e46736d496e74
+        - HutongGames.PlayMaker.FsmInt
         customTypeSizes: 
         customTypeNames: []
         paramDataType: 0f00000011000000130000001c0000001c0000000f0000000c0000001100000001000000
         paramName:
-        - 72617944697374616e6365
-        - 73746f72654469645069636b4f626a656374
-        - 73746f726547616d654f626a656374
-        - 73746f7265506f696e74
-        - 73746f72654e6f726d616c
-        - 73746f726544697374616e6365
-        - 6c617965724d61736b
-        - 696e766572744d61736b
-        - 65766572794672616d65
-        paramDataPos: 00000000050000000000000007000000220000002f000000000000003400000036000000
-        paramByteDataSize: 0500000002000000000000001b0000000d00000005000000000000000200000001000000
-    - name: 4d6f7665546f204c6f636174696f6e
-      description: 4d6f76652074686520706c6179657220746f207468652073656c656374656420706f736974696f6e
+        - rayDistance
+        - storeDidPickObject
+        - storeGameObject
+        - storePoint
+        - storeNormal
+        - storeDistance
+        - layerMask
+        - invertMask
+        - everyFrame
+        paramDataPos: 000000000500000000000000070000002400000031000000000000003600000038000000
+        paramByteDataSize: 0500000002000000000000001d0000000d00000005000000000000000200000001000000
+    - name: Move To Destination
+      description: 
       colorIndex: 0
       position:
-        x: 641
-        y: 281
-        width: 207
+        serializedVersion: 2
+        x: 512
+        y: 114
+        width: 154
         height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: 46494e4953484544
+          name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: 417761697420496e707574
+        toState: Await Input
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - 4875746f6e6747616d65732e506c61794d616b65722e5061746866696e64696e672e4d6f7665546f
-        - 4875746f6e6747616d65732e506c61794d616b65722e416374696f6e732e4765744d6f757365427574746f6e446f776e
+        - HutongGames.PlayMaker.Pathfinding.MoveTo
         customNames:
         - 
-        - 
-        actionEnabled:
-        - 1
-        - 1
-        actionIsOpen:
-        - 1
-        - 1
-        actionStartIndex: 000000001f000000
-        actionHashCodes: 0f9b9a6b2d8b867b
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 0f9b9a6b
         unityObjectParams: []
         fsmGameObjectParams:
-        - useVariable: 1
+        - useVariable: 0
           name: 
           tooltip: 
           showInInspector: 0
           networkSync: 0
           value: {fileID: 0}
         fsmOwnerDefaultParams:
-        - gameObject:
+        - ownerOption: 0
+          gameObject:
             useVariable: 0
             name: 
             tooltip: 
@@ -683,246 +627,84 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: 556e697479456e67696e652e4f626a656374
+          typeName: UnityEngine.Object
           value: {fileID: 0}
         fsmVarParams: []
-        byteData:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 32
-        - 65
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 128
-        - 63
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 77
-        - 111
-        - 118
-        - 101
-        - 84
-        - 111
-        - 76
-        - 111
-        - 99
-        - 97
-        - 116
-        - 105
-        - 111
-        - 110
-        - 4
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 64
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 64
-        - 64
-        - 0
-        - 70
-        - 73
-        - 78
-        - 73
-        - 83
-        - 72
-        - 69
-        - 68
-        - 0
-        - 0
-        - 64
-        - 64
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 64
-        - 64
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 64
-        - 64
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 1
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 128
-        - 63
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 77
-        - 79
-        - 85
-        - 83
-        - 69
-        - 32
-        - 68
-        - 79
-        - 87
-        - 78
-        - 0
-        - 1
+        byteData: 00000000000020410000000000000000803f00000000000000000000000000000144657374696e6174696f6e506f696e7405000000000000400000000000003f0046494e49534845440000803f00010000000000803f0000000000404000010000000000000000000000000000000000000000000000000100000000010100010000000000000000000000000000803f00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 070000000f000000100000000f000000140000001800000001000000130000001c000000070000000f000000110000000f00000017000000170000000f000000070000000f000000110000000f00000011000000110000000f00000011000000110000001c000000180000000f000000110000000100000019000000070000001700000011000000
+        paramDataType: 070000000f000000100000000f000000140000001800000001000000130000001c000000070000000f000000110000000f00000017000000170000000f000000070000000f000000110000000f00000011000000110000000f00000011000000110000001c000000180000000f000000110000000100000019000000
         paramName:
-        - 6d6f76654d6f6465
-        - 6c656e677468
-        - 757064617465496e74657276616c
-        - 736861646f7755706461746544697374616e6365
-        - 6163746f72
-        - 696e70757450617468
-        - 75706461746550617468
-        - 746172676574
-        - 746172676574506f736974696f6e
-        - 636f6e74726f6c6c657254797065
-        - 7370656564
-        - 736d6f6f74685475726e73
-        - 7475726e526164697573
-        - 656e644f66506174684576656e74
-        - 6661696c65644576656e74
-        - 6e657874576179706f696e7444697374616e6365
-        - 66696e69736844697374616e63654d6f6465
-        - 66696e69736844697374616e6365
-        - 657861637446696e697368
-        - 6661696c757265546f6c6572616e6365
-        - 69676e6f726559
-        - 6175746f
-        - 636f7374446570656e64656e645370656564
-        - 737461727441745374617274
-        - 636f6e6e65637450617468
-        - 646972656374696f6e4f7574
-        - 4f757470757450617468
-        - 6f75747075745370656564
-        - 4c6f674576656e7473
-        - 6472617747697a6d6f73
-        - 67697a6d6f73436f6c6f72
-        - 627574746f6e
-        - 73656e644576656e74
-        - 73746f7265526573756c74
-        paramDataPos: 0000000004000000090000000e00000000000000000000001300000000000000140000002f00000033000000380000003a0000003f00000047000000470000004c0000005000000055000000570000005c0000005e0000006000000065000000670000006900000001000000760000007b0000007d0000007e0000008f000000930000009d000000
-        paramByteDataSize: 04000000050000000500000005000000000000000000000001000000000000001b000000040000000500000002000000050000000800000000000000050000000400000005000000020000000500000002000000020000000500000002000000020000000d0000000000000005000000020000000100000011000000040000000a00000002000000
-    - name: 53686f7720506f696e74204d61726b6572
-      description: 4a757374206164647320612063756265206174207468652064657374696e6174696f6e20706f696e74206265666f726520796f7520626567696e206d6f76696e67207468657265
+        - moveMode
+        - length
+        - updateInterval
+        - shadowUpdateDistance
+        - actor
+        - inputPath
+        - updatePath
+        - target
+        - targetPosition
+        - controllerType
+        - speed
+        - smoothTurns
+        - turnRadius
+        - endOfPathEvent
+        - failedEvent
+        - nextWaypointDistance
+        - finishDistanceMode
+        - finishDistance
+        - exactFinish
+        - failureTolerance
+        - ignoreY
+        - auto
+        - costDependendSpeed
+        - startAtStart
+        - connectPath
+        - directionOut
+        - OutputPath
+        - outputSpeed
+        - LogEvents
+        - drawGizmos
+        - gizmosColor
+        paramDataPos: 0000000004000000090000000e000000000000000000000013000000000000001400000031000000350000003a0000003c0000004100000049000000490000004e0000005200000057000000590000005e000000600000006200000067000000690000006b00000001000000780000007d0000007f00000080000000
+        paramByteDataSize: 04000000050000000500000005000000000000000000000001000000000000001d000000040000000500000002000000050000000800000000000000050000000400000005000000020000000500000002000000020000000500000002000000020000000d0000000000000005000000020000000100000011000000
+    - name: Show Destination Position
+      description: 
       colorIndex: 0
       position:
-        x: 63
-        y: 382
-        width: 318.5
+        serializedVersion: 2
+        x: 281
+        y: 236
+        width: 193
         height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: 46494e4953484544
+          name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: 4d6f7665546f204c6f636174696f6e
+        toState: Move To Destination
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - 4875746f6e6747616d65732e506c61794d616b65722e416374696f6e732e5472616e736c617465
+        - HutongGames.PlayMaker.Actions.Translate
         customNames:
         - 
-        actionEnabled:
-        - 1
-        actionIsOpen:
-        - 1
+        actionEnabled: 01
+        actionIsOpen: 01
         actionStartIndex: 00000000
         actionHashCodes: 1d4debbb
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
-        - gameObject:
+        - ownerOption: 1
+          gameObject:
             useVariable: 0
             name: 
             tooltip: 
@@ -938,91 +720,33 @@ MonoBehaviour:
         fsmStringParams: []
         fsmObjectParams: []
         fsmVarParams: []
-        byteData:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 77
-        - 111
-        - 118
-        - 101
-        - 84
-        - 111
-        - 76
-        - 111
-        - 99
-        - 97
-        - 116
-        - 105
-        - 111
-        - 110
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 1
-        - 1
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
+        byteData: 0000000000000000000000000144657374696e6174696f6e506f696e740000000001000000000100000000010100000000000000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
         paramDataType: 140000001c0000000f0000000f0000000f0000000700000001000000010000000100000001000000
         paramName:
-        - 67616d654f626a656374
-        - 766563746f72
-        - 78
-        - 79
-        - 7a
-        - 7370616365
-        - 7065725365636f6e64
-        - 65766572794672616d65
-        - 6c617465557064617465
-        - 6669786564557064617465
-        paramDataPos: 00000000000000001b00000020000000250000002a0000002e0000002f0000003000000031000000
-        paramByteDataSize: 000000001b0000000500000005000000050000000400000001000000010000000100000001000000
+        - gameObject
+        - vector
+        - x
+        - y
+        - z
+        - space
+        - perSecond
+        - everyFrame
+        - lateUpdate
+        - fixedUpdate
+        paramDataPos: 00000000000000001d00000022000000270000002c00000030000000310000003200000033000000
+        paramByteDataSize: 000000001d0000000500000005000000050000000400000001000000010000000100000001000000
     events:
-    - name: 46494e4953484544
+    - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: 4d4f55534520444f574e
+    - name: MOUSE DOWN
       isSystemEvent: 1
       isGlobal: 0
-    globalTransitions:
-    - fsmEvent:
-        name: 4d4f55534520444f574e
-        isSystemEvent: 1
-        isGlobal: 0
-      toState: 53656c656374204d6f7665546f204c6f636174696f6e
-      linkStyle: 0
-      linkConstraint: 0
-      colorIndex: 0
+    globalTransitions: []
     variables:
       floatVariables: []
       intVariables: []
@@ -1031,7 +755,7 @@ MonoBehaviour:
       vector2Variables: []
       vector3Variables:
       - useVariable: 1
-        name: 4d6f7665546f4c6f636174696f6e
+        name: DestinationPoint
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -1043,10 +767,12 @@ MonoBehaviour:
       objectVariables: []
       materialVariables: []
       textureVariables: []
-    description: 546865206578616d706c65206265686176696f757220666f72206d6f76696e67206120706c617965722061726f756e642062617365642075706f6e206d6f75736520636c69636b7320746f20706f736974696f6e732e
+    description: 
     docUrl: 
     showStateLabel: 1
+    maxLoopCount: 0
     watermark: 
+    version: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -1183,6 +909,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
+  m_OcclusionCulling: 1
 --- !u!4 &1148951532
 Transform:
   m_ObjectHideFlags: 0
@@ -1241,6 +968,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &1266138455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1260,2625 +990,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1266138452}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1442480097
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1442480098}
-  - 114: {fileID: 1442480099}
-  - 114: {fileID: 1442480100}
-  m_Layer: 0
-  m_Name: PathFinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1442480098
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1442480097}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.84797287, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1442480099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1442480097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  astarData:
-    hasBeenReverted: 0
-    data:
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 51
-    - 195
-    - 237
-    - 214
-    - 228
-    - 1
-    - 0
-    - 0
-    - 156
-    - 3
-    - 0
-    - 0
-    - 11
-    - 0
-    - 36
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 93
-    - 82
-    - 93
-    - 143
-    - 155
-    - 48
-    - 16
-    - 252
-    - 43
-    - 149
-    - 159
-    - 147
-    - 8
-    - 56
-    - 8
-    - 33
-    - 111
-    - 215
-    - 164
-    - 151
-    - 86
-    - 186
-    - 246
-    - 78
-    - 151
-    - 86
-    - 125
-    - 222
-    - 152
-    - 37
-    - 88
-    - 49
-    - 54
-    - 178
-    - 77
-    - 47
-    - 201
-    - 233
-    - 254
-    - 123
-    - 215
-    - 134
-    - 124
-    - 190
-    - 32
-    - 152
-    - 157
-    - 221
-    - 157
-    - 153
-    - 229
-    - 131
-    - 109
-    - 59
-    - 81
-    - 178
-    - 249
-    - 7
-    - 251
-    - 7
-    - 178
-    - 67
-    - 54
-    - 103
-    - 85
-    - 85
-    - 22
-    - 83
-    - 172
-    - 18
-    - 200
-    - 56
-    - 20
-    - 179
-    - 7
-    - 62
-    - 46
-    - 121
-    - 149
-    - 102
-    - 252
-    - 161
-    - 216
-    - 228
-    - 241
-    - 166
-    - 200
-    - 171
-    - 41
-    - 251
-    - 28
-    - 49
-    - 176
-    - 45
-    - 114
-    - 247
-    - 6
-    - 78
-    - 104
-    - 54
-    - 143
-    - 71
-    - 204
-    - 104
-    - 231
-    - 223
-    - 149
-    - 31
-    - 180
-    - 103
-    - 243
-    - 104
-    - 196
-    - 14
-    - 225
-    - 121
-    - 164
-    - 39
-    - 209
-    - 57
-    - 42
-    - 135
-    - 102
-    - 40
-    - 142
-    - 179
-    - 73
-    - 154
-    - 68
-    - 121
-    - 148
-    - 4
-    - 82
-    - 49
-    - 73
-    - 163
-    - 60
-    - 155
-    - 197
-    - 129
-    - 59
-    - 142
-    - 38
-    - 69
-    - 50
-    - 203
-    - 178
-    - 56
-    - 167
-    - 166
-    - 78
-    - 113
-    - 9
-    - 77
-    - 139
-    - 229
-    - 90
-    - 28
-    - 113
-    - 232
-    - 205
-    - 162
-    - 73
-    - 50
-    - 205
-    - 102
-    - 105
-    - 146
-    - 134
-    - 102
-    - 250
-    - 140
-    - 211
-    - 116
-    - 86
-    - 228
-    - 25
-    - 241
-    - 149
-    - 46
-    - 177
-    - 167
-    - 210
-    - 48
-    - 174
-    - 165
-    - 20
-    - 118
-    - 80
-    - 228
-    - 14
-    - 173
-    - 119
-    - 182
-    - 128
-    - 214
-    - 118
-    - 18
-    - 217
-    - 136
-    - 149
-    - 2
-    - 26
-    - 12
-    - 138
-    - 136
-    - 90
-    - 163
-    - 216
-    - 214
-    - 142
-    - 205
-    - 147
-    - 171
-    - 174
-    - 151
-    - 170
-    - 178
-    - 232
-    - 130
-    - 5
-    - 3
-    - 135
-    - 165
-    - 48
-    - 228
-    - 54
-    - 12
-    - 99
-    - 95
-    - 181
-    - 171
-    - 105
-    - 66
-    - 3
-    - 118
-    - 119
-    - 149
-    - 154
-    - 55
-    - 217
-    - 207
-    - 249
-    - 121
-    - 91
-    - 24
-    - 199
-    - 84
-    - 169
-    - 140
-    - 110
-    - 190
-    - 15
-    - 91
-    - 226
-    - 136
-    - 102
-    - 186
-    - 90
-    - 240
-    - 221
-    - 27
-    - 28
-    - 56
-    - 88
-    - 130
-    - 42
-    - 144
-    - 22
-    - 111
-    - 193
-    - 229
-    - 181
-    - 192
-    - 174
-    - 189
-    - 137
-    - 53
-    - 190
-    - 196
-    - 122
-    - 146
-    - 187
-    - 168
-    - 145
-    - 211
-    - 86
-    - 103
-    - 58
-    - 60
-    - 233
-    - 184
-    - 129
-    - 58
-    - 245
-    - 14
-    - 114
-    - 7
-    - 27
-    - 137
-    - 127
-    - 107
-    - 84
-    - 191
-    - 244
-    - 202
-    - 232
-    - 78
-    - 149
-    - 125
-    - 245
-    - 211
-    - 155
-    - 217
-    - 47
-    - 164
-    - 104
-    - 54
-    - 52
-    - 117
-    - 146
-    - 94
-    - 62
-    - 31
-    - 247
-    - 194
-    - 134
-    - 117
-    - 4
-    - 172
-    - 165
-    - 246
-    - 25
-    - 22
-    - 36
-    - 1
-    - 13
-    - 5
-    - 253
-    - 131
-    - 196
-    - 133
-    - 139
-    - 219
-    - 32
-    - 139
-    - 48
-    - 175
-    - 227
-    - 143
-    - 197
-    - 223
-    - 176
-    - 181
-    - 103
-    - 75
-    - 3
-    - 252
-    - 36
-    - 140
-    - 117
-    - 84
-    - 8
-    - 195
-    - 160
-    - 115
-    - 250
-    - 89
-    - 168
-    - 221
-    - 202
-    - 136
-    - 242
-    - 194
-    - 60
-    - 161
-    - 75
-    - 97
-    - 221
-    - 179
-    - 104
-    - 68
-    - 72
-    - 138
-    - 110
-    - 234
-    - 189
-    - 108
-    - 116
-    - 103
-    - 136
-    - 201
-    - 190
-    - 133
-    - 4
-    - 201
-    - 118
-    - 231
-    - 22
-    - 218
-    - 40
-    - 244
-    - 96
-    - 239
-    - 175
-    - 69
-    - 5
-    - 210
-    - 29
-    - 94
-    - 105
-    - 155
-    - 187
-    - 189
-    - 222
-    - 93
-    - 229
-    - 188
-    - 239
-    - 14
-    - 127
-    - 2
-    - 238
-    - 116
-    - 159
-    - 246
-    - 80
-    - 121
-    - 84
-    - 91
-    - 250
-    - 85
-    - 238
-    - 232
-    - 1
-    - 60
-    - 115
-    - 253
-    - 37
-    - 133
-    - 162
-    - 126
-    - 144
-    - 175
-    - 125
-    - 61
-    - 172
-    - 164
-    - 160
-    - 46
-    - 123
-    - 20
-    - 221
-    - 145
-    - 164
-    - 123
-    - 179
-    - 95
-    - 86
-    - 6
-    - 90
-    - 255
-    - 239
-    - 148
-    - 6
-    - 222
-    - 87
-    - 226
-    - 216
-    - 232
-    - 179
-    - 126
-    - 161
-    - 42
-    - 189
-    - 230
-    - 6
-    - 81
-    - 189
-    - 92
-    - 154
-    - 63
-    - 255
-    - 3
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 40
-    - 126
-    - 24
-    - 170
-    - 67
-    - 0
-    - 0
-    - 0
-    - 72
-    - 0
-    - 0
-    - 0
-    - 18
-    - 0
-    - 36
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 95
-    - 101
-    - 100
-    - 105
-    - 116
-    - 111
-    - 114
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 171
-    - 86
-    - 202
-    - 201
-    - 79
-    - 206
-    - 78
-    - 77
-    - 81
-    - 178
-    - 42
-    - 41
-    - 42
-    - 77
-    - 213
-    - 81
-    - 42
-    - 206
-    - 200
-    - 47
-    - 119
-    - 173
-    - 40
-    - 41
-    - 74
-    - 84
-    - 178
-    - 74
-    - 75
-    - 204
-    - 41
-    - 6
-    - 138
-    - 148
-    - 164
-    - 86
-    - 148
-    - 148
-    - 22
-    - 165
-    - 134
-    - 101
-    - 22
-    - 103
-    - 38
-    - 229
-    - 164
-    - 194
-    - 212
-    - 21
-    - 100
-    - 150
-    - 229
-    - 151
-    - 40
-    - 89
-    - 41
-    - 57
-    - 167
-    - 230
-    - 149
-    - 164
-    - 22
-    - 41
-    - 213
-    - 2
-    - 0
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 240
-    - 7
-    - 142
-    - 200
-    - 121
-    - 0
-    - 0
-    - 0
-    - 136
-    - 0
-    - 0
-    - 0
-    - 9
-    - 0
-    - 36
-    - 0
-    - 109
-    - 101
-    - 116
-    - 97
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 29
-    - 140
-    - 177
-    - 14
-    - 131
-    - 32
-    - 20
-    - 0
-    - 255
-    - 229
-    - 205
-    - 150
-    - 8
-    - 20
-    - 45
-    - 174
-    - 29
-    - 220
-    - 26
-    - 247
-    - 198
-    - 1
-    - 121
-    - 60
-    - 101
-    - 40
-    - 24
-    - 68
-    - 147
-    - 166
-    - 233
-    - 191
-    - 87
-    - 186
-    - 221
-    - 112
-    - 119
-    - 31
-    - 56
-    - 92
-    - 218
-    - 124
-    - 12
-    - 208
-    - 129
-    - 100
-    - 130
-    - 41
-    - 198
-    - 161
-    - 130
-    - 57
-    - 153
-    - 117
-    - 217
-    - 160
-    - 227
-    - 39
-    - 238
-    - 30
-    - 79
-    - 122
-    - 2
-    - 17
-    - 234
-    - 198
-    - 145
-    - 48
-    - 202
-    - 26
-    - 125
-    - 147
-    - 246
-    - 130
-    - 150
-    - 174
-    - 202
-    - 74
-    - 61
-    - 181
-    - 124
-    - 210
-    - 45
-    - 53
-    - 48
-    - 86
-    - 144
-    - 223
-    - 171
-    - 123
-    - 152
-    - 151
-    - 251
-    - 23
-    - 131
-    - 201
-    - 11
-    - 249
-    - 128
-    - 62
-    - 204
-    - 172
-    - 79
-    - 30
-    - 251
-    - 114
-    - 45
-    - 86
-    - 136
-    - 232
-    - 238
-    - 113
-    - 15
-    - 185
-    - 104
-    - 66
-    - 213
-    - 245
-    - 248
-    - 253
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 51
-    - 195
-    - 237
-    - 214
-    - 228
-    - 1
-    - 0
-    - 0
-    - 156
-    - 3
-    - 0
-    - 0
-    - 11
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 40
-    - 126
-    - 24
-    - 170
-    - 67
-    - 0
-    - 0
-    - 0
-    - 72
-    - 0
-    - 0
-    - 0
-    - 18
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 49
-    - 2
-    - 0
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 95
-    - 101
-    - 100
-    - 105
-    - 116
-    - 111
-    - 114
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 240
-    - 7
-    - 142
-    - 200
-    - 121
-    - 0
-    - 0
-    - 0
-    - 136
-    - 0
-    - 0
-    - 0
-    - 9
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 200
-    - 2
-    - 0
-    - 0
-    - 109
-    - 101
-    - 116
-    - 97
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 80
-    - 75
-    - 5
-    - 6
-    - 0
-    - 0
-    - 0
-    - 0
-    - 3
-    - 0
-    - 3
-    - 0
-    - 28
-    - 1
-    - 0
-    - 0
-    - 140
-    - 3
-    - 0
-    - 0
-    - 0
-    - 0
-    data_backup: []
-    data_cachedStartup: []
-    revertData: []
-    cacheStartup: 0
-    compress: 0
-  showNavGraphs: 1
-  showUnwalkableNodes: 1
-  debugMode: 0
-  debugFloor: 0
-  debugRoof: 20000
-  showSearchTree: 0
-  unwalkableNodeDebugSize: .300000012
-  stepByStep: 1
-  logPathResults: 1
-  maxNearestNodeDistance: 100
-  scanOnStartup: 1
-  fullGetNearestSearch: 0
-  prioritizeGraphs: 0
-  prioritizeGraphsLimit: 1
-  colorSettings:
-    _NodeConnection:
-      r: 1
-      g: 1
-      b: 1
-      a: .899999976
-    _UnwalkableNode:
-      r: 1
-      g: 0
-      b: 0
-      a: .5
-    _BoundsHandles:
-      r: .289999992
-      g: .453999996
-      b: .740999997
-      a: .899999976
-    _ConnectionLowLerp:
-      r: 0
-      g: 1
-      b: 0
-      a: .5
-    _ConnectionHighLerp:
-      r: 1
-      g: 0
-      b: 0
-      a: .5
-    _MeshEdgeColor:
-      r: 0
-      g: 0
-      b: 0
-      a: .5
-    _MeshColor:
-      r: .125
-      g: .68599999
-      b: 0
-      a: .189999998
-    _AreaColors: []
-  tagNames: []
-  heuristic: 2
-  heuristicScale: 1
-  threadCount: 0
-  maxFrameTime: 1
-  recyclePaths: 0
-  minAreaSize: 10
-  limitGraphUpdates: 1
-  maxGraphUpdateFreq: .200000003
-  lastScanTime: .051034499
-  inGameDebugPath: 
-  isScanning: 0
-  showGraphs: 1
-  lastUniqueAreaIndex: 9
---- !u!114 &1442480100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1442480097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67ff733b14cfeeb4e82e86b293295e6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  astarData:
-    hasBeenReverted: 0
-    data:
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 21
-    - 69
-    - 114
-    - 67
-    - 1
-    - 36
-    - 179
-    - 154
-    - 216
-    - 1
-    - 0
-    - 0
-    - 143
-    - 3
-    - 0
-    - 0
-    - 11
-    - 0
-    - 36
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 245
-    - 36
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 245
-    - 36
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 245
-    - 36
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 93
-    - 82
-    - 93
-    - 111
-    - 218
-    - 64
-    - 16
-    - 252
-    - 43
-    - 213
-    - 61
-    - 3
-    - 50
-    - 6
-    - 215
-    - 49
-    - 111
-    - 41
-    - 52
-    - 180
-    - 82
-    - 218
-    - 68
-    - 33
-    - 85
-    - 159
-    - 215
-    - 231
-    - 5
-    - 159
-    - 56
-    - 223
-    - 89
-    - 247
-    - 209
-    - 0
-    - 17
-    - 255
-    - 189
-    - 123
-    - 103
-    - 243
-    - 201
-    - 131
-    - 133
-    - 103
-    - 118
-    - 103
-    - 103
-    - 103
-    - 253
-    - 201
-    - 54
-    - 94
-    - 84
-    - 108
-    - 246
-    - 201
-    - 254
-    - 129
-    - 244
-    - 200
-    - 102
-    - 172
-    - 228
-    - 85
-    - 193
-    - 161
-    - 72
-    - 10
-    - 204
-    - 211
-    - 73
-    - 86
-    - 192
-    - 176
-    - 128
-    - 170
-    - 204
-    - 190
-    - 230
-    - 15
-    - 57
-    - 240
-    - 242
-    - 1
-    - 166
-    - 99
-    - 118
-    - 28
-    - 48
-    - 176
-    - 45
-    - 114
-    - 247
-    - 6
-    - 78
-    - 104
-    - 54
-    - 27
-    - 15
-    - 152
-    - 209
-    - 46
-    - 252
-    - 87
-    - 65
-    - 104
-    - 199
-    - 102
-    - 201
-    - 128
-    - 237
-    - 227
-    - 243
-    - 64
-    - 79
-    - 42
-    - 231
-    - 168
-    - 28
-    - 154
-    - 158
-    - 28
-    - 230
-    - 163
-    - 44
-    - 201
-    - 39
-    - 249
-    - 180
-    - 43
-    - 26
-    - 77
-    - 210
-    - 60
-    - 205
-    - 147
-    - 44
-    - 22
-    - 15
-    - 211
-    - 81
-    - 50
-    - 205
-    - 166
-    - 244
-    - 43
-    - 168
-    - 205
-    - 43
-    - 46
-    - 161
-    - 105
-    - 177
-    - 90
-    - 137
-    - 3
-    - 246
-    - 221
-    - 89
-    - 167
-    - 157
-    - 5
-    - 89
-    - 165
-    - 43
-    - 236
-    - 168
-    - 116
-    - 68
-    - 253
-    - 92
-    - 75
-    - 41
-    - 108
-    - 239
-    - 194
-    - 237
-    - 219
-    - 176
-    - 205
-    - 28
-    - 90
-    - 235
-    - 37
-    - 178
-    - 1
-    - 171
-    - 4
-    - 52
-    - 24
-    - 93
-    - 144
-    - 223
-    - 26
-    - 197
-    - 166
-    - 118
-    - 212
-    - 119
-    - 213
-    - 245
-    - 178
-    - 94
-    - 91
-    - 116
-    - 209
-    - 182
-    - 129
-    - 253
-    - 66
-    - 24
-    - 218
-    - 48
-    - 138
-    - 177
-    - 111
-    - 218
-    - 213
-    - 164
-    - 208
-    - 128
-    - 221
-    - 94
-    - 37
-    - 21
-    - 28
-    - 116
-    - 58
-    - 191
-    - 110
-    - 137
-    - 225
-    - 152
-    - 152
-    - 181
-    - 209
-    - 205
-    - 143
-    - 126
-    - 202
-    - 56
-    - 33
-    - 77
-    - 87
-    - 11
-    - 190
-    - 125
-    - 131
-    - 61
-    - 7
-    - 75
-    - 208
-    - 26
-    - 164
-    - 197
-    - 91
-    - 112
-    - 113
-    - 109
-    - 208
-    - 183
-    - 55
-    - 81
-    - 142
-    - 47
-    - 81
-    - 158
-    - 236
-    - 206
-    - 107
-    - 228
-    - 52
-    - 213
-    - 25
-    - 143
-    - 39
-    - 31
-    - 55
-    - 144
-    - 87
-    - 31
-    - 32
-    - 183
-    - 80
-    - 74
-    - 252
-    - 91
-    - 163
-    - 250
-    - 173
-    - 151
-    - 70
-    - 123
-    - 85
-    - 117
-    - 236
-    - 49
-    - 44
-    - 179
-    - 155
-    - 75
-    - 209
-    - 148
-    - 225
-    - 2
-    - 211
-    - 203
-    - 235
-    - 227
-    - 78
-    - 216
-    - 56
-    - 142
-    - 128
-    - 149
-    - 212
-    - 33
-    - 195
-    - 130
-    - 44
-    - 160
-    - 161
-    - 168
-    - 127
-    - 146
-    - 185
-    - 120
-    - 101
-    - 27
-    - 109
-    - 17
-    - 22
-    - 124
-    - 252
-    - 177
-    - 248
-    - 14
-    - 27
-    - 123
-    - 94
-    - 169
-    - 135
-    - 159
-    - 132
-    - 177
-    - 142
-    - 136
-    - 40
-    - 6
-    - 222
-    - 233
-    - 103
-    - 161
-    - 182
-    - 75
-    - 35
-    - 170
-    - 75
-    - 229
-    - 9
-    - 93
-    - 8
-    - 235
-    - 158
-    - 69
-    - 35
-    - 98
-    - 82
-    - 116
-    - 213
-    - 176
-    - 75
-    - 169
-    - 189
-    - 161
-    - 74
-    - 246
-    - 61
-    - 38
-    - 72
-    - 107
-    - 123
-    - 55
-    - 215
-    - 70
-    - 97
-    - 0
-    - 187
-    - 253
-    - 90
-    - 84
-    - 32
-    - 221
-    - 254
-    - 149
-    - 166
-    - 185
-    - 219
-    - 235
-    - 221
-    - 49
-    - 231
-    - 121
-    - 119
-    - 248
-    - 19
-    - 112
-    - 167
-    - 187
-    - 180
-    - 123
-    - 230
-    - 81
-    - 109
-    - 232
-    - 83
-    - 185
-    - 43
-    - 143
-    - 224
-    - 185
-    - 54
-    - 92
-    - 82
-    - 40
-    - 234
-    - 7
-    - 249
-    - 218
-    - 241
-    - 113
-    - 36
-    - 5
-    - 165
-    - 78
-    - 198
-    - 20
-    - 157
-    - 145
-    - 156
-    - 135
-    - 93
-    - 191
-    - 44
-    - 13
-    - 180
-    - 225
-    - 211
-    - 169
-    - 12
-    - 124
-    - 44
-    - 197
-    - 161
-    - 209
-    - 103
-    - 251
-    - 66
-    - 173
-    - 245
-    - 138
-    - 27
-    - 68
-    - 245
-    - 18
-    - 123
-    - 227
-    - 208
-    - 227
-    - 127
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 21
-    - 69
-    - 114
-    - 67
-    - 40
-    - 126
-    - 24
-    - 170
-    - 67
-    - 0
-    - 0
-    - 0
-    - 72
-    - 0
-    - 0
-    - 0
-    - 18
-    - 0
-    - 36
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 95
-    - 101
-    - 100
-    - 105
-    - 116
-    - 111
-    - 114
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 5
-    - 76
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 5
-    - 76
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 5
-    - 76
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 171
-    - 86
-    - 202
-    - 201
-    - 79
-    - 206
-    - 78
-    - 77
-    - 81
-    - 178
-    - 42
-    - 41
-    - 42
-    - 77
-    - 213
-    - 81
-    - 42
-    - 206
-    - 200
-    - 47
-    - 119
-    - 173
-    - 40
-    - 41
-    - 74
-    - 84
-    - 178
-    - 74
-    - 75
-    - 204
-    - 41
-    - 6
-    - 138
-    - 148
-    - 164
-    - 86
-    - 148
-    - 148
-    - 22
-    - 165
-    - 134
-    - 101
-    - 22
-    - 103
-    - 38
-    - 229
-    - 164
-    - 194
-    - 212
-    - 21
-    - 100
-    - 150
-    - 229
-    - 151
-    - 40
-    - 89
-    - 41
-    - 57
-    - 167
-    - 230
-    - 149
-    - 164
-    - 22
-    - 41
-    - 213
-    - 2
-    - 0
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 21
-    - 69
-    - 114
-    - 67
-    - 4
-    - 26
-    - 224
-    - 237
-    - 120
-    - 0
-    - 0
-    - 0
-    - 135
-    - 0
-    - 0
-    - 0
-    - 9
-    - 0
-    - 36
-    - 0
-    - 109
-    - 101
-    - 116
-    - 97
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 22
-    - 115
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 22
-    - 115
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 22
-    - 115
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 29
-    - 140
-    - 177
-    - 14
-    - 131
-    - 32
-    - 20
-    - 0
-    - 255
-    - 229
-    - 205
-    - 150
-    - 128
-    - 138
-    - 136
-    - 107
-    - 7
-    - 183
-    - 166
-    - 123
-    - 227
-    - 240
-    - 224
-    - 161
-    - 50
-    - 20
-    - 12
-    - 98
-    - 147
-    - 166
-    - 233
-    - 191
-    - 87
-    - 186
-    - 221
-    - 112
-    - 119
-    - 31
-    - 120
-    - 185
-    - 180
-    - 251
-    - 24
-    - 96
-    - 128
-    - 134
-    - 213
-    - 76
-    - 50
-    - 1
-    - 21
-    - 44
-    - 9
-    - 183
-    - 117
-    - 135
-    - 65
-    - 156
-    - 120
-    - 120
-    - 58
-    - 233
-    - 1
-    - 198
-    - 146
-    - 182
-    - 168
-    - 185
-    - 118
-    - 170
-    - 110
-    - 164
-    - 198
-    - 139
-    - 70
-    - 50
-    - 178
-    - 83
-    - 189
-    - 66
-    - 107
-    - 122
-    - 108
-    - 5
-    - 76
-    - 21
-    - 228
-    - 247
-    - 230
-    - 110
-    - 248
-    - 116
-    - 255
-    - 226
-    - 142
-    - 121
-    - 157
-    - 125
-    - 32
-    - 31
-    - 22
-    - 54
-    - 38
-    - 79
-    - 99
-    - 185
-    - 22
-    - 43
-    - 68
-    - 114
-    - 215
-    - 120
-    - 132
-    - 92
-    - 180
-    - 150
-    - 243
-    - 233
-    - 251
-    - 3
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 21
-    - 69
-    - 114
-    - 67
-    - 1
-    - 36
-    - 179
-    - 154
-    - 216
-    - 1
-    - 0
-    - 0
-    - 143
-    - 3
-    - 0
-    - 0
-    - 11
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 245
-    - 36
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 245
-    - 36
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 245
-    - 36
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 21
-    - 69
-    - 114
-    - 67
-    - 40
-    - 126
-    - 24
-    - 170
-    - 67
-    - 0
-    - 0
-    - 0
-    - 72
-    - 0
-    - 0
-    - 0
-    - 18
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 37
-    - 2
-    - 0
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 95
-    - 101
-    - 100
-    - 105
-    - 116
-    - 111
-    - 114
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 5
-    - 76
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 5
-    - 76
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 5
-    - 76
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 21
-    - 69
-    - 114
-    - 67
-    - 4
-    - 26
-    - 224
-    - 237
-    - 120
-    - 0
-    - 0
-    - 0
-    - 135
-    - 0
-    - 0
-    - 0
-    - 9
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 188
-    - 2
-    - 0
-    - 0
-    - 109
-    - 101
-    - 116
-    - 97
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 22
-    - 115
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 22
-    - 115
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 22
-    - 115
-    - 252
-    - 123
-    - 49
-    - 228
-    - 206
-    - 1
-    - 80
-    - 75
-    - 5
-    - 6
-    - 0
-    - 0
-    - 0
-    - 0
-    - 3
-    - 0
-    - 3
-    - 0
-    - 28
-    - 1
-    - 0
-    - 0
-    - 127
-    - 3
-    - 0
-    - 0
-    - 0
-    - 0
-    data_backup: []
-    data_cachedStartup: []
-    revertData: []
-    cacheStartup: 0
-    compress: 0
-  showNavGraphs: 1
-  showUnwalkableNodes: 1
-  debugFloor: 0
-  debugRoof: 20000
-  showSearchTree: 0
-  unwalkableNodeDebugSize: .300000012
-  stepByStep: 1
-  maxNearestNodeDistance: 100
-  scanOnStartup: 1
-  fullGetNearestSearch: 0
-  prioritizeGraphs: 0
-  prioritizeGraphsLimit: 1
-  colorSettings:
-    _NodeConnection:
-      r: 1
-      g: 1
-      b: 1
-      a: .899999976
-    _UnwalkableNode:
-      r: 1
-      g: 0
-      b: 0
-      a: .5
-    _BoundsHandles:
-      r: .289999992
-      g: .453999996
-      b: .740999997
-      a: .899999976
-    _ConnectionLowLerp:
-      r: 0
-      g: 1
-      b: 0
-      a: .5
-    _ConnectionHighLerp:
-      r: 1
-      g: 0
-      b: 0
-      a: .5
-    _MeshEdgeColor:
-      r: 0
-      g: 0
-      b: 0
-      a: .5
-    _MeshColor:
-      r: .125
-      g: .68599999
-      b: 0
-      a: .189999998
-    _AreaColors: []
-  tagNames: []
-  heuristicScale: 1
-  maxFrameTime: 1
-  recyclePaths: 0
-  limitGraphUpdates: 1
-  maxGraphUpdateFreq: .200000003
-  lastScanTime: .0880049989
-  inGameDebugPath: 
-  isScanning: 0
-  showGraphs: 1
 --- !u!1 &1473926370
 GameObject:
   m_ObjectHideFlags: 0
@@ -3915,6 +1026,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &1473926372
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3945,6 +1059,89 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!1 &1571994301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1571994302}
+  - 114: {fileID: 1571994303}
+  m_Layer: 0
+  m_Name: Pathfinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1571994302
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1571994301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1571994303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1571994301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  astarData:
+    hasBeenReverted: 0
+    data: 504b0304140000080800a8ad7443234a3c65de010000950300000b0024006772617068302e6a736f6e0a0020000000000001001800dbf6b8cc39e6ce01dbf6b8cc39e6ce01dbf6b8cc39e6ce015d525d6fda4010fc2bd53d03b24d6c0c6f2924a452da44a1559f177b8d4f9cefacfb688088ffdebdb3f97cb1ecd9d9dd99597fb18de3259b7db17f201cb2192b26d318e2719aaeb3641d433e84388112a148b334c9f308d871c0c0b458d80fb05cb1593c605a59ff2efda01d9b4503b60fcf033d895ea0b4a8fbe2f06194e46994c557a4613c4a9274924ca29ce84e16029a16cb153f60df954e46c9341f67a1298d465136ceb374426ca94aec8834b1504270d32bb1fbd63b9a436b9c4036602587068312a2d6c837b565b3e4aaebadaa0cdaa04ac37ec135b90cc3d877656b9ad080d95ea5e5cd75737ede168631552aad9a977e4b1cd14c5bf362fb01fb020c41150883b7e0e25aa06b6fe28c2f719ee4ce6b2c68abd50e4f3a6e20273f416c612df06f8df2975a6ae564d9558fdecc6e2e78b3a6a9a387cbe7e38e9bb08e8095503ec32949404d41ff2071e1d226c822ccebf863f0376cccd9520f3f736d2c15c2307056bd72b95d6a5e5e982774c18d7de50d0f49d14dbd97b5729a98ec292448b69d9d2b2dd1839dbf162508bb7fa76df6f67a7795f3be3bfc190aabbab4fbcaa3dcd0af72470fe099eb2fc925f58378efea612505254fc2249d91942fb00227ecb7a586d6ff3da586cf253f34eaec80cb4aad0a8d28dfceedc7ff504b0304140000080800a8ad7443287e18aa4300000048000000120024006772617068305f656469746f722e6a736f6e0a0020000000000001001800dbf6b8cc39e6ce01dbf6b8cc39e6ce01dbf6b8cc39e6ce01ab56cac94fce4e4d51b22a292a4dd5512acec82f77ad28294a54b24a4bcc29068a94a456949416a58665166726e5a4c2d4156496e59728592939a7e695a41629d50200504b0304140000080800a8ad7443dadee2fd7800000088000000090024006d6574612e6a736f6e0a0020000000000001001800f21db9cc39e6ce01f21db9cc39e6ce01f21db9cc39e6ce011d8cb10e82301040ffe5666cb892c3caeac046dc0dc3412bdc604b4a3131847f97babde1bdb7c3c7c5558287062aa515298402a6c8cbbc4283276e624f7ac278bd21634534d47a40361746cdd6f1483569634a86be80f45d5cc76ff72f1e9ce697782b7e526d14dbe66bb67cb0ee1e369fb2a60d95fdf103504b01022d00140000080800a8ad7443234a3c65de010000950300000b00240000000000000000000000000000006772617068302e6a736f6e0a0020000000000001001800dbf6b8cc39e6ce01dbf6b8cc39e6ce01dbf6b8cc39e6ce01504b01022d00140000080800a8ad7443287e18aa430000004800000012002400000000000000000000002b0200006772617068305f656469746f722e6a736f6e0a0020000000000001001800dbf6b8cc39e6ce01dbf6b8cc39e6ce01dbf6b8cc39e6ce01504b01022d00140000080800a8ad7443dadee2fd78000000880000000900240000000000000000000000c20200006d6574612e6a736f6e0a0020000000000001001800f21db9cc39e6ce01f21db9cc39e6ce01f21db9cc39e6ce01504b050600000000030003001c010000850300000000
+    data_backup: 
+    data_cachedStartup: 
+    revertData: 
+    cacheStartup: 0
+    compress: 0
+  showNavGraphs: 1
+  showUnwalkableNodes: 1
+  debugMode: 0
+  debugFloor: 0
+  debugRoof: 20000
+  showSearchTree: 0
+  unwalkableNodeDebugSize: .300000012
+  stepByStep: 1
+  logPathResults: 1
+  maxNearestNodeDistance: 100
+  scanOnStartup: 1
+  fullGetNearestSearch: 0
+  prioritizeGraphs: 0
+  prioritizeGraphsLimit: 1
+  colorSettings:
+    _NodeConnection: {r: 1, g: 1, b: 1, a: .899999976}
+    _UnwalkableNode: {r: 1, g: 0, b: 0, a: .5}
+    _BoundsHandles: {r: .289999992, g: .453999996, b: .740999997, a: .899999976}
+    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: .5}
+    _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: .5}
+    _MeshEdgeColor: {r: 0, g: 0, b: 0, a: .5}
+    _MeshColor: {r: .125, g: .68599999, b: 0, a: .189999998}
+    _AreaColors: []
+  tagNames: []
+  heuristic: 2
+  heuristicScale: 1
+  threadCount: 0
+  maxFrameTime: 1
+  recyclePaths: 0
+  minAreaSize: 10
+  limitGraphUpdates: 1
+  maxGraphUpdateFreq: .200000003
+  lastScanTime: .035023801
+  inGameDebugPath: 
+  isScanning: 0
+  showGraphs: 1
+  lastUniqueAreaIndex: 9
 --- !u!1 &1625168813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3992,6 +1189,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &1625168816
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4067,6 +1267,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!4 &1739067068
 Transform:
   m_ObjectHideFlags: 0
@@ -4105,11 +1308,9 @@ MonoBehaviour:
   m_Script: {fileID: -73581967, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
   previewOnGUI: 1
   enableGUILayout: 1
-  drawStateLabels: 0
+  drawStateLabels: 1
   GUITextureStateLabels: 1
   GUITextStateLabels: 1
   filterLabelsWithDistance: 0
@@ -4209,6 +1410,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &1957754573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4275,6 +1479,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &2010046852
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4341,6 +1548,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!65 &2069712854
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: 67ff733b14cfeeb4e82e86b293295e6c
+guid: 78396926cbbfc4ac3b48fc5fc34a87d1
+labels:
+- Pathfinder
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []

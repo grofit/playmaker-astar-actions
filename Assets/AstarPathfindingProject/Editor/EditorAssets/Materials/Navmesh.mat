@@ -9,6 +9,7 @@ Material:
   m_Name: Navmesh
   m_Shader: {fileID: 4800000, guid: 6dad35c0b62e44c26ab244ad80deee1a, type: 3}
   m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -57,16 +58,16 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _FadeColor
-        second: {r: 1, g: 1, b: 1, a: .23137255}
+          name: _Emission
+        second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
           name: _SpecColor
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _Emission
-        second: {r: 0, g: 0, b: 0, a: 1}
+          name: _FadeColor
+        second: {r: 1, g: 1, b: 1, a: .23137255}
       data:
         first:
           name: _TintColor
