@@ -85,7 +85,7 @@ GameObject:
   - 33: {fileID: 35216887}
   - 65: {fileID: 35216886}
   - 23: {fileID: 35216885}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - 33: {fileID: 50699897}
   - 64: {fileID: 50699896}
   - 23: {fileID: 50699895}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   - 33: {fileID: 330017208}
   - 65: {fileID: 330017207}
   - 23: {fileID: 330017206}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   - 33: {fileID: 810017961}
   - 65: {fileID: 810017960}
   - 23: {fileID: 810017959}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,16 +437,19 @@ MonoBehaviour:
   fsm:
     usedInTemplate: {fileID: 0}
     name: MoveToPlayerBehaviour
-    startState: Await Input
+    startState: Await Event Notification
     states:
-    - name: Await Input
-      description: This waits for the mouse left click event to occur
+    - name: Await Event Notification
+      description: 'Does nothing, waits for the MoveToLocationSelected event
+
+
+'
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 304
+        x: 320
         y: 100
-        width: 218.5
+        width: 293
         height: 16
       isBreakpoint: 0
       isSequence: 0
@@ -473,7 +476,7 @@ MonoBehaviour:
         fsmStringParams: []
         fsmObjectParams: []
         fsmVarParams: []
-        byteData: 000000004d4f55534520444f574e0001
+        byteData: 000000000001
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
@@ -483,109 +486,30 @@ MonoBehaviour:
         - button
         - sendEvent
         - storeResult
-        paramDataPos: 00000000040000000e000000
-        paramByteDataSize: 040000000a00000002000000
-    - name: Select MoveTo Location
-      description: 'The location to move to
-
-'
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 56
-        y: 189
-        width: 176
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Show Point Marker
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.MousePick
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: 3b448f99
-        unityObjectParams: []
-        fsmGameObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
-        byteData: 0000c842000001000000000000000000000000014d6f7665546f4c6f636174696f6e000000000000000000000000010000000001000000
-        arrayParamSizes: 00000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmInt
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 0f00000011000000130000001c0000001c0000000f0000000c0000001100000001000000
-        paramName:
-        - rayDistance
-        - storeDidPickObject
-        - storeGameObject
-        - storePoint
-        - storeNormal
-        - storeDistance
-        - layerMask
-        - invertMask
-        - everyFrame
-        paramDataPos: 00000000050000000000000007000000220000002f000000000000003400000036000000
-        paramByteDataSize: 0500000002000000000000001b0000000d00000005000000000000000200000001000000
+        paramDataPos: 000000000400000004000000
+        paramByteDataSize: 040000000000000002000000
     - name: MoveTo Location
       description: Move the player to the selected position
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 641
-        y: 281
+        x: 465
+        y: 403
         width: 207
-        height: 32
+        height: 16
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Await Input
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
+      transitions: []
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Pathfinding.MoveTo
-        - HutongGames.PlayMaker.Actions.GetMouseButtonDown
         customNames:
         - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 000000001f000000
-        actionHashCodes: 0f9b9a6b2d8b867b
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 0f9b9a6b
         unityObjectParams: []
         fsmGameObjectParams:
         - useVariable: 1
@@ -626,12 +550,12 @@ MonoBehaviour:
           typeName: UnityEngine.Object
           value: {fileID: 0}
         fsmVarParams: []
-        byteData: 00000000000020410000000000000000803f0000000000000000000000000000014d6f7665546f4c6f636174696f6e0400000000000040000100000040400046494e4953484544000040400001000000000040400000000000404000010000000000000000000000000000000000000000000000000100000000010100010000000000000000000000000000803f00000000004d4f55534520444f574e0001
+        byteData: 00000000000020410000000000000000803f0000000000000000000000000000014d6f7665546f4c6f636174696f6e05000000000000400001000000803f00000040400003000000000040400000000000404000010000000000000000000000000000000000000000000000000100000000010100010000000000000000000000000000803f00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 070000000f000000100000000f000000140000001800000001000000130000001c000000070000000f000000110000000f00000017000000170000000f000000070000000f000000110000000f00000011000000110000000f00000011000000110000001c000000180000000f000000110000000100000019000000070000001700000011000000
+        paramDataType: 070000000f000000100000000f000000140000001800000001000000130000001c000000070000000f000000110000000f00000017000000170000000f000000070000000f000000110000000f00000011000000110000000f00000011000000110000001c000000180000000f000000110000000100000019000000
         paramName:
         - moveMode
         - length
@@ -664,20 +588,17 @@ MonoBehaviour:
         - LogEvents
         - drawGizmos
         - gizmosColor
-        - button
-        - sendEvent
-        - storeResult
-        paramDataPos: 0000000004000000090000000e00000000000000000000001300000000000000140000002f00000033000000380000003a0000003f00000047000000470000004c0000005000000055000000570000005c0000005e0000006000000065000000670000006900000001000000760000007b0000007d0000007e0000008f000000930000009d000000
-        paramByteDataSize: 04000000050000000500000005000000000000000000000001000000000000001b000000040000000500000002000000050000000800000000000000050000000400000005000000020000000500000002000000020000000500000002000000020000000d0000000000000005000000020000000100000011000000040000000a00000002000000
+        paramDataPos: 0000000004000000090000000e00000000000000000000001300000000000000140000002f00000033000000380000003a0000003f0000003f0000003f00000044000000480000004d0000004f0000005400000056000000580000005d0000005f00000061000000010000006e000000730000007500000076000000
+        paramByteDataSize: 04000000050000000500000005000000000000000000000001000000000000001b000000040000000500000002000000050000000000000000000000050000000400000005000000020000000500000002000000020000000500000002000000020000000d0000000000000005000000020000000100000011000000
     - name: Show Point Marker
       description: Just adds a cube at the destination point before you begin moving
-        there
+        there.
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 63
-        y: 382
-        width: 318.5
+        y: 402
+        width: 320.5
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -693,13 +614,13 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.Translate
+        - HutongGames.PlayMaker.Actions.SetPosition
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: 1d4debbb
+        actionHashCodes: 8b80e9a5
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -720,12 +641,12 @@ MonoBehaviour:
         fsmStringParams: []
         fsmObjectParams: []
         fsmVarParams: []
-        byteData: 000000000000000000000000014d6f7665546f4c6f636174696f6e0000000001000000000100000000010100000000000000
+        byteData: 00000000000000000000000001000000000100000000010000000001010000000000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000001c0000000f0000000f0000000f0000000700000001000000010000000100000001000000
+        paramDataType: 140000001c0000000f0000000f0000000f000000070000000100000001000000
         paramName:
         - gameObject
         - vector
@@ -733,25 +654,136 @@ MonoBehaviour:
         - y
         - z
         - space
-        - perSecond
         - everyFrame
         - lateUpdate
-        - fixedUpdate
-        paramDataPos: 00000000000000001b00000020000000250000002a0000002e0000002f0000003000000031000000
-        paramByteDataSize: 000000001b0000000500000005000000050000000400000001000000010000000100000001000000
+        paramDataPos: 00000000000000000d00000012000000170000001c0000002000000021000000
+        paramByteDataSize: 000000000d000000050000000500000005000000040000000100000001000000
+    - name: Get Location Data
+      description: 'Gets the location data from the event sent
+
+'
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 65
+        y: 286
+        width: 240.5
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Show Point Marker
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.GetEventInfo
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 00
+        actionStartIndex: 00000000
+        actionHashCodes: 743aed41
+        unityObjectParams: []
+        fsmGameObjectParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {fileID: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {fileID: 0}
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 
+        fsmObjectParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.Object
+          value: {fileID: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.Object
+          value: {fileID: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.Object
+          value: {fileID: 0}
+        fsmVarParams: []
+        byteData: 000100000000010000000001000000000000000001000000000000000000000000014d6f7665546f4c6f636174696f6e000000000000000000000000000000000100000000000000000000000000000000010000000000000000000000000000803f01
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 130000001200000011000000100000000f000000250000001c00000012000000130000001e0000002300000020000000210000001900000018000000
+        paramName:
+        - sentByGameObject
+        - fsmName
+        - getBoolData
+        - getIntData
+        - getFloatData
+        - getVector2Data
+        - getVector3Data
+        - getStringData
+        - getGameObjectData
+        - getRectData
+        - getQuaternionData
+        - getMaterialData
+        - getTextureData
+        - getColorData
+        - getObjectData
+        paramDataPos: 00000000000000000000000002000000070000000c000000150000000100000001000000300000004100000000000000010000005200000002000000
+        paramByteDataSize: 0000000000000000020000000500000005000000090000001b0000000000000000000000110000001100000000000000000000001100000000000000
     events:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: MOUSE DOWN
-      isSystemEvent: 1
-      isGlobal: 0
+    - name: MoveToLocationSelected
+      isSystemEvent: 0
+      isGlobal: 1
     globalTransitions:
     - fsmEvent:
-        name: MOUSE DOWN
-        isSystemEvent: 1
-        isGlobal: 0
-      toState: Select MoveTo Location
+        name: MoveToLocationSelected
+        isSystemEvent: 0
+        isGlobal: 1
+      toState: Get Location Data
       linkStyle: 0
       linkConstraint: 0
       colorIndex: 0
@@ -775,8 +807,8 @@ MonoBehaviour:
       objectVariables: []
       materialVariables: []
       textureVariables: []
-    description: The example behaviour for moving a player around based upon mouse
-      clicks to positions.
+    description: This example waits for the InputManager to notify it of a position
+      being chosen for movement then carries out the movement event.
     docUrl: 
     showStateLabel: 1
     maxLoopCount: 0
@@ -941,7 +973,7 @@ GameObject:
   - 33: {fileID: 1266138456}
   - 65: {fileID: 1266138455}
   - 23: {fileID: 1266138454}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -999,6 +1031,380 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1266138452}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1303585350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1303585352}
+  - 114: {fileID: 1303585351}
+  - 65: {fileID: 1303585353}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1303585351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1303585350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fsm:
+    usedInTemplate: {fileID: 0}
+    name: Input Management
+    startState: Await Input
+    states:
+    - name: Await Input
+      description: This waits for the user to click the mouse on the ground
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 66
+        y: 100
+        width: 252
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: MOUSE DOWN
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Get Point And Check Validity
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.GetMouseButtonDown
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 2d8b867b
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        byteData: 000000004d4f55534520444f574e0001
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 070000001700000011000000
+        paramName:
+        - button
+        - sendEvent
+        - storeResult
+        paramDataPos: 00000000040000000e000000
+        paramByteDataSize: 040000000a00000002000000
+    - name: Get Point And Check Validity
+      description: Gets the area clicked and verifies that it is valid.
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 61
+        y: 214
+        width: 273.5
+        height: 48
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: InvalidSelection
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Await Input
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: ValidSelection
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Send Event To Listeners
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.MousePick
+        - HutongGames.PlayMaker.Actions.BoolTest
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 000000000a000000
+        actionHashCodes: 3b448f993334d172
+        unityObjectParams: []
+        fsmGameObjectParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {fileID: 0}
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        byteData: 0000c84200000148617353656c656374656447726f756e64000000000000000000000000014d6f7573655069636b4c6f636174696f6e0000000000000000000000000100000000010800000000000000000148617353656c656374656447726f756e6456616c696453656c656374696f6e496e76616c696453656c656374696f6e00
+        arrayParamSizes: 01000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmInt
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 0f00000011000000130000001c0000001c0000000f0000000c00000010000000110000000100000011000000170000001700000001000000
+        paramName:
+        - rayDistance
+        - storeDidPickObject
+        - storeGameObject
+        - storePoint
+        - storeNormal
+        - storeDistance
+        - layerMask
+        - 
+        - invertMask
+        - everyFrame
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000050000000000000018000000360000004300000000000000480000004d0000004f00000050000000630000007100000081000000
+        paramByteDataSize: 0500000013000000000000001e0000000d0000000500000000000000050000000200000001000000130000000e0000001000000001000000
+    - name: Send Event To Listeners
+      description: 'Sends the event to any listeners (player in this example)
+
+'
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 418
+        y: 246
+        width: 287.5
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.SetEventData
+        - HutongGames.PlayMaker.Actions.SendEvent
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 000000000d000000
+        actionHashCodes: 1245e98eeec9d968
+        unityObjectParams: []
+        fsmGameObjectParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {fileID: 0}
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams:
+        - target: 4
+          excludeSelf:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 1
+          gameObject:
+            ownerOption: 0
+            gameObject:
+              useVariable: 0
+              name: 
+              tooltip: 
+              showInInspector: 0
+              networkSync: 0
+              value: {fileID: 0}
+          fsmName:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 
+          sendToChildren:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: 0
+          fsmComponent: {fileID: 0}
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 
+        fsmObjectParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.Object
+          value: {fileID: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.Object
+          value: {fileID: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.Object
+          value: {fileID: 0}
+        fsmVarParams: []
+        byteData: 000000000100000000010001000000000000000001000000000000000000000000014d6f7573655069636b4c6f636174696f6e000000000000000000000000000000000100000000000000000000000000000000010000000000000000000000000000803f014d6f7665546f4c6f636174696f6e53656c6563746564000000000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 13000000100000000f0000001200000011000000250000001c0000001e00000023000000190000002000000021000000180000001f000000170000000f00000001000000
+        paramName:
+        - setGameObjectData
+        - setIntData
+        - setFloatData
+        - setStringData
+        - setBoolData
+        - setVector2Data
+        - setVector3Data
+        - setRectData
+        - setQuaternionData
+        - setColorData
+        - setMaterialData
+        - setTextureData
+        - setObjectData
+        - eventTarget
+        - sendEvent
+        - delay
+        - everyFrame
+        paramDataPos: 000000000000000005000000000000000a0000000c0000001500000033000000440000005500000000000000010000000200000000000000660000007c00000081000000
+        paramByteDataSize: 0000000005000000050000000000000002000000090000001e00000011000000110000001100000000000000000000000000000000000000160000000500000001000000
+    events:
+    - name: MOUSE DOWN
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: InvalidSelection
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: MoveToLocationSelected
+      isSystemEvent: 0
+      isGlobal: 1
+    - name: ValidSelection
+      isSystemEvent: 0
+      isGlobal: 0
+    globalTransitions: []
+    variables:
+      floatVariables: []
+      intVariables: []
+      boolVariables:
+      - useVariable: 1
+        name: HasSelectedGround
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      stringVariables: []
+      vector2Variables: []
+      vector3Variables:
+      - useVariable: 1
+        name: MousePickLocation
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: {x: 0, y: 0, z: 0}
+      colorVariables: []
+      rectVariables: []
+      quaternionVariables: []
+      gameObjectVariables: []
+      objectVariables: []
+      materialVariables: []
+      textureVariables: []
+    description: This handles the input and validation side of things, and notifies
+      the Player script of the player's intent to move somewhere.
+    docUrl: 
+    showStateLabel: 1
+    maxLoopCount: 0
+    watermark: 
+    version: 0
+    ExposedEvents: []
+    RestartOnEnable: 1
+    EnableDebugFlow: 0
+    StepFrame: 0
+    activeStateName: 
+  fsmTemplate: {fileID: 0}
+--- !u!4 &1303585352
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1303585350}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.6597576, y: -6.9760685, z: -20.9030724}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!65 &1303585353
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1303585350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1442480097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,1313 +1444,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
   astarData:
     hasBeenReverted: 0
-    data:
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 51
-    - 195
-    - 237
-    - 214
-    - 228
-    - 1
-    - 0
-    - 0
-    - 156
-    - 3
-    - 0
-    - 0
-    - 11
-    - 0
-    - 36
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 93
-    - 82
-    - 93
-    - 143
-    - 155
-    - 48
-    - 16
-    - 252
-    - 43
-    - 149
-    - 159
-    - 147
-    - 8
-    - 56
-    - 8
-    - 33
-    - 111
-    - 215
-    - 164
-    - 151
-    - 86
-    - 186
-    - 246
-    - 78
-    - 151
-    - 86
-    - 125
-    - 222
-    - 152
-    - 37
-    - 88
-    - 49
-    - 54
-    - 178
-    - 77
-    - 47
-    - 201
-    - 233
-    - 254
-    - 123
-    - 215
-    - 134
-    - 124
-    - 190
-    - 32
-    - 152
-    - 157
-    - 221
-    - 157
-    - 153
-    - 229
-    - 131
-    - 109
-    - 59
-    - 81
-    - 178
-    - 249
-    - 7
-    - 251
-    - 7
-    - 178
-    - 67
-    - 54
-    - 103
-    - 85
-    - 85
-    - 22
-    - 83
-    - 172
-    - 18
-    - 200
-    - 56
-    - 20
-    - 179
-    - 7
-    - 62
-    - 46
-    - 121
-    - 149
-    - 102
-    - 252
-    - 161
-    - 216
-    - 228
-    - 241
-    - 166
-    - 200
-    - 171
-    - 41
-    - 251
-    - 28
-    - 49
-    - 176
-    - 45
-    - 114
-    - 247
-    - 6
-    - 78
-    - 104
-    - 54
-    - 143
-    - 71
-    - 204
-    - 104
-    - 231
-    - 223
-    - 149
-    - 31
-    - 180
-    - 103
-    - 243
-    - 104
-    - 196
-    - 14
-    - 225
-    - 121
-    - 164
-    - 39
-    - 209
-    - 57
-    - 42
-    - 135
-    - 102
-    - 40
-    - 142
-    - 179
-    - 73
-    - 154
-    - 68
-    - 121
-    - 148
-    - 4
-    - 82
-    - 49
-    - 73
-    - 163
-    - 60
-    - 155
-    - 197
-    - 129
-    - 59
-    - 142
-    - 38
-    - 69
-    - 50
-    - 203
-    - 178
-    - 56
-    - 167
-    - 166
-    - 78
-    - 113
-    - 9
-    - 77
-    - 139
-    - 229
-    - 90
-    - 28
-    - 113
-    - 232
-    - 205
-    - 162
-    - 73
-    - 50
-    - 205
-    - 102
-    - 105
-    - 146
-    - 134
-    - 102
-    - 250
-    - 140
-    - 211
-    - 116
-    - 86
-    - 228
-    - 25
-    - 241
-    - 149
-    - 46
-    - 177
-    - 167
-    - 210
-    - 48
-    - 174
-    - 165
-    - 20
-    - 118
-    - 80
-    - 228
-    - 14
-    - 173
-    - 119
-    - 182
-    - 128
-    - 214
-    - 118
-    - 18
-    - 217
-    - 136
-    - 149
-    - 2
-    - 26
-    - 12
-    - 138
-    - 136
-    - 90
-    - 163
-    - 216
-    - 214
-    - 142
-    - 205
-    - 147
-    - 171
-    - 174
-    - 151
-    - 170
-    - 178
-    - 232
-    - 130
-    - 5
-    - 3
-    - 135
-    - 165
-    - 48
-    - 228
-    - 54
-    - 12
-    - 99
-    - 95
-    - 181
-    - 171
-    - 105
-    - 66
-    - 3
-    - 118
-    - 119
-    - 149
-    - 154
-    - 55
-    - 217
-    - 207
-    - 249
-    - 121
-    - 91
-    - 24
-    - 199
-    - 84
-    - 169
-    - 140
-    - 110
-    - 190
-    - 15
-    - 91
-    - 226
-    - 136
-    - 102
-    - 186
-    - 90
-    - 240
-    - 221
-    - 27
-    - 28
-    - 56
-    - 88
-    - 130
-    - 42
-    - 144
-    - 22
-    - 111
-    - 193
-    - 229
-    - 181
-    - 192
-    - 174
-    - 189
-    - 137
-    - 53
-    - 190
-    - 196
-    - 122
-    - 146
-    - 187
-    - 168
-    - 145
-    - 211
-    - 86
-    - 103
-    - 58
-    - 60
-    - 233
-    - 184
-    - 129
-    - 58
-    - 245
-    - 14
-    - 114
-    - 7
-    - 27
-    - 137
-    - 127
-    - 107
-    - 84
-    - 191
-    - 244
-    - 202
-    - 232
-    - 78
-    - 149
-    - 125
-    - 245
-    - 211
-    - 155
-    - 217
-    - 47
-    - 164
-    - 104
-    - 54
-    - 52
-    - 117
-    - 146
-    - 94
-    - 62
-    - 31
-    - 247
-    - 194
-    - 134
-    - 117
-    - 4
-    - 172
-    - 165
-    - 246
-    - 25
-    - 22
-    - 36
-    - 1
-    - 13
-    - 5
-    - 253
-    - 131
-    - 196
-    - 133
-    - 139
-    - 219
-    - 32
-    - 139
-    - 48
-    - 175
-    - 227
-    - 143
-    - 197
-    - 223
-    - 176
-    - 181
-    - 103
-    - 75
-    - 3
-    - 252
-    - 36
-    - 140
-    - 117
-    - 84
-    - 8
-    - 195
-    - 160
-    - 115
-    - 250
-    - 89
-    - 168
-    - 221
-    - 202
-    - 136
-    - 242
-    - 194
-    - 60
-    - 161
-    - 75
-    - 97
-    - 221
-    - 179
-    - 104
-    - 68
-    - 72
-    - 138
-    - 110
-    - 234
-    - 189
-    - 108
-    - 116
-    - 103
-    - 136
-    - 201
-    - 190
-    - 133
-    - 4
-    - 201
-    - 118
-    - 231
-    - 22
-    - 218
-    - 40
-    - 244
-    - 96
-    - 239
-    - 175
-    - 69
-    - 5
-    - 210
-    - 29
-    - 94
-    - 105
-    - 155
-    - 187
-    - 189
-    - 222
-    - 93
-    - 229
-    - 188
-    - 239
-    - 14
-    - 127
-    - 2
-    - 238
-    - 116
-    - 159
-    - 246
-    - 80
-    - 121
-    - 84
-    - 91
-    - 250
-    - 85
-    - 238
-    - 232
-    - 1
-    - 60
-    - 115
-    - 253
-    - 37
-    - 133
-    - 162
-    - 126
-    - 144
-    - 175
-    - 125
-    - 61
-    - 172
-    - 164
-    - 160
-    - 46
-    - 123
-    - 20
-    - 221
-    - 145
-    - 164
-    - 123
-    - 179
-    - 95
-    - 86
-    - 6
-    - 90
-    - 255
-    - 239
-    - 148
-    - 6
-    - 222
-    - 87
-    - 226
-    - 216
-    - 232
-    - 179
-    - 126
-    - 161
-    - 42
-    - 189
-    - 230
-    - 6
-    - 81
-    - 189
-    - 92
-    - 154
-    - 63
-    - 255
-    - 3
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 40
-    - 126
-    - 24
-    - 170
-    - 67
-    - 0
-    - 0
-    - 0
-    - 72
-    - 0
-    - 0
-    - 0
-    - 18
-    - 0
-    - 36
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 95
-    - 101
-    - 100
-    - 105
-    - 116
-    - 111
-    - 114
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 171
-    - 86
-    - 202
-    - 201
-    - 79
-    - 206
-    - 78
-    - 77
-    - 81
-    - 178
-    - 42
-    - 41
-    - 42
-    - 77
-    - 213
-    - 81
-    - 42
-    - 206
-    - 200
-    - 47
-    - 119
-    - 173
-    - 40
-    - 41
-    - 74
-    - 84
-    - 178
-    - 74
-    - 75
-    - 204
-    - 41
-    - 6
-    - 138
-    - 148
-    - 164
-    - 86
-    - 148
-    - 148
-    - 22
-    - 165
-    - 134
-    - 101
-    - 22
-    - 103
-    - 38
-    - 229
-    - 164
-    - 194
-    - 212
-    - 21
-    - 100
-    - 150
-    - 229
-    - 151
-    - 40
-    - 89
-    - 41
-    - 57
-    - 167
-    - 230
-    - 149
-    - 164
-    - 22
-    - 41
-    - 213
-    - 2
-    - 0
-    - 80
-    - 75
-    - 3
-    - 4
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 240
-    - 7
-    - 142
-    - 200
-    - 121
-    - 0
-    - 0
-    - 0
-    - 136
-    - 0
-    - 0
-    - 0
-    - 9
-    - 0
-    - 36
-    - 0
-    - 109
-    - 101
-    - 116
-    - 97
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 29
-    - 140
-    - 177
-    - 14
-    - 131
-    - 32
-    - 20
-    - 0
-    - 255
-    - 229
-    - 205
-    - 150
-    - 8
-    - 20
-    - 45
-    - 174
-    - 29
-    - 220
-    - 26
-    - 247
-    - 198
-    - 1
-    - 121
-    - 60
-    - 101
-    - 40
-    - 24
-    - 68
-    - 147
-    - 166
-    - 233
-    - 191
-    - 87
-    - 186
-    - 221
-    - 112
-    - 119
-    - 31
-    - 56
-    - 92
-    - 218
-    - 124
-    - 12
-    - 208
-    - 129
-    - 100
-    - 130
-    - 41
-    - 198
-    - 161
-    - 130
-    - 57
-    - 153
-    - 117
-    - 217
-    - 160
-    - 227
-    - 39
-    - 238
-    - 30
-    - 79
-    - 122
-    - 2
-    - 17
-    - 234
-    - 198
-    - 145
-    - 48
-    - 202
-    - 26
-    - 125
-    - 147
-    - 246
-    - 130
-    - 150
-    - 174
-    - 202
-    - 74
-    - 61
-    - 181
-    - 124
-    - 210
-    - 45
-    - 53
-    - 48
-    - 86
-    - 144
-    - 223
-    - 171
-    - 123
-    - 152
-    - 151
-    - 251
-    - 23
-    - 131
-    - 201
-    - 11
-    - 249
-    - 128
-    - 62
-    - 204
-    - 172
-    - 79
-    - 30
-    - 251
-    - 114
-    - 45
-    - 86
-    - 136
-    - 232
-    - 238
-    - 113
-    - 15
-    - 185
-    - 104
-    - 66
-    - 213
-    - 245
-    - 248
-    - 253
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 51
-    - 195
-    - 237
-    - 214
-    - 228
-    - 1
-    - 0
-    - 0
-    - 156
-    - 3
-    - 0
-    - 0
-    - 11
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 30
-    - 163
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 40
-    - 126
-    - 24
-    - 170
-    - 67
-    - 0
-    - 0
-    - 0
-    - 72
-    - 0
-    - 0
-    - 0
-    - 18
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 49
-    - 2
-    - 0
-    - 0
-    - 103
-    - 114
-    - 97
-    - 112
-    - 104
-    - 48
-    - 95
-    - 101
-    - 100
-    - 105
-    - 116
-    - 111
-    - 114
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 80
-    - 75
-    - 1
-    - 2
-    - 45
-    - 0
-    - 20
-    - 0
-    - 0
-    - 8
-    - 8
-    - 0
-    - 76
-    - 139
-    - 113
-    - 67
-    - 240
-    - 7
-    - 142
-    - 200
-    - 121
-    - 0
-    - 0
-    - 0
-    - 136
-    - 0
-    - 0
-    - 0
-    - 9
-    - 0
-    - 36
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 200
-    - 2
-    - 0
-    - 0
-    - 109
-    - 101
-    - 116
-    - 97
-    - 46
-    - 106
-    - 115
-    - 111
-    - 110
-    - 10
-    - 0
-    - 32
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 1
-    - 0
-    - 24
-    - 0
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 53
-    - 202
-    - 192
-    - 35
-    - 186
-    - 227
-    - 206
-    - 1
-    - 80
-    - 75
-    - 5
-    - 6
-    - 0
-    - 0
-    - 0
-    - 0
-    - 3
-    - 0
-    - 3
-    - 0
-    - 28
-    - 1
-    - 0
-    - 0
-    - 140
-    - 3
-    - 0
-    - 0
-    - 0
-    - 0
-    data_backup: []
-    data_cachedStartup: []
-    revertData: []
-    cacheStartup: 0
-    compress: 0
-  showNavGraphs: 1
-  showUnwalkableNodes: 1
-  debugMode: 0
-  debugFloor: 0
-  debugRoof: 20000
-  showSearchTree: 0
-  unwalkableNodeDebugSize: .300000012
-  stepByStep: 1
-  logPathResults: 1
-  maxNearestNodeDistance: 100
-  scanOnStartup: 1
-  fullGetNearestSearch: 0
-  prioritizeGraphs: 0
-  prioritizeGraphsLimit: 1
-  colorSettings:
-    _NodeConnection:
-      r: 1
-      g: 1
-      b: 1
-      a: .899999976
-    _UnwalkableNode:
-      r: 1
-      g: 0
-      b: 0
-      a: .5
-    _BoundsHandles:
-      r: .289999992
-      g: .453999996
-      b: .740999997
-      a: .899999976
-    _ConnectionLowLerp:
-      r: 0
-      g: 1
-      b: 0
-      a: .5
-    _ConnectionHighLerp:
-      r: 1
-      g: 0
-      b: 0
-      a: .5
-    _MeshEdgeColor:
-      r: 0
-      g: 0
-      b: 0
-      a: .5
-    _MeshColor:
-      r: .125
-      g: .68599999
-      b: 0
-      a: .189999998
-    _AreaColors: []
-  tagNames: []
-  heuristic: 2
-  heuristicScale: 1
-  threadCount: 0
-  maxFrameTime: 1
-  recyclePaths: 0
-  minAreaSize: 10
-  limitGraphUpdates: 1
-  maxGraphUpdateFreq: .200000003
-  lastScanTime: .051034499
-  inGameDebugPath: 
-  isScanning: 0
-  showGraphs: 1
-  lastUniqueAreaIndex: 9
---- !u!114 &1442480100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1442480097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67ff733b14cfeeb4e82e86b293295e6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  astarData:
-    hasBeenReverted: 0
-    data: 504b0304140000080800154572430124b39ad80100008f0300000b0024006772617068302e6a736f6e0a0020000000000001001800f524fc7b31e4ce01f524fc7b31e4ce01f524fc7b31e4ce015d525d6fda4010fc2bd53d033206d7316f2934b452da4421559fd7e7059f38df59f7d10011ffbd7b67f3c983856776676767fdc9365e546cf6c9fe81f4c866ace455c1a1480accd34956c0b080aaccbee60f39f0f201a663761c30b02d72f7064e68361b0f98d12efc574168c766c980ede3f3404f2ae7a81c9a9e1ce6a32cc927f9b42b1a4dd23ccd932c160fd35132cda6f42ba8cd2b2ea169b15a8903f6dd59a79d0559a52beca87444fd5c4b296cefc2eddbb0cd1c5aeb25b201ab0434185d90df1ac5a676d477d5f5b25e5b74d1b681fd4218da308ab16fdad5a4d080dd5e25151c743abf6e89e19898b5d1cd8f7eca38214d570bbe7d833d074bd01aa4c55b70716dd0b737518e2f519eecce6be434d5198f271f3790571f20b7504afc5ba3faad97467b5575ec312cb39b4bd194e102d3cbebe34ed8388e8095d421c3822ca0a1a87f92b978651b6d11167cfcb1f80e1b7b5ea9879f84b18e882806dee967a1b64b23aa4be5095d08eb9e4523625274d5b04ba9bda14af63d26486b7b37d7466100bbfd5a5420ddfe95a6b9dbebdd31e77977f81370a7bbb47be6516de853b92b8fe0b9365c5228ea07f9daf1712405a54ec6149d919c875dbf2c0db4e1d3a90c7c2cc5a1d167fb42adf58a1b44f5127be3d0e37f504b030414000008080015457243287e18aa4300000048000000120024006772617068305f656469746f722e6a736f6e0a0020000000000001001800054cfc7b31e4ce01054cfc7b31e4ce01054cfc7b31e4ce01ab56cac94fce4e4d51b22a292a4dd5512acec82f77ad28294a54b24a4bcc29068a94a456949416a58665166726e5a4c2d4156496e59728592939a7e695a41629d50200504b030414000008080015457243041ae0ed7800000087000000090024006d6574612e6a736f6e0a00200000000000010018001673fc7b31e4ce011673fc7b31e4ce011673fc7b31e4ce011d8cb10e83201400ffe5cd96808a886b07b7a67be3f0e0a132140c6293a6e9bf57badd70771f78b9b4fb18608086d54c3201152c09b77587419c78783ae901c692b6a8b976aa6ea4c68b4632b253bd426b7a6c054c15e4f7e66ef874ffe28e799d7d201f1636264f63b9162b4472d778845cb496f3e9fb03504b01022d00140000080800154572430124b39ad80100008f0300000b00240000000000000000000000000000006772617068302e6a736f6e0a0020000000000001001800f524fc7b31e4ce01f524fc7b31e4ce01f524fc7b31e4ce01504b01022d0014000008080015457243287e18aa43000000480000001200240000000000000000000000250200006772617068305f656469746f722e6a736f6e0a0020000000000001001800054cfc7b31e4ce01054cfc7b31e4ce01054cfc7b31e4ce01504b01022d0014000008080015457243041ae0ed78000000870000000900240000000000000000000000bc0200006d6574612e6a736f6e0a00200000000000010018001673fc7b31e4ce011673fc7b31e4ce011673fc7b31e4ce01504b050600000000030003001c0100007f0300000000
+    data: 504b03041400000808004c8b714333c3edd6e40100009c0300000b0024006772617068302e6a736f6e0a00200000000000010018001ea3c023bae3ce011ea3c023bae3ce011ea3c023bae3ce015d525d8f9b3010fc2b959f93083808216fd7a49756baf64e97567dde9825583136b24d2fc9e9fe7bd7867cbe20989ddd9d99e5836d3b51b2f907fb07b243366755551653ac12c83814b3073e2e799566fca1d8e4f1a6c8ab29fb1c31b02d72f7064e68368f47cc68e7df951fb467f368c40ee179a427d1392a8766288eb3499a44799404523149a33c9bc5813b8e264532cbb238a7a64e71094d8be55a1c71e8cda24932cd6669928666fa8cd37456e419f1952eb1a7d230aea5147650e40ead77b680d67612d98895021a0c8a885aa3d8d68ecd93abae97aab2e882050387a530e4360c635fb5ab6942037677959a37d9cff9795b18c754a98c6ebe0f5be28866ba5af0dd1b1c3858822a90166fc1e5b5c0aebd8935bec47a92bba891d356673a3ce9b8813af50e72071b897f6b54bff4cae84e957df5d39bd92fa468363475925e3e1ff7c2867504aca5f6191624010d05fd83c4858bdb208b30afe38fc5dfb0b5674b03fc248c755408c3a073fa59a8ddca88f2c23ca14b61ddb36844488a6eeabd6c746788c9be8504c976e716da28f460efaf4505d21d5e699bbbbdde5de5bcef0e7f02ee749ff65079545bfa55eee8013c73fd2585a27e90af7d3daca4a02e7b14dd91a47bb35f56065affef9406de57e2d8e8b37ea12abde60651bd5c9a3fff03504b03041400000808004c8b7143287e18aa4300000048000000120024006772617068305f656469746f722e6a736f6e0a002000000000000100180035cac023bae3ce0135cac023bae3ce0135cac023bae3ce01ab56cac94fce4e4d51b22a292a4dd5512acec82f77ad28294a54b24a4bcc29068a94a456949416a58665166726e5a4c2d4156496e59728592939a7e695a41629d50200504b03041400000808004c8b7143f0078ec87900000088000000090024006d6574612e6a736f6e0a002000000000000100180035cac023bae3ce0135cac023bae3ce0135cac023bae3ce011d8cb10e83201400ffe5cd9608142dae1ddc1af7c601793c6528184493a6e9bf57badd70771f385cda7c0cd081648229c6a182399975d9a0e327ee1e4f7a0211eac69130ca1a7d93f68296aeca4a3db57cd22d35305690dfab7b9897fb1783c90bf9803eccac4f1efb722d5688e8ee710fb96842d5f5f8fd01504b01022d001400000808004c8b714333c3edd6e40100009c0300000b00240000000000000000000000000000006772617068302e6a736f6e0a00200000000000010018001ea3c023bae3ce011ea3c023bae3ce011ea3c023bae3ce01504b01022d001400000808004c8b7143287e18aa43000000480000001200240000000000000000000000310200006772617068305f656469746f722e6a736f6e0a002000000000000100180035cac023bae3ce0135cac023bae3ce0135cac023bae3ce01504b01022d001400000808004c8b7143f0078ec879000000880000000900240000000000000000000000c80200006d6574612e6a736f6e0a002000000000000100180035cac023bae3ce0135cac023bae3ce0135cac023bae3ce01504b050600000000030003001c0100008c0300000000
     data_backup: 
     data_cachedStartup: 
     revertData: 
@@ -2382,11 +1484,22 @@ MonoBehaviour:
   minAreaSize: 10
   limitGraphUpdates: 1
   maxGraphUpdateFreq: .200000003
-  lastScanTime: .0880049989
+  lastScanTime: .051034499
   inGameDebugPath: 
   isScanning: 0
   showGraphs: 1
-  lastUniqueAreaIndex: 1
+  lastUniqueAreaIndex: 9
+--- !u!114 &1442480100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1442480097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67ff733b14cfeeb4e82e86b293295e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1473926370
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,7 +1580,7 @@ GameObject:
   - 33: {fileID: 1625168817}
   - 65: {fileID: 1625168816}
   - 23: {fileID: 1625168815}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2624,7 +1737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewOnGUI: 1
   enableGUILayout: 1
-  drawStateLabels: 0
+  drawStateLabels: 1
   GUITextureStateLabels: 1
   GUITextStateLabels: 1
   filterLabelsWithDistance: 0
@@ -2688,7 +1801,7 @@ GameObject:
   - 33: {fileID: 1957754574}
   - 65: {fileID: 1957754573}
   - 23: {fileID: 1957754572}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2757,7 +1870,7 @@ GameObject:
   - 33: {fileID: 2010046853}
   - 65: {fileID: 2010046852}
   - 23: {fileID: 2010046851}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2826,7 +1939,7 @@ GameObject:
   - 33: {fileID: 2069712855}
   - 65: {fileID: 2069712854}
   - 23: {fileID: 2069712853}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
