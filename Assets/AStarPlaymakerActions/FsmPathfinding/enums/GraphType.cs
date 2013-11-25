@@ -2,9 +2,9 @@ namespace HutongGames.PlayMaker.Pathfinding.Enums
 {
     public enum GraphType
     {
-        any,
-        pointGraph,
-        gridGraph,
-        all,
+        Any,
+        PointGraph,
+        GridGraph,
+        All
     }
 }

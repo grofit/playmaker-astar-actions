@@ -22,7 +22,7 @@ namespace HutongGames.PlayMaker.Pathfinding.Editor
             EditField("nodes");
             EditField("everyFrame");	
 		
-            if(aTarget.graphType == GraphType.pointGraph){
+            if(aTarget.graphType == GraphType.PointGraph){
                 EditField("root");
                 EditField("autoLinkNodes");
                 EditField("limits");
@@ -34,7 +34,7 @@ namespace HutongGames.PlayMaker.Pathfinding.Editor
                 EditField("thickRaycast");
                 EditField("thickRaycastRadius");
             }
-            if(aTarget.graphType == GraphType.gridGraph){
+            if(aTarget.graphType == GraphType.GridGraph){
                 EditField("size");
                 EditField("scans");
                 EditField("getNearestForceOverlap");

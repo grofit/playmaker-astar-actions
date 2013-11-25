@@ -125,7 +125,7 @@ namespace HutongGames.PlayMaker.Pathfinding
             nodes.Value = new FsmNodes { Value = currentNavGraph.nodes.ToList() };
 			open.Value = currentNavGraph.open;
 			
-			if(graphType == GraphType.pointGraph && currentNavGraph as PointGraph != null)
+			if(graphType == GraphType.PointGraph && currentNavGraph as PointGraph != null)
 			{
 				autoLinkNodes.Value = (currentNavGraph as PointGraph).autoLinkNodes ;
 				limits.Value = (currentNavGraph as PointGraph).limits ;
@@ -139,7 +139,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				thickRaycastRadius.Value = (currentNavGraph as PointGraph).thickRaycastRadius ;
 			}
 			
-			if(graphType == GraphType.gridGraph && currentNavGraph as GridGraph != null)
+			if(graphType == GraphType.GridGraph && currentNavGraph as GridGraph != null)
 			{
 				getNearestForceOverlap.Value = (currentNavGraph as GridGraph).getNearestForceOverlap ;
 				scans.Value = (currentNavGraph as GridGraph).scans ;

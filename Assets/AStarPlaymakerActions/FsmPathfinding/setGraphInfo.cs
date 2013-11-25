@@ -132,7 +132,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			if (!open.IsNone)
 			{ navGraph.open = open.Value; }
 			
-			if(graphType == GraphType.pointGraph && navGraph as PointGraph != null)
+			if(graphType == GraphType.PointGraph && navGraph as PointGraph != null)
 			{
 				if (!autoLinkNodes.IsNone)
 				{ (navGraph as PointGraph).autoLinkNodes = autoLinkNodes.Value; }
@@ -162,7 +162,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				{ (navGraph as PointGraph).thickRaycastRadius = thickRaycastRadius.Value ; }
 			}
 			
-			if(graphType == GraphType.gridGraph && navGraph as GridGraph != null)
+			if(graphType == GraphType.GridGraph && navGraph as GridGraph != null)
 			{
 				if (!getNearestForceOverlap.IsNone)
 				{ (navGraph as GridGraph).getNearestForceOverlap = getNearestForceOverlap.Value ;}

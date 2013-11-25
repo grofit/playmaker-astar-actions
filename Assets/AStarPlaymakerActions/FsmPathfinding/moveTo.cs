@@ -40,7 +40,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  	public FsmVector3 targetPosition;
 		
 		[Tooltip("What type of controller would you like to use? The RVO controller is a pro only feature. If you choose <available> it will use whatever is already on your actor. If you choose none, you can use the direction output to controle it yourself")]
-		public ControllerType controllerType = ControllerType.available;
+		public ControllerType controllerType = ControllerType.Available;
 		
 	  	[Tooltip("Required movement speed.")]
 	  	public FsmFloat speed = 1f;
@@ -61,7 +61,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  	public FsmFloat nextWaypointDistance = 3f;
 		
 		[Tooltip("if set to absolute, the action will send the finished event once the distance between the actor and the target is less than finishDistance. Using absoluteEndnode it will send Finish once the distance between the last node on the path and the Actor is less than finishDistance. If set to relative, it will send the finish event if the distance along the path is less than finishDistance. If set to last it will go to the second to last node on the path and only then starts checking whether the distance to the last node is less than the finishDistance. Use last on simple movement actions, as it is by far the cheapest. Use relative only when you must, as it can be a tad expensive if your finishDistance is very high.")]
-		public FinishDistance finishDistanceMode = FinishDistance.absolute;
+		public FinishDistance finishDistanceMode = FinishDistance.Absolute;
 		
 		[Tooltip("Stop this distance away from your goal.")]
 	  	public FsmFloat finishDistance = 1f;
@@ -152,7 +152,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter() 
 	  	{
-			if(moveMode == MoveMode.followPath)
+			if(moveMode == MoveMode.FollowPath)
 			{
 				path = inputPath.GetPath();
 				if(path == null)
@@ -192,9 +192,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 			controller2 = targetGameObject.GetComponent<RVOController>();
 			rigidbody = targetGameObject.GetComponent<Rigidbody>();
 			
-			if(controllerType == ControllerType.characterController && controller == null)
+			if(controllerType == ControllerType.CharacterController && controller == null)
 			{ controller = targetGameObject.AddComponent<CharacterController>(); }
-			else if(controllerType == ControllerType.rvoController && controller2 == null)
+			else if(controllerType == ControllerType.RvoController && controller2 == null)
 			{
 				if(AstarPath.HasPro)
 				{
@@ -203,31 +203,31 @@ namespace HutongGames.PlayMaker.Pathfinding
 				}
 				else 
 				{
-					controllerType = ControllerType.characterController;//free version can't use RVOControllers
+					controllerType = ControllerType.CharacterController;//free version can't use RVOControllers
 
 					if(controller == null)
 					{ controller = targetGameObject.AddComponent<CharacterController>(); }
 				}
 			}			
-			else if(controllerType == ControllerType.rigidbody && rigidbody == null)
+			else if(controllerType == ControllerType.Rigidbody && rigidbody == null)
 			{
 				rigidbody = targetGameObject.AddComponent<Rigidbody>();
 				rigidbody.drag = 0.5f;
 				rigidbody.freezeRotation = true;
 			}
-			else if(controllerType == ControllerType.rigidbodyVelocity && rigidbody == null)
+			else if(controllerType == ControllerType.RigidbodyVelocity && rigidbody == null)
 			{
 				rigidbody = targetGameObject.AddComponent<Rigidbody>();
 				rigidbody.freezeRotation = true;
 			}	
 			
-			if(moveMode != MoveMode.followPath)
+			if(moveMode != MoveMode.FollowPath)
 			{ CalculatePath(); }
 			
-			if(moveMode == MoveMode.followPath && !startAtStart.Value)
+			if(moveMode == MoveMode.FollowPath && !startAtStart.Value)
 			{ currentWaypoint = GetClosestIndex(); }
 			
-			if(moveMode == MoveMode.followPath && connectPath.Value)
+			if(moveMode == MoveMode.FollowPath && connectPath.Value)
 			{ ConnectPathX(); }
       	}
 		
@@ -283,7 +283,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public void CalculatePath()
 		{
-			if(moveMode != MoveMode.follow && moveMode != MoveMode.followTo && moveMode != MoveMode.fleeContinuously)
+			if(moveMode != MoveMode.Follow && moveMode != MoveMode.FollowTo && moveMode != MoveMode.FleeContinuously)
 			{ path = null; }
 						
 			Vector3 targetPos;
@@ -292,19 +292,19 @@ namespace HutongGames.PlayMaker.Pathfinding
 			else
 			{ targetPos = targetPosition.Value;}
 			
-			if(path != null && path.vectorPath.Count > 0 && (moveMode == MoveMode.follow || moveMode == MoveMode.followTo))	
+			if(path != null && path.vectorPath.Count > 0 && (moveMode == MoveMode.Follow || moveMode == MoveMode.FollowTo))	
 			{abPath = ABPath.Construct (nextPos , targetPos , OnPathComplete);} // create path from next waypoint (to avoid jitter due to sudden direction change on path update) to closest/first node
-			else if(moveMode != MoveMode.fleeContinuously && moveMode != MoveMode.flee && moveMode != MoveMode.randomPath )
+			else if(moveMode != MoveMode.FleeContinuously && moveMode != MoveMode.Flee && moveMode != MoveMode.RandomPath )
 			{abPath = ABPath.Construct (targetGameObject.transform.position , targetPos , OnPathComplete);} // create path from current position to closest/first node
 			
-			else if(moveMode == MoveMode.fleeContinuously || moveMode == MoveMode.flee ) 
+			else if(moveMode == MoveMode.FleeContinuously || moveMode == MoveMode.Flee ) 
 			{
 				if(AstarPath.HasPro)
 				{ abPath = FleePath.Construct (targetGameObject.transform.position , targetPos , (int)(length.Value*1000f), OnPathComplete);} // create path from current position to closest/first node
 				else
 				{ abPath = ABPath.Construct (targetGameObject.transform.position , targetGameObject.transform.position + (targetGameObject.transform.position - targetPos).normalized * length.Value, OnPathComplete);}
 			}
-			else if (moveMode == MoveMode.randomPath)
+			else if (moveMode == MoveMode.RandomPath)
 			{
 				if(AstarPath.HasPro)
 				{ abPath = RandomPath.Construct (targetGameObject.transform.position, (int)(length.Value*1000f) , OnPathComplete); } // create path from current position to closest/first node
@@ -328,9 +328,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 			path = path1;
 			
 			currentWaypoint = 1;
-			if(moveMode == MoveMode.followPath)
+			if(moveMode == MoveMode.FollowPath)
 			{ currentWaypoint = 0; }// used to be getClosest() + 1;
-			else if(moveMode == MoveMode.follow || moveMode == MoveMode.followTo || moveMode == MoveMode.fleeContinuously)
+			else if(moveMode == MoveMode.Follow || moveMode == MoveMode.FollowTo || moveMode == MoveMode.FleeContinuously)
 			{ currentWaypoint = (path.vectorPath.Count >= 2 && (path.vectorPath[0]-targetGameObject.transform.position).sqrMagnitude <= (path.vectorPath[1]-targetGameObject.transform.position).sqrMagnitude) ? 0 : 1; }
 
 			newFsmPath.Value = path;
@@ -375,7 +375,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public void Move() 
 		{
-			if(controllerType == ControllerType.rvoController || (controllerType == ControllerType.available && controller2 != null))
+			if(controllerType == ControllerType.RvoController || (controllerType == ControllerType.Available && controller2 != null))
 			{
 				if (controller2 != null) 
 				{
@@ -393,7 +393,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				}
 			}
 			
-			else if(controllerType == ControllerType.characterController || (controllerType == ControllerType.available && controller != null))
+			else if(controllerType == ControllerType.CharacterController || (controllerType == ControllerType.Available && controller != null))
 			{
 				if (controller != null) 
 				{ controller.SimpleMove(direction); }
@@ -405,12 +405,12 @@ namespace HutongGames.PlayMaker.Pathfinding
 				}
 			}
 
-			else if(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity)
+			else if(controllerType == ControllerType.Rigidbody || controllerType == ControllerType.RigidbodyVelocity)
 			{
-				if (controllerType == ControllerType.rigidbody && rigidbody != null) 
+				if (controllerType == ControllerType.Rigidbody && rigidbody != null) 
 				{ rigidbody.AddForce(direction*Time.deltaTime*100*rigidbody.mass); }
 				
-				else if (controllerType == ControllerType.rigidbodyVelocity && rigidbody != null) 
+				else if (controllerType == ControllerType.RigidbodyVelocity && rigidbody != null) 
 				{
 					if(ignoreY.Value)
 					{ rigidbody.velocity = new Vector3(direction.x,rigidbody.velocity.y,direction.z)*110; }
@@ -429,19 +429,19 @@ namespace HutongGames.PlayMaker.Pathfinding
 				}
 			}
 			
-			else if(controllerType == ControllerType.transform || (controllerType == ControllerType.available && controller2 == null && controller == null && rigidbody == null))
+			else if(controllerType == ControllerType.Transform || (controllerType == ControllerType.Available && controller2 == null && controller == null && rigidbody == null))
 			{ targetGameObject.transform.position += direction * Time.deltaTime; }
 		}
 		
 	 	public override void OnUpdate()
 	 	{
-			if(updatePath && moveMode == MoveMode.followPath)
+			if(updatePath && moveMode == MoveMode.FollowPath)
 			{ path = inputPath.GetPath(); }
 
 			if (path == null || path.vectorPath.Count == 0)
             { return; }
 			
-			if(!pathLoading && ((moveMode == MoveMode.follow || moveMode == MoveMode.followTo || moveMode == MoveMode.fleeContinuously) && frame >= Math.Max(1,updateInterval.Value)) )
+			if(!pathLoading && ((moveMode == MoveMode.Follow || moveMode == MoveMode.FollowTo || moveMode == MoveMode.FleeContinuously) && frame >= Math.Max(1,updateInterval.Value)) )
 			{
 				CalculatePath();
 				pathLoading = true;
@@ -450,7 +450,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			else 
 			{ frame += 1; }
 			
-			if(moveMode == MoveMode.shadow || moveMode == MoveMode.shadowTo ) 
+			if(moveMode == MoveMode.Shadow || moveMode == MoveMode.ShadowTo ) 
 			{ ShadowExtendPath(); }
 			
 			if(auto.Value)
@@ -464,30 +464,30 @@ namespace HutongGames.PlayMaker.Pathfinding
 			if (currentWaypoint >= (path.vectorPath).Count) 
 			{ currentWaypoint = path.vectorPath.Count-1; }
 
-	 	    var isCloseEnoughToEndPoint = (finishDistanceMode == FinishDistance.absolute && (
+	 	    var isCloseEnoughToEndPoint = (finishDistanceMode == FinishDistance.Absolute && (
                 (target.Value != null && (target.Value.transform.position - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) ||
 	 	        (ignoreY.Value && target.Value != null && (new Vector3(target.Value.transform.position.x, targetGameObject.transform.position.y, target.Value.transform.position.z)
                 - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value*finishDistance.Value) ||
                 (target.Value == null && Vector3.Distance(targetGameObject.transform.position, targetPosition.Value) <= finishDistance.Value) ||
                 (ignoreY.Value && target.Value == null && (new Vector3(targetPosition.Value.x, targetGameObject.transform.position.y, targetPosition.Value.z) - targetGameObject.transform.position).sqrMagnitude <= finishDistance.Value * finishDistance.Value)));
 
-	 	    var isCloseEnoughToEndNode = (finishDistanceMode == FinishDistance.absoluteEndnode && ((!ignoreY.Value && Vector3.Distance(targetGameObject.transform.position, path.vectorPath[path.vectorPath.Count - 1]) <= finishDistance.Value) ||
+	 	    var isCloseEnoughToEndNode = (finishDistanceMode == FinishDistance.AbsoluteEndnode && ((!ignoreY.Value && Vector3.Distance(targetGameObject.transform.position, path.vectorPath[path.vectorPath.Count - 1]) <= finishDistance.Value) ||
 	 	        (ignoreY.Value && Vector3.Distance(new Vector3(targetGameObject.transform.position.x, path.vectorPath[path.vectorPath.Count - 1].y, targetGameObject.transform.position.z), path.vectorPath[path.vectorPath.Count - 1]) <=
 	 	         finishDistance.Value)));
 
             if (isCloseEnoughToEndPoint || isCloseEnoughToEndNode)
 			{ 
 				//Debug.Log("Finish");
-			    if (moveMode == MoveMode.follow || moveMode == MoveMode.shadow || moveMode == MoveMode.fleeContinuously) 
+			    if (moveMode == MoveMode.Follow || moveMode == MoveMode.Shadow || moveMode == MoveMode.FleeContinuously) 
                 { return; }
 			    
                 if (LogEvents.Value)
 			    { Debug.Log ("End Of path reached."); }
 					
-			    if (controller2 != null && controllerType == ControllerType.rvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
+			    if (controller2 != null && controllerType == ControllerType.RvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
 			    { controller2.Move(new Vector3(0,0,0)); }	
 					
-			    if(rigidbody != null && (controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity))
+			    if(rigidbody != null && (controllerType == ControllerType.Rigidbody || controllerType == ControllerType.RigidbodyVelocity))
 			    { rigidbody.velocity = new Vector3(0,rigidbody.velocity.y,0); }
 	
 			    if(endOfPathEvent != null)
@@ -497,7 +497,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			    return;
 			}
 
-	 	    if(finishDistanceMode == FinishDistance.relative )
+	 	    if(finishDistanceMode == FinishDistance.Relative )
 	 	    {
 	 	        var i = currentWaypoint;
 	 	        var leng = 0.0f;
@@ -511,14 +511,14 @@ namespace HutongGames.PlayMaker.Pathfinding
 	 	        if (!(leng <= finishDistance.Value)) 
                 { return; }
 
-	 	        if (moveMode == MoveMode.follow || moveMode == MoveMode.shadow || moveMode == MoveMode.fleeContinuously)
+	 	        if (moveMode == MoveMode.Follow || moveMode == MoveMode.Shadow || moveMode == MoveMode.FleeContinuously)
                 { return; }
 
 	 	        if (LogEvents.Value)
 	 	        { Debug.Log ("End Of path reached."); }
-	 	        if (controller2 != null && controllerType == ControllerType.rvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
+	 	        if (controller2 != null && controllerType == ControllerType.RvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
 	 	        { controller2.Move(new Vector3(0,0,0));	}
-	 	        if(rigidbody != null &&(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity))
+	 	        if(rigidbody != null &&(controllerType == ControllerType.Rigidbody || controllerType == ControllerType.RigidbodyVelocity))
 	 	        { rigidbody.velocity = new Vector3(0,rigidbody.velocity.y,0); }
 							
 	 	        Fsm.Event(endOfPathEvent);
@@ -538,17 +538,17 @@ namespace HutongGames.PlayMaker.Pathfinding
 
 			if(distance < nextWaypointDistance.Value && !smoothTurns.Value) 
 			{	
-				if(finishDistanceMode == FinishDistance.last && currentWaypoint >= (path.vectorPath).Count - 1) 
+				if(finishDistanceMode == FinishDistance.Last && currentWaypoint >= (path.vectorPath).Count - 1) 
 				{
-					if(moveMode != MoveMode.follow && moveMode != MoveMode.shadow && moveMode != MoveMode.fleeContinuously)
+					if(moveMode != MoveMode.Follow && moveMode != MoveMode.Shadow && moveMode != MoveMode.FleeContinuously)
 					{
 						if (LogEvents.Value)
 						{ Debug.Log ("End Of path reached."); }
 						
-						if (controller2 != null && controllerType == ControllerType.rvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
+						if (controller2 != null && controllerType == ControllerType.RvoController) //RVO controller needs to be set to 0/0/0 , else it continues running.
 						{ controller2.Move(new Vector3(0,0,0));	}
 						
-						if(rigidbody != null &&(controllerType == ControllerType.rigidbody || controllerType == ControllerType.rigidbodyVelocity))
+						if(rigidbody != null &&(controllerType == ControllerType.Rigidbody || controllerType == ControllerType.RigidbodyVelocity))
 						{ rigidbody.velocity = new Vector3(0,rigidbody.velocity.y,0); }
 							
 						Fsm.Event(endOfPathEvent);

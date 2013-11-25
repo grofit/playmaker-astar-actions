@@ -15,23 +15,23 @@ namespace HutongGames.PlayMaker.Pathfinding.Editor
             EditField("targetObjectHelper");
 		
             EditField("moveMode");
-            if(moveToTarget.moveMode == MoveMode.flee || moveToTarget.moveMode == MoveMode.fleeContinuously || moveToTarget.moveMode == MoveMode.randomPath)
+            if(moveToTarget.moveMode == MoveMode.Flee || moveToTarget.moveMode == MoveMode.FleeContinuously || moveToTarget.moveMode == MoveMode.RandomPath)
             { EditField("length"); }
 
-            if(moveToTarget.moveMode == MoveMode.follow || moveToTarget.moveMode == MoveMode.followTo || moveToTarget.moveMode == MoveMode.fleeContinuously)
+            if(moveToTarget.moveMode == MoveMode.Follow || moveToTarget.moveMode == MoveMode.FollowTo || moveToTarget.moveMode == MoveMode.FleeContinuously)
             { EditField("updateInterval"); }
 
-            if(moveToTarget.moveMode == MoveMode.shadow || moveToTarget.moveMode == MoveMode.shadowTo)
+            if(moveToTarget.moveMode == MoveMode.Shadow || moveToTarget.moveMode == MoveMode.ShadowTo)
             { EditField("shadowUpdateDistance"); }	
 		
             EditField("actor");
-            if(moveToTarget.moveMode == MoveMode.followPath)
+            if(moveToTarget.moveMode == MoveMode.FollowPath)
             {
                 EditField("inputPath");
                 EditField("updatePath");		
             }
 
-            if(moveToTarget.moveMode != MoveMode.followPath && moveToTarget.moveMode != MoveMode.randomPath)
+            if(moveToTarget.moveMode != MoveMode.FollowPath && moveToTarget.moveMode != MoveMode.RandomPath)
             {
                 EditField("target");
                 EditField("targetPosition");
@@ -39,7 +39,7 @@ namespace HutongGames.PlayMaker.Pathfinding.Editor
 
             EditField("controllerType");
             EditField("auto");
-            if(moveToTarget.moveMode == MoveMode.followPath)
+            if(moveToTarget.moveMode == MoveMode.FollowPath)
             {
                 EditField("startAtStart");
                 EditField("connectPath");
@@ -58,17 +58,17 @@ namespace HutongGames.PlayMaker.Pathfinding.Editor
                 EditField("nextWaypointDistance"); 
 		
             EditField("finishDistanceMode");
-            if(moveToTarget.moveMode != MoveMode.follow && moveToTarget.moveMode != MoveMode.fleeContinuously)
+            if(moveToTarget.moveMode != MoveMode.Follow && moveToTarget.moveMode != MoveMode.FleeContinuously)
             { EditField ("endOfPathEvent"); }
 
             EditField("finishDistance");
 		
-            if(!(moveToTarget.moveMode == MoveMode.flee || moveToTarget.moveMode == MoveMode.fleeContinuously || moveToTarget.moveMode == MoveMode.randomPath))
+            if(!(moveToTarget.moveMode == MoveMode.Flee || moveToTarget.moveMode == MoveMode.FleeContinuously || moveToTarget.moveMode == MoveMode.RandomPath))
                 EditField("exactFinish");
 		
             EditField("failedEvent");
 		
-            if(moveToTarget.moveMode != MoveMode.follow && moveToTarget.moveMode != MoveMode.fleeContinuously)
+            if(moveToTarget.moveMode != MoveMode.Follow && moveToTarget.moveMode != MoveMode.FleeContinuously)
             { EditField("failureTolerance"); }
 
             EditField ("directionOut");
