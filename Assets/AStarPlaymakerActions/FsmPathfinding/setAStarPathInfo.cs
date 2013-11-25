@@ -57,7 +57,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public void SetInfoOnPath()
 		{
 			if (!astarPath.IsNone && astarPath.Value != null)
-			{ astarp = FsmConverter.GetAstarPath(astarPath); }
+			{ astarp = astarPath.GetAstarPath(); }
 			else
 			{ astarp = AstarPath.active; }
 			
@@ -71,7 +71,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ astarp.lastUniqueAreaIndex = lastUniqueAreaIndex.Value; }	
 
 			if (!astarData.IsNone)
-			{ astarp.graphs = FsmConverter.GetNavGraphs(astarData.Value); }
+            { astarp.graphs = astarData.GetNavGraphs(); }
 		}
 	  
 		public override void OnUpdate() 

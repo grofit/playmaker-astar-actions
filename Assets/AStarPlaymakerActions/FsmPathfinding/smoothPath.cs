@@ -24,8 +24,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 				Finish();
 				return;
 			}
-			
-			if(FsmConverter.GetPath(InputPath).vectorPath.Count == 0) 
+
+		    var path = InputPath.GetPath();
+            if (path.vectorPath.Count == 0)
 			{ return; }
 			
 			var go = gameObject.OwnerOption == OwnerDefaultOption.UseOwner ? Owner : gameObject.GameObject.Value;

@@ -29,7 +29,6 @@ namespace HutongGames.PlayMaker.Helpers
 	  	//Required movement speed.
 	  	public float speed;
 	  
-		
 		//Stop this distance away from your goal.
 	  	public float finishDistance;
 		
@@ -48,10 +47,7 @@ namespace HutongGames.PlayMaker.Helpers
 		public bool noStepBack;
 
 		public float costDependendSpeed;
-			
-		/*@Tooltip("WIP : Uses the offset to calculate a new InputPath, then checks if every node connection and node is walkable, if not extends the InputPath to make sure the InputPath is possible. ")
-		public var subcalc : FsmBool; */
-		
+
 		//Add an optional offset
 		public Vector3 offset;		
 		
@@ -67,8 +63,6 @@ namespace HutongGames.PlayMaker.Helpers
 
 	  	private CharacterController controller;
 		private RVOController controller2;
-		
-	  //	private var seeker : Seeker;
 		private Vector3 direction;	
 			  	
 		private FsmPath doo;
@@ -92,7 +86,6 @@ namespace HutongGames.PlayMaker.Helpers
 			doo = new FsmPath(); // this needs to be an instance even if the actual path is the same.
 			doo.Value = p;
 			OutputPath = doo;
-			path = p;// this distinction makes it work with the previous path until the new one is finished
 			currentWaypoint = 0; // new path, then it obviously has to start back at 0;
 			if(noStepBack) currentWaypoint += 1;
 			Update();//start Update again to avoid any problems whatsoever, especially when stopping and resuming the script.

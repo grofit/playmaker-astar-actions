@@ -1,5 +1,4 @@
 using System;
-using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using UnityEngine;
 
@@ -36,7 +35,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				return;
 			}
 			
-			SetTheNearestNode();
+			UpdateNearestNode();
 			
 			var fsmNode = node.Value as FsmNode;
             if(fsmNode == null)
@@ -49,14 +48,15 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ Finish(); }			
 		}
 		
-		public void SetTheNearestNode() 
+		public void UpdateNearestNode()
 		{
-			node.Value = FsmConverter.SetNode(AstarPath.active.GetNearest(Position.Value).node);
+            var nearestNode = AstarPath.active.GetNearest(Position.Value).node;
+            node.Value = new FsmNode { Value = nearestNode };
 		}
 		
 		public override void OnUpdate()
 		{
-			SetTheNearestNode();
+			UpdateNearestNode();
 		}
    	}
 }

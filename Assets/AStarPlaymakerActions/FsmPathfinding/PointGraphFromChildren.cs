@@ -1,3 +1,4 @@
+using System.Linq;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
@@ -62,10 +63,10 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{
 				pointGraph = AstarPath.active.astarData.AddGraph( typeof( PointGraph )) as PointGraph;	
 				Debug.Log("Point graph " + (pointGraph != null ));
-				graph.Value = FsmConverter.SetNavGraph(pointGraph) as FsmNavGraph;
+                graph.Value = new FsmNavGraph { Value = pointGraph };
 			}
 			else { 
-				pointGraph = FsmConverter.GetNavGraph(graph) as PointGraph;
+				pointGraph = graph.GetNavGraph() as PointGraph;
 				if(pointGraph==null)
 					 throw new System.ArgumentException("The input graph variable does not contain a Pointgraph, but some other type of graph.");
 			}
@@ -185,8 +186,8 @@ namespace HutongGames.PlayMaker.Pathfinding
 					nnConstraint.graphMask = nncSave;
 				}			
 			}
-			
-			Nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(pointGraph.nodes));
+
+            Nodes.Value = new FsmNodes { Value = pointGraph.nodes.ToList() };
             AstarPath.active.FloodFill();
 		}
 		

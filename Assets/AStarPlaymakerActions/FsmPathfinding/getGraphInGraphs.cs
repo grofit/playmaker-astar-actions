@@ -42,7 +42,7 @@ namespace HutongGames.PlayMaker.Pathfinding
                 return;
 		    }
 						
-			var navGraphArray = FsmConverter.GetNavGraphs(graphs);
+			var navGraphArray = graphs.GetNavGraphs();
             if (index.Value >= navGraphArray.Length)
             { Finish(); }
 

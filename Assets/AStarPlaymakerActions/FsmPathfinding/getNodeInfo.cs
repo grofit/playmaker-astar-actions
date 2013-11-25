@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using HutongGames.PlayMaker.Helpers;
+using System.Linq;
 using FsmPathfinding;
 using Pathfinding;
 using UnityEngine;
@@ -91,11 +90,11 @@ namespace HutongGames.PlayMaker.Pathfinding
 			position.Value *= Int3.PrecisionFactor;
 			
 			if (!connectedNodes.IsNone)
-			{ (connectedNodes.Value as FsmNodes).Value = (List<Node>)FsmConverter.NodeListToArray(underlingNode.connections); }
-			
-			var newNavGraph = new FsmNavGraph();
-			newNavGraph.Value = AstarPath.active.graphs[underlingNode.graphIndex];
-			graph.Value = newNavGraph;
+			{ (connectedNodes.Value as FsmNodes).Value = underlingNode.connections.ToList(); }
+
+		    var currentNavGraph = AstarPath.active.graphs[underlingNode.graphIndex];
+            var newNavGraph = new FsmNavGraph { Value = currentNavGraph };
+		    graph.Value = newNavGraph;
 		}
 		
 		public override void OnUpdate()

@@ -1,9 +1,8 @@
-using System;
+using System.Linq;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using Pathfinding;
 using AstarPathExtension;
-using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
@@ -49,9 +48,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public override void OnEnter()
 	  	{
-			
-			
-            if(graph.Value == null)
+			if(graph.Value == null)
             { graph.Value = new FsmNavGraph(); }
 			
 			var fsmNavGraph = graph.Value as FsmNavGraph;
@@ -60,10 +57,10 @@ namespace HutongGames.PlayMaker.Pathfinding
 			if (fsmNavGraph.Value == null || alwaysNew.Value) 
 			{
 				pointGraph = AstarPath.active.astarData.AddGraph( typeof( PointGraph )) as PointGraph;	
-				graph.Value = FsmConverter.SetNavGraph(pointGraph) as FsmNavGraph;
+				graph.Value = new FsmNavGraph { Value = pointGraph };
 			}
 			else { 
-				pointGraph = FsmConverter.GetNavGraph(graph) as PointGraph;
+				pointGraph = graph.GetNavGraph() as PointGraph;
 				if(pointGraph==null)
 					 throw new System.ArgumentException("The input graph variable does not contain a Pointgraph, but some other type of graph.");
 			}
@@ -81,8 +78,8 @@ namespace HutongGames.PlayMaker.Pathfinding
 			pointGraph.initialPenalty = (uint)cost.Value;
 			pointGraph.name = name.Value;
 		 	AstarPathExtensions.ScanGraph(pointGraph);
-			
-			Nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(pointGraph.nodes));
+
+            Nodes.Value = new FsmNodes { Value = pointGraph.nodes.ToList() };
 			AstarPath.active.FloodFill ();
 		}		  
    	}	

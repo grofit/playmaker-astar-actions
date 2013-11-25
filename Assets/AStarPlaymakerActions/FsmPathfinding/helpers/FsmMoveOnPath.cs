@@ -18,7 +18,6 @@ namespace HutongGames.PlayMaker.Helpers
 	  	//Required movement speed.
 	  	public float speed;
 	  
-		
 		//Stop this distance away from your goal.
 	  	public float finishDistance;
 		
@@ -32,16 +31,12 @@ namespace HutongGames.PlayMaker.Helpers
 	  	public bool ignoreY;
 	
 		public float costDependendSpeed;
-		
-		/*@Tooltip("WIP : Uses the offset to calculate a new InputPath, then checks if every node connection and node is walkable, if not extends the InputPath to make sure the InputPath is possible. ")
-		public var subcalc : FsmBool; */
-		
+			
 		//Add an optional offset
 		public Vector3 offset;
 
 		public Vector3 directionOut;
 
-	  	
 		//Print out debug messages.
 	  	public bool LogEvents;
 		
@@ -49,16 +44,14 @@ namespace HutongGames.PlayMaker.Helpers
 
 		private RVOController controller2;
 	  	private CharacterController controller;
-	  //	private var seeker : Seeker;
 		private Vector3 direction;
 		
 	  	public int currentWaypoint = 0;
 		private FsmPath doo;
 		private Vector3 nextPos ;
 		private float dist ;
-		private float a = 1/0f;
+		private float arbitraryNumber = 1/0f;
 	
-		
 		public void UpdatePath()
 		{
 			if (InputPath == null) 
@@ -66,10 +59,8 @@ namespace HutongGames.PlayMaker.Helpers
 				var moo = go.GetComponent<FsmMoveOnPath>();
 				Destroy(moo);
 			}
-			return;
 		}
-		
-	  
+
 		public void Start() 
 	  	{		 	
 		 	controller = go.GetComponent<CharacterController>();
@@ -84,19 +75,14 @@ namespace HutongGames.PlayMaker.Helpers
 				else 
 				{ controller = go.AddComponent<CharacterController>(); }
 			}
-			
 			UpdatePath();
-			
       	}
 		
-
-	  
 	 	public void Update()
 	 	{
 			if(stop) return;
 			UpdatePath();
 			
-			//nextWaypointDistance = Vector3.Distance(go.transform.position,nextPos);
 			// If there is no InputPath yet.
 			if (InputPath == null) { return; }
 			if (currentWaypoint >= (InputPath.vectorPath).Count) 
@@ -135,14 +121,13 @@ namespace HutongGames.PlayMaker.Helpers
 			// Check if we are close enough to the next waypoint.
 			dist = Vector3.Distance(go.transform.position, nextPos);
 			if ( dist < nextWaypointDistance) 
-			{	//Debug.Log(doo.Value.vectorPath[currentWaypoint]);
+			{	
 				if (currentWaypoint >= (InputPath.vectorPath).Count - 1) 
 				{
 					if (dist >= finishDistance){return;}
 				}
 				// Proceed to follow the next waypoint.
 				currentWaypoint++;
-				return;
 			}
 		}
 		

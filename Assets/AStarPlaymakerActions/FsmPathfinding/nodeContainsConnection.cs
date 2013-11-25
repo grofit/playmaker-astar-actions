@@ -10,7 +10,6 @@ namespace Assets.AStarPlaymakerActions.FsmPathfinding
 	[Tooltip("set node attributes directly")]
 	public class NodeContainsConnection : FsmStateAction
 	{
-
 		[ActionSection("Any type of node.")]
 		[ObjectType(typeof(FsmNode))]
 		[Tooltip("node1")]	
@@ -41,7 +40,7 @@ namespace Assets.AStarPlaymakerActions.FsmPathfinding
 			}
 			
 			var a = (node.Value as FsmNode).Value;
-			connected.Value = a.ContainsConnection(FsmConverter.GetAnythingShallow(node2) as Node); 
+			connected.Value = a.ContainsConnection(node2.GetAnythingShallow() as Node); 
 			Finish();	
 		} 
    	}

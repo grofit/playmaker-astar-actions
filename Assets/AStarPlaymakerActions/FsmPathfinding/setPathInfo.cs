@@ -95,8 +95,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ Finish(); }			
 		}
 		
-		public void SetInfoOnPath(){
-			var path = FsmConverter.GetPath(InputPath);
+		public void SetInfoOnPath()
+        {
+			var path = InputPath.GetPath();
 			
 			path.duration = duration.Value;
 			path.heuristicScale = heuristicScale.Value;			
@@ -107,10 +108,10 @@ namespace HutongGames.PlayMaker.Pathfinding
 			path.searchIterations = searchIterations.Value;
 			path.speed = speed.Value;
 			path.turnRadius = turnRadius.Value;
-			path.recycled = recycled.Value;			
-			nnConstraint.Value = FsmConverter.SetNNConstraint(path.nnConstraint);
-			nodes.Value = FsmConverter.SetNodes(path.path);
-			runData.Value = FsmConverter.SetNodeRunData(path.runData);			
+			path.recycled = recycled.Value;
+            nnConstraint.Value = new FsmNNConstraint { Value = path.nnConstraint };
+            nodes.Value = new FsmNodes { Value = path.path };
+            runData.Value = new FsmNodeRunData { Value = path.runData };		
 		}
 	 
 		public override void OnUpdate() 

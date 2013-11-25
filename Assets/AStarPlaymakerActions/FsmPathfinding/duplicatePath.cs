@@ -54,7 +54,7 @@ namespace HutongGames.PlayMaker.Pathfinding
             newAbPath.path = underlyingABPath.path;
             newAbPath.vectorPath = underlyingABPath.vectorPath;
 
-            OutputPath.Value = FsmConverter.SetPath(newAbPath);
+            OutputPath.Value = new FsmPath { Value = newAbPath };
 			Finish();	
 		}
    	}

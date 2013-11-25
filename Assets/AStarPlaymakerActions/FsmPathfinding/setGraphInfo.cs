@@ -112,7 +112,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 				return;
 			}
 					
-			var navGraph = FsmConverter.GetNavGraph(graph);
+			var navGraph = graph.GetNavGraph();
 			
 			if (!drawGizmos.IsNone)
 			{ navGraph.drawGizmos = drawGizmos.Value; }
@@ -127,7 +127,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ navGraph.name = name.Value; }
 			
 			if (!nodes.IsNone)
-			{ navGraph.nodes = FsmConverter.NodeArrayFromList((nodes.Value as FsmNodes).Value); }
+			{ navGraph.nodes = (nodes.Value as FsmNodes).Value.ToArray(); }
 			
 			if (!open.IsNone)
 			{ navGraph.open = open.Value; }

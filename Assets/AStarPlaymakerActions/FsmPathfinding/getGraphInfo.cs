@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;
 using HutongGames.PlayMaker.Pathfinding.Enums;
@@ -115,13 +116,13 @@ namespace HutongGames.PlayMaker.Pathfinding
 				return;
 			}			
 			
-			var currentNavGraph = FsmConverter.GetNavGraph(graph);
+			var currentNavGraph = graph.GetNavGraph();
 			guid.Value = currentNavGraph.guid.ToString();
 			drawGizmos.Value = currentNavGraph.drawGizmos;
 			infoScreenOpen.Value = currentNavGraph.infoScreenOpen;
 			initialPenalty.Value = (int)currentNavGraph.initialPenalty;
 			name.Value = currentNavGraph.name;
-			nodes.Value = FsmConverter.SetNodes(FsmConverter.NodeListToArray(currentNavGraph.nodes));
+            nodes.Value = new FsmNodes { Value = currentNavGraph.nodes.ToList() };
 			open.Value = currentNavGraph.open;
 			
 			if(graphType == GraphType.pointGraph && currentNavGraph as PointGraph != null)

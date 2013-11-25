@@ -89,7 +89,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		{
             AstarPath currentAstarPath;
 			if (!astarPath.IsNone && astarPath.Value != null)
-            { currentAstarPath = FsmConverter.GetAstarPath(astarPath); }
+            { currentAstarPath = astarPath.GetAstarPath(); }
 			else
             { currentAstarPath = AstarPath.active; }
 			
@@ -117,14 +117,11 @@ namespace HutongGames.PlayMaker.Pathfinding
 			if(!Version.IsNone)
 			{ Version.Value = AstarPath.Version.ToString(); }
 			
-			if(!graphs.IsNone)
-            { graphs.Value = FsmConverter.SetNavGraphs(currentAstarPath.graphs); }
+			if(!graphs.IsNone || !astarData.IsNone)
+            { graphs.Value = new FsmNavGraphs { Value = currentAstarPath.graphs }; }
 			
 			if(!activeAstarPath.IsNone)
-			{ activeAstarPath.Value = FsmConverter.SetAstarPath(AstarPath.active);	}	
-			
-			if (!astarData.IsNone)
-            { astarData.Value = FsmConverter.SetNavGraphs(currentAstarPath.graphs); }			
+            { activeAstarPath.Value = new FsmAstarPath { Value = AstarPath.active };  }		
 		}
 	  
 		public override void OnUpdate() 

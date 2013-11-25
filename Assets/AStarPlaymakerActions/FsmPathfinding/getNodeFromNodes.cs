@@ -1,7 +1,4 @@
 using FsmPathfinding;
-using Pathfinding;
-using HutongGames.PlayMaker.Helpers;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding
@@ -28,8 +25,8 @@ namespace HutongGames.PlayMaker.Pathfinding
 		public override void Reset()
 		{
 			nodes = new FsmObject();
-			index = 0;
 			node = new FsmObject();
+            index = 0;
 		}
 	  
 		public override void OnEnter()  
@@ -49,7 +46,8 @@ namespace HutongGames.PlayMaker.Pathfinding
 				return;
 			}
 
-			node.Value = FsmConverter.SetNode((nodes.Value as FsmNodes).Value[index.Value]);
+            var currentNode = (nodes.Value as FsmNodes).Value[index.Value];
+            node.Value = new FsmNode { Value = currentNode };
 			Finish();			
 		}  
    	}

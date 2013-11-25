@@ -154,7 +154,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 	  	{
 			if(moveMode == MoveMode.followPath)
 			{
-				path = FsmConverter.GetPath(inputPath);
+				path = inputPath.GetPath();
 				if(path == null)
 				{
 					if(LogEvents.Value)
@@ -436,7 +436,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 	 	public override void OnUpdate()
 	 	{
 			if(updatePath && moveMode == MoveMode.followPath)
-			{ path = FsmConverter.GetPath(inputPath); }
+			{ path = inputPath.GetPath(); }
 
 			if (path == null || path.vectorPath.Count == 0)
             { return; }
