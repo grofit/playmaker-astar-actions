@@ -1,13 +1,43 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs">
     <Files>
-      <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" Line="596" Column="1" />
+      <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" Line="445" Column="1" />
+      <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" Line="571" Column="5" />
       <File FileName="Assets\AStarPlaymakerActions\FsmPathfinding\helpers\FsmFollowTargetHelper.cs" Line="1" Column="1" />
+      <File FileName="c:\Code\Games\playmaker-astar-actions\Assets\AstarPathfindingProject\Core\AI\Seeker.cs" Line="414" Column="57" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="AStarPlaymakerActions" expanded="True">
+              <Node name="FsmPathfinding" expanded="True">
+                <Node name="moveTo.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>moveMode</Value>
+          <Value>finishDistanceMode</Value>
+          <Value>controllerType</Value>
+          <Value>abPath</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Code\Games\playmaker-astar-actions\Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" line="445" />
+      <Breakpoint file="C:\Code\Games\playmaker-astar-actions\Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" line="316" />
+      <Breakpoint file="C:\Code\Games\playmaker-astar-actions\Assets\AStarPlaymakerActions\FsmPathfinding\moveTo.cs" line="299" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
