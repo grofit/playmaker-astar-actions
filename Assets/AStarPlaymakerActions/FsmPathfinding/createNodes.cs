@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using HutongGames.PlayMaker.Helpers;
 using FsmPathfinding;

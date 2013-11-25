@@ -59,10 +59,11 @@ namespace HutongGames.PlayMaker.Pathfinding
 				pointGraph = AstarPath.active.astarData.AddGraph( typeof( PointGraph )) as PointGraph;	
 				graph.Value = new FsmNavGraph { Value = pointGraph };
 			}
-			else { 
+			else 
+            { 
 				pointGraph = graph.GetNavGraph() as PointGraph;
 				if(pointGraph==null)
-					 throw new System.ArgumentException("The input graph variable does not contain a Pointgraph, but some other type of graph.");
+                { throw new System.ArgumentException("The input graph variable does not contain a Pointgraph, but some other type of graph."); }
 			}
 			
 			ScanPointGraph(pointGraph);
