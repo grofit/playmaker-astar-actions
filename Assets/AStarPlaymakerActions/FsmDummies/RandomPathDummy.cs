@@ -1,10 +1,12 @@
 using UnityEngine;
-using Pathfinding;
 
-namespace HutongGames.PlayMaker.Dummies
+namespace Pathfinding
 {
-	public static class RandomPath 
-	{
-		public static ABPath Construct (Vector3 v , int l, OnPathDelegate o){return null;}
-	}
+    public static class RandomPath
+    {
+        public static ABPath Construct(Vector3 v, int l, OnPathDelegate o)
+        {
+            return null;
+        }
+    }
 }

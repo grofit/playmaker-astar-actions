@@ -1,11 +1,8 @@
 using UnityEngine;
 
-namespace HutongGames.PlayMaker.Dummies
+public class RVOController : Component 
 {
-	public class RVOController : Component 
-	{
-		public float maxSpeed;
+	public float maxSpeed;
 		
-		public void Move(Vector3 go){}
-	}
+	public void Move(Vector3 go){}
 }
