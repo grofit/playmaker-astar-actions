@@ -1,6 +1,6 @@
 using System.Linq;
-using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
+using HutongGames.PlayMaker.Extensions;
 using Pathfinding;
 using UnityEngine;
 
@@ -81,7 +81,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		 	pointGraph.maxDistance = -1; // no autoconnect
 			pointGraph.initialPenalty = (uint)cost.Value;
 			pointGraph.name = name.Value;
-		 	AstarPathExtensions.ScanGraph(pointGraph);
+            pointGraph.ScanGraph();
 			
 			if(width.Value <= 1)
 			{

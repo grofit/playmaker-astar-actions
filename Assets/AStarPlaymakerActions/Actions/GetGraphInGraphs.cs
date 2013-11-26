@@ -1,6 +1,6 @@
 using System;
-using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
+using HutongGames.PlayMaker.Extensions;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HutongGames.PlayMaker.Behaviours
+namespace HutongGames.PlayMaker.Extensions
 {
     public static class Vector3Extensions
     {

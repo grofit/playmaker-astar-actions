@@ -1,4 +1,5 @@
 using HutongGames.PlayMaker.Behaviours;
+using HutongGames.PlayMaker.Extensions;
 using UnityEngine;
 using Pathfinding;
 using Pathfinding.Nodes;
@@ -72,7 +73,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 			else
 			{
 				bounds = (targetGameObject.renderer.GetComponent<MeshFilter>()).sharedMesh.bounds;
-				RecalculateBox(graphUpdateShape);
+				graphUpdateShape.RecalculateBox(targetGameObject, bounds);
 			}
 			
 			nodes = graph.GetNodesInArea(graphUpdateShape);
@@ -101,7 +102,7 @@ namespace HutongGames.PlayMaker.Pathfinding
                var castCollider = (targetGameObject.collider as BoxCollider);
                bounds.center = castCollider.center;
                bounds.size = castCollider.size;
-               RecalculateBox(graphUpdateShape);
+               graphUpdateShape.RecalculateBox(targetGameObject, bounds);
            }
            else if (targetGameObject.collider is MeshCollider)
            {
@@ -114,38 +115,25 @@ namespace HutongGames.PlayMaker.Pathfinding
            else
            {
                Debug.Log("This type of collider is not specifically supported. Using bounds instead...");
-               RecalculateBox(graphUpdateShape);
+               graphUpdateShape.RecalculateBox(targetGameObject, bounds);
            }
        }
-
-       void RecalculateBox(GraphUpdateShape graphUpdateShape) 
+       
+       void UpdateNodesInArea() 
        {
-			graphUpdateShape.points = new Vector3[8];
-			graphUpdateShape.points[0] = targetGameObject.transform.TransformPoint(new Vector3(bounds.min.x, bounds.min.y, bounds.max.z));
-			graphUpdateShape.points[1] = targetGameObject.transform.TransformPoint(new Vector3(bounds.max.x, bounds.min.y, bounds.max.z));
-			graphUpdateShape.points[2] = targetGameObject.transform.TransformPoint(new Vector3(bounds.max.x, bounds.min.y, bounds.min.z));
-			graphUpdateShape.points[3] = targetGameObject.transform.TransformPoint(new Vector3(bounds.min.x, bounds.min.y, bounds.min.z));
-			graphUpdateShape.points[7] = targetGameObject.transform.TransformPoint(new Vector3(bounds.min.x, bounds.max.y, bounds.min.z));
-			graphUpdateShape.points[4] = targetGameObject.transform.TransformPoint(new Vector3(bounds.min.x, bounds.max.y, bounds.max.z));
-			graphUpdateShape.points[5] = targetGameObject.transform.TransformPoint(new Vector3(bounds.max.x, bounds.max.y, bounds.max.z));
-			graphUpdateShape.points[6] = targetGameObject.transform.TransformPoint(new Vector3(bounds.max.x, bounds.max.y, bounds.min.z));		
-		}
-		
-		void UpdateNodesInArea() 
-        {
-			nodes = new List<Node> {node};
-		    if(getWalkableOnly.Value) // actually, this does not get all walkables in the area, it just floods outwards along the walkables from the center of the gameObject. anyways, could be useful, so I left it in.
-			{
-				for(var i=0; i < nodes.Count; i++) 
-				{ nodes[i].GetConnections(CheckNode); }
-			}
-			else
-			{
-				var allNodes = AstarPath.active.graphs[node.graphIndex].nodes; // get all nodes, no .ToList(); to save performance (save wherever you can :D )
-				foreach (var currentNode in allNodes)
-				{ CheckNode(currentNode); }
-			}
-		}
+	        nodes = new List<Node> {node};
+	        if(getWalkableOnly.Value) // actually, this does not get all walkables in the area, it just floods outwards along the walkables from the center of the gameObject. anyways, could be useful, so I left it in.
+	        {
+		        for(var i=0; i < nodes.Count; i++) 
+		        { nodes[i].GetConnections(CheckNode); }
+	        }
+	        else
+	        {
+		        var allNodes = AstarPath.active.graphs[node.graphIndex].nodes; // get all nodes, no .ToList(); to save performance (save wherever you can :D )
+		        foreach (var currentNode in allNodes)
+		        { CheckNode(currentNode); }
+	        }
+        }
 		
 		public void CheckNode(Node nodeToCheck)
 		{

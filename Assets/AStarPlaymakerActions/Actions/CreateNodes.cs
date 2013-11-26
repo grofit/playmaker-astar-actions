@@ -1,6 +1,6 @@
 using System.Linq;
-using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
+using HutongGames.PlayMaker.Extensions;
 using Pathfinding;
 
 namespace HutongGames.PlayMaker.Pathfinding

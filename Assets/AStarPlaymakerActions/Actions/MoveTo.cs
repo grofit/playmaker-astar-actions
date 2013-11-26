@@ -1,6 +1,7 @@
 using System;
 using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
+using HutongGames.PlayMaker.Extensions;
 using HutongGames.PlayMaker.Pathfinding.Enums;
 using Pathfinding;
 using UnityEngine;
@@ -422,10 +423,9 @@ namespace HutongGames.PlayMaker.Pathfinding
 				else
 				{
 					if(LogEvents.Value)
-					{	Debug.Log("Astar Move To failed. The rigidbody controller was removed");} 
+					{ Debug.Log("Astar Move To failed. The rigidbody controller was removed"); } 
 					Fsm.Event(failedEvent); 
-					Finish(); 
-					return;
+					Finish();
 				}
 			}
 			
