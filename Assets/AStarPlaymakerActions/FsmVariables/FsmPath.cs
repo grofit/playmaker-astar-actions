@@ -1,6 +1,6 @@
 using Pathfinding;
 
-namespace FsmPathfinding
+namespace HutongGames.PlayMaker.Pathfinding
 {
     public class FsmPath : FsmVariableWrapper<Path>{}
 }

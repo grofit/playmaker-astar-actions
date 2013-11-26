@@ -1,4 +1,4 @@
-using FsmPathfinding;
+using HutongGames.PlayMaker.Pathfinding;
 using Pathfinding;
 using Pathfinding.Nodes;
 

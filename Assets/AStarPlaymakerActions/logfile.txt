@@ -73,3 +73,13 @@
 - Refactored project to use c# rather than javascript
 - project no longer needs setup script to install
 - namespaces and file locations changed
+
+0v901
+- Refactored namespaces further
+- Renamed a few underlying classes
+- File locations have changed
+- Adopted extension methods wherever possible for isolated logic
+- Added a FREE and PRO version of the unitypackage
+- Removed unused code
+- Removed class level variables which had short lifetimes in favor of method scope variables
+- Reworked the Dummy classes to use the same namespaces and names as the PRO version classes to make the unitypackage easier to manage

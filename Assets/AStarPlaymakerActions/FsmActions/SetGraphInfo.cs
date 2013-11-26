@@ -1,4 +1,4 @@
-using FsmPathfinding;
+using HutongGames.PlayMaker.Pathfinding;
 using HutongGames.PlayMaker.Extensions;
 using HutongGames.PlayMaker.Pathfinding.Enums;
 using Pathfinding;

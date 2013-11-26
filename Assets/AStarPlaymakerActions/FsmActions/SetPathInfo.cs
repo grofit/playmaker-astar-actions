@@ -1,4 +1,4 @@
-using FsmPathfinding;
+using HutongGames.PlayMaker.Pathfinding;
 using HutongGames.PlayMaker.Extensions;
 
 namespace HutongGames.PlayMaker.Pathfinding

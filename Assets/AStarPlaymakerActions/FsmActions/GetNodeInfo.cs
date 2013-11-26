@@ -1,5 +1,5 @@
 using System.Linq;
-using FsmPathfinding;
+using HutongGames.PlayMaker.Pathfinding;
 using Pathfinding;
 using UnityEngine;
 

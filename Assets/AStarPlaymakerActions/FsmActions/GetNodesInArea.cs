@@ -4,7 +4,7 @@ using Pathfinding;
 using Pathfinding.Nodes;
 using System.Collections.Generic;
 using System.Linq;
-using FsmPathfinding;
+using HutongGames.PlayMaker.Pathfinding;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {

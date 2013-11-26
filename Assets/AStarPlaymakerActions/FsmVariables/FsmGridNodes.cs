@@ -1,6 +1,6 @@
 using Pathfinding.Nodes;
 
-namespace FsmPathfinding
+namespace HutongGames.PlayMaker.Pathfinding
 {
     public class FsmGridNodes : FsmVariableWrapper<GridNode[]>{}
 }
