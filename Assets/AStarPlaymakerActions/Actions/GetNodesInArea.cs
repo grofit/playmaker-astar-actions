@@ -1,4 +1,3 @@
-using HutongGames.PlayMaker.Behaviours;
 using HutongGames.PlayMaker.Extensions;
 using UnityEngine;
 using Pathfinding;
@@ -69,11 +68,11 @@ namespace HutongGames.PlayMaker.Pathfinding
 			
 			var graphUpdateShape = new GraphUpdateShape(); 
 			if (useRealCollider.Value)
-			{ GetNodesFromCollider(graphUpdateShape); }
+            { graphUpdateShape.RecalculatePoints(targetGameObject, bounds); }
 			else
 			{
 				bounds = (targetGameObject.renderer.GetComponent<MeshFilter>()).sharedMesh.bounds;
-				graphUpdateShape.RecalculateBox(targetGameObject, bounds);
+				graphUpdateShape.AssignTransformedPoints(targetGameObject, bounds);
 			}
 			
 			nodes = graph.GetNodesInArea(graphUpdateShape);
@@ -92,35 +91,10 @@ namespace HutongGames.PlayMaker.Pathfinding
 			{ nodesOutput.Value = new FsmNodes { Value = nodes }; }
 
 			Debug.Log("i" + nodes.Count);
-		}
+        }
 
-       private void GetNodesFromCollider(GraphUpdateShape graphUpdateShape)
-       {
-           if (targetGameObject.collider is BoxCollider) // take render bounds, then turn them into world coordinates
-           {
-               Debug.Log("It's a box collider");
-               var castCollider = (targetGameObject.collider as BoxCollider);
-               bounds.center = castCollider.center;
-               bounds.size = castCollider.size;
-               graphUpdateShape.RecalculateBox(targetGameObject, bounds);
-           }
-           else if (targetGameObject.collider is MeshCollider)
-           {
-               Debug.Log("It's a mesh collider!");
-               var castCollider = (targetGameObject.collider as MeshCollider);
-               graphUpdateShape.points = castCollider.sharedMesh.vertices;
-               for (var i = 0; i < graphUpdateShape.points.Count(); i++)
-               { graphUpdateShape.points[i] = targetGameObject.transform.TransformPoint(castCollider.sharedMesh.vertices[i]); }
-           }
-           else
-           {
-               Debug.Log("This type of collider is not specifically supported. Using bounds instead...");
-               graphUpdateShape.RecalculateBox(targetGameObject, bounds);
-           }
-       }
-       
-       void UpdateNodesInArea() 
-       {
+        void UpdateNodesInArea() 
+        {
 	        nodes = new List<Node> {node};
 	        if(getWalkableOnly.Value) // actually, this does not get all walkables in the area, it just floods outwards along the walkables from the center of the gameObject. anyways, could be useful, so I left it in.
 	        {
@@ -135,20 +109,20 @@ namespace HutongGames.PlayMaker.Pathfinding
 	        }
         }
 		
-		public void CheckNode(Node nodeToCheck)
-		{
-		    var nodePosition = new Vector3(nodeToCheck.position.x,nodeToCheck.position.y,nodeToCheck.position.z);
-		    var normalisedNodePosition = nodePosition*Int3.PrecisionFactor;
-			if(useRealCollider.Value) 
-			{
+        public void CheckNode(Node nodeToCheck)
+        {
+	        var nodePosition = new Vector3(nodeToCheck.position.x,nodeToCheck.position.y,nodeToCheck.position.z);
+	        var normalisedNodePosition = nodePosition*Int3.PrecisionFactor;
+	        if(useRealCollider.Value) 
+	        {
                 if ((!nodes.Contains(nodeToCheck)) && normalisedNodePosition.IsInside(targetGameObject.collider)) // check if the node in question is both in the collider and NOT in the list already.
-				{ nodes.Add(nodeToCheck); }			
-			}
-			else
-			{
+		        { nodes.Add(nodeToCheck); }			
+	        }
+	        else
+	        {
                 if ((!nodes.Contains(nodeToCheck)) && bounds.Contains(normalisedNodePosition)) // check if the node in question is both in the bounds and NOT in the list already.
-				{ nodes.Add(nodeToCheck); }
-			}
-		}
+		        { nodes.Add(nodeToCheck); }
+	        }
+        }
 	}
 }

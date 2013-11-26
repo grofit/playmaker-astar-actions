@@ -1,12 +1,8 @@
-using UnityEngine;
-using System.Collections;
-using System;
-using HutongGames.PlayMaker;
 using FsmPathfinding;
 using Pathfinding;
 using System.Linq;
 
-namespace HutongGames.PlayMaker.Actions
+namespace HutongGames.PlayMaker.Pathfinding
 {
     public class GetPointGraphInfo : FsmStateAction
     {
@@ -71,36 +67,36 @@ namespace HutongGames.PlayMaker.Actions
 		
 		public FsmBool everyFrame;
 		
-		private PointGraph g;
-	// Use this for initialization
-	public override void OnEnter () {
-			FsmNavGraph go = graph.Value as FsmNavGraph;
-			if(go.Value as PointGraph == null) {Finish(); return;}
-			g = go.Value as PointGraph;
+		private PointGraph pointGraph;
+
+	    public override void OnEnter () 
+        {
+            var navGraph = graph.Value as FsmNavGraph;
+	        pointGraph = navGraph.Value as PointGraph;
+	        if (pointGraph == null)
+	        {
+	            Finish(); 
+                return;
+	        }
 			
-			DoStuff();
+            GetGraphInfo();
 			
-			if (!everyFrame.Value)
-			Finish();	
-	}
+            if (!everyFrame.Value)
+            { Finish(); }	
+	    }
 	
-		public void DoStuff(){
-			guid.Value = g.guid.ToString();
-			drawGizmos.Value = g.drawGizmos;
-			infoScreenOpen.Value = g.infoScreenOpen;
-			initialPenalty.Value = (int)g.initialPenalty;
-			name.Value = g.name;
-			var tempNodes = new FsmNodes {Value = g.nodes.ToList()};
-		    nodes.Value = tempNodes;  // everywhere else it's saved as a generic list, only here it is an array, so it needs extra conversion
-			open.Value = g.open;
-
-
+		public void GetGraphInfo()
+        {
+			guid.Value = pointGraph.guid.ToString();
+			drawGizmos.Value = pointGraph.drawGizmos;
+			infoScreenOpen.Value = pointGraph.infoScreenOpen;
+			initialPenalty.Value = (int)pointGraph.initialPenalty;
+			name.Value = pointGraph.name;
+            nodes.Value = new FsmNodes { Value = pointGraph.nodes.ToList() }; ;
+			open.Value = pointGraph.open;
 		}
 		
-	// Update is called once per frame
 		public override void OnUpdate()
-		{
-			DoStuff();
-		}
-}
+		{ GetGraphInfo(); }
+    }
 }
