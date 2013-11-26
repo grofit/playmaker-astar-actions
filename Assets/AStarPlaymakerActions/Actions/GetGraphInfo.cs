@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using HutongGames.PlayMaker.Helpers;
+using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
 using HutongGames.PlayMaker.Pathfinding.Enums;
 using Pathfinding;

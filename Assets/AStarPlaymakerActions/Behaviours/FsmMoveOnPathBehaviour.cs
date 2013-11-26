@@ -3,9 +3,9 @@ using FsmPathfinding;
 using Pathfinding;
 using UnityEngine;
 
-namespace HutongGames.PlayMaker.Helpers
+namespace HutongGames.PlayMaker.Behaviours
 {
-	public class FsmMoveOnPath : MonoBehaviour
+	public class FsmMoveOnPathBehaviour : MonoBehaviour
 	{
 		[Tooltip ("Stop the running temporarily. Use the set property action.")]
 		public bool stop;
@@ -56,7 +56,7 @@ namespace HutongGames.PlayMaker.Helpers
 		{
 			if (InputPath == null) 
 			{
-				var moo = go.GetComponent<FsmMoveOnPath>();
+				var moo = go.GetComponent<FsmMoveOnPathBehaviour>();
 				Destroy(moo);
 			}
 		}
@@ -90,7 +90,7 @@ namespace HutongGames.PlayMaker.Helpers
 				InputPath = null;
 				if (controller2 != null) //NVO controller needs to be set to 0/0/0 , else it continues running.
 					controller2.Move(new Vector3(0,0,0));
-				Destroy(go.GetComponent<FsmMoveOnPath>());
+				Destroy(go.GetComponent<FsmMoveOnPathBehaviour>());
 				return;
 			}
 			nextPos = InputPath.vectorPath[currentWaypoint];

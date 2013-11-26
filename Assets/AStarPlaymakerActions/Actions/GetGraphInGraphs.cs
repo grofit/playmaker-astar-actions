@@ -1,5 +1,5 @@
 using System;
-using HutongGames.PlayMaker.Helpers;
+using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
 
 namespace HutongGames.PlayMaker.Pathfinding

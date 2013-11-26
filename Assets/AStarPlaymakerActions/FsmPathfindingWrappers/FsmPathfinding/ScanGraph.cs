@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Pathfinding;
 using FsmPathfinding;
-using AstarPathExtension;
+using HutongGames.PlayMaker.Behaviours;
 
 namespace HutongGames.PlayMaker.Actions
 {

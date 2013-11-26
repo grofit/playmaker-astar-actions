@@ -3,9 +3,9 @@ using FsmPathfinding;
 using Pathfinding;
 using UnityEngine;
 
-namespace HutongGames.PlayMaker.Helpers
+namespace HutongGames.PlayMaker.Behaviours
 {
-	public class FsmFollowTargetHelper : MonoBehaviour
+	public class FsmFollowTargetBehaviour : MonoBehaviour
 	{  		
 		[Tooltip("This defines the number of frames between each path update.")]
 		public int GoUpdate = 5;
@@ -122,7 +122,7 @@ namespace HutongGames.PlayMaker.Helpers
 				if (finishOnEnd) 
 				{
 					InputPath = null;
-					Destroy(go.GetComponent<FsmFollowTargetHelper>());
+					Destroy(go.GetComponent<FsmFollowTargetBehaviour>());
 				}
 				return;
 			}			

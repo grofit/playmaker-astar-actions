@@ -1,6 +1,6 @@
 using FsmPathfinding;
 using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Helpers;
+using HutongGames.PlayMaker.Behaviours;
 using Pathfinding;
 using UnityEngine;
 

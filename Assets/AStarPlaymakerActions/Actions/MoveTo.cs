@@ -1,5 +1,5 @@
 using System;
-using HutongGames.PlayMaker.Helpers;
+using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
 using HutongGames.PlayMaker.Pathfinding.Enums;
 using Pathfinding;
@@ -360,7 +360,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		
 		public void Auto() 
         {
-			var moveOnPathComponent = targetGameObject.GetComponent<FsmMoveOnPath>() ?? targetGameObject.AddComponent<FsmMoveOnPath>();
+			var moveOnPathComponent = targetGameObject.GetComponent<FsmMoveOnPathBehaviour>() ?? targetGameObject.AddComponent<FsmMoveOnPathBehaviour>();
 		    moveOnPathComponent.go = targetGameObject;
 			moveOnPathComponent.InputPath = path;
 			moveOnPathComponent.speed = speed.Value;

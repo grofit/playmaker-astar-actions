@@ -8,7 +8,8 @@ using System.Linq;
 
 namespace HutongGames.PlayMaker.Actions
 {
-public class GetPointGraphInfo : FsmConverterC {
+    public class GetPointGraphInfo : FsmStateAction
+    {
 		[ActionSection("Input")]
 		[RequiredField]
 		[ObjectType(typeof(FsmNavGraph))]
@@ -89,9 +90,8 @@ public class GetPointGraphInfo : FsmConverterC {
 			infoScreenOpen.Value = g.infoScreenOpen;
 			initialPenalty.Value = (int)g.initialPenalty;
 			name.Value = g.name;
-			FsmNodes tempNodes = new FsmNodes();
-			tempNodes.Value = NodeArrayToList(g.nodes);
-			nodes.Value = tempNodes;  // everywhere else it's saved as a generic list, only here it is an array, so it needs extra conversion
+			var tempNodes = new FsmNodes {Value = g.nodes.ToList()};
+		    nodes.Value = tempNodes;  // everywhere else it's saved as a generic list, only here it is an array, so it needs extra conversion
 			open.Value = g.open;
 
 

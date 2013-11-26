@@ -1,8 +1,7 @@
 using System.Linq;
-using HutongGames.PlayMaker.Helpers;
+using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
 using Pathfinding;
-using AstarPathExtension;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
@@ -78,7 +77,7 @@ namespace HutongGames.PlayMaker.Pathfinding
 		 	pointGraph.maxDistance = maxDistance.Value;
 			pointGraph.initialPenalty = (uint)cost.Value;
 			pointGraph.name = name.Value;
-		 	AstarPathExtensions.ScanGraph(pointGraph);
+            pointGraph.ScanGraph();
 
             Nodes.Value = new FsmNodes { Value = pointGraph.nodes.ToList() };
 			AstarPath.active.FloodFill ();

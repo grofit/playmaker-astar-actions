@@ -1,8 +1,7 @@
 using System.Linq;
-using HutongGames.PlayMaker.Helpers;
+using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
 using Pathfinding;
-using AstarPathExtension;
 using UnityEngine;
 
 namespace HutongGames.PlayMaker.Pathfinding

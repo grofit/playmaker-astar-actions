@@ -1,8 +1,7 @@
 using System.Linq;
-using HutongGames.PlayMaker.Helpers;
+using HutongGames.PlayMaker.Behaviours;
 using FsmPathfinding;
 using Pathfinding;
-using AstarPathExtension;
 
 namespace HutongGames.PlayMaker.Pathfinding
 {
@@ -57,12 +56,10 @@ namespace HutongGames.PlayMaker.Pathfinding
 			var createdNodes = cachedNavGraph.CreateNodes(number.Value);
 			nodes.Value = new FsmNodes();
 			(nodes.Value as FsmNodes).Value = createdNodes.ToList();
-			AstarPathExtensions.ScanGraph(cachedNavGraph);
+            cachedNavGraph.ScanGraph();
 		}
 		
 		public override void OnUpdate()
-		{
-			CreateNodesForGraph();
-		} 
+		{ CreateNodesForGraph(); } 
    	}
 }

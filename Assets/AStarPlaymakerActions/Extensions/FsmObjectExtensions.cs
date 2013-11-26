@@ -2,7 +2,7 @@ using FsmPathfinding;
 using Pathfinding;
 using Pathfinding.Nodes;
 
-namespace HutongGames.PlayMaker.Helpers
+namespace HutongGames.PlayMaker.Behaviours
 {
     public static class FsmObjectExtensions
     {
